@@ -1,0 +1,24 @@
+{
+  "name": "zodlike",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run --passWithNoTests --reporter verbose",
+    "test:watch": "vitest watch --passWithNoTests --reporter verbose",
+    "type-check": "yarn tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "Kevin Østerkilde",
+  "license": "MIT",
+  "prettier": {
+    "semi": false,
+    "printWidth": 100,
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "jsdom": "^22.1.0",
+    "typescript": "^5.1.6",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.33.0"
+  }
+}

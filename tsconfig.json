@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "target": "ES5",
+      "lib": ["DOM", "DOM.Iterable", "ESNext"],
+      "baseUrl": ".",
+      "allowJs": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "forceConsistentCasingInFileNames": true,
+      "noEmit": true,
+      "esModuleInterop": true,
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "incremental": true,
+      "tsBuildInfoFile": ".tsbuildinfo",
+      "types": ["node", "vitest/globals"]
+    },
+    "typeAcquisition": { "include": ["vitest/globals"] },
+    "exclude": ["node_modules"],
+    "include": ["**/*.ts", "**/*.tsx", "vitest.config.ts"]
+  }
