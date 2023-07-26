@@ -4,10 +4,10 @@ function assert(condition: any, message: string): asserts condition {
 
 export const zodLike = {
   // TODO
-  validate: (data: any) => data,
-  object: (data: any) => ({
+  validate: <T>(data: T) => data,
+  object: <T>(data: T) => ({
     refine: (
-      condition: boolean | ((data: any) => boolean),
+      condition: boolean | ((data: T) => boolean),
       params: { message: string; path: string[] }
     ) => {
       assert(
@@ -15,20 +15,46 @@ export const zodLike = {
         params.message
       )
 
-      return
+      return data
     },
   }),
 
   string: () => ({
-    parse: (value: unknown): string => {
+    parse: (value: string) => {
       assert(typeof value === 'string', 'Expected a string')
 
       return value
     },
   }),
+
   number: () => ({
-    parse: (value: unknown): number => {
+    min: (min: number) => ({
+      parse: (value: number) => {
+        assert(typeof value === 'number', 'Expected a number')
+        assert(isFinite(value), 'Expected a finite number')
+        assert(value >= min, `Expected a number greater than or equal to ${min}`)
+
+        return value
+      },
+
+      max: (max: number) => zodLike.number().max(max),
+    }),
+
+    max: (max: number) => ({
+      parse: (value: number) => {
+        assert(typeof value === 'number', 'Expected a number')
+        assert(isFinite(value), 'Expected a finite number')
+        assert(value <= max, `Expected a number less than or equal to ${max}`)
+
+        return value
+      },
+
+      min: (min: number) => zodLike.number().min(min),
+    }),
+
+    parse: (value: number) => {
       assert(typeof value === 'number', 'Expected a number')
+      assert(isFinite(value), 'Expected a finite number')
 
       return value
     },
