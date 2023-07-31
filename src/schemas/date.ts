@@ -1,25 +1,14 @@
-import type { HelperReturnType } from '../types'
+import { MaxDate, MinDate } from '../modifiers'
 import { assert, TypeError } from '../utils'
 
-export const date = (args?: HelperReturnType[], message?: string) => ({
+export type DateSchemaArgs = Array<MinDate | MaxDate>
+
+export const date = (args?: DateSchemaArgs, message?: string) => ({
   parse: (value: Date) => {
     assert(value instanceof Date, new TypeError(message || 'Expected a Date'))
 
     args?.forEach((arg) => {
-      switch (arg.name) {
-        case 'minDate': {
-          if ('min' in arg.args) {
-            assert(value.valueOf() >= arg.args.min, arg.args.message)
-          }
-          break
-        }
-        case 'maxDate': {
-          if ('max' in arg.args) {
-            assert(value.valueOf() <= arg.args.max, arg.args.message)
-          }
-          break
-        }
-      }
+      arg.validate(value)
     })
 
     return value

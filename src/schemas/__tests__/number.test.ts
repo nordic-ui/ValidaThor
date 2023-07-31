@@ -1,6 +1,6 @@
 import { parse } from '../../core/parse'
 import { number } from '../number'
-import { max, min } from '../../helpers'
+import { max, min } from '../../modifiers'
 
 describe('number()', () => {
   it('should work with no args', () => {

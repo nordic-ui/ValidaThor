@@ -1,5 +1,5 @@
 import { parse } from '../../core/parse'
-import { maxDate, minDate } from '../../helpers'
+import { maxDate, minDate } from '../../modifiers'
 import { date } from '../date'
 
 describe('date()', () => {

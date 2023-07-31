@@ -1,6 +1,6 @@
 import { parse } from '../../core/parse'
 import { string } from '../string'
-import { min, max, email } from '../../helpers'
+import { email, minLength, maxLength } from '../../modifiers'
 
 describe('string()', () => {
   it('should work with no args', () => {
@@ -20,11 +20,11 @@ describe('string()', () => {
   })
 
   it('should work with min() and max() args', () => {
-    const schema1 = string([min(2)])
-    const schema2 = string([max(6)])
-    const schema3 = string([min(2), max(6)])
-    const schema4 = string([min(2, 'Expected a string with at least 2 characters')])
-    const schema5 = string([max(6, 'Expected a string with at most 6 characters')])
+    const schema1 = string([minLength(2)])
+    const schema2 = string([maxLength(6)])
+    const schema3 = string([minLength(2), maxLength(6)])
+    const schema4 = string([minLength(2, 'Expected a string with at least 2 characters')])
+    const schema5 = string([maxLength(6, 'Expected a string with at most 6 characters')])
 
     expect(parse(schema1, 'hello')).toEqual('hello')
     expect(parse(schema2, 'world')).toEqual('world')

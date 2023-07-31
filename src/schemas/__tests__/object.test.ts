@@ -1,5 +1,5 @@
 import { parse } from '../../core/parse'
-import { max } from '../../helpers'
+import { maxLength } from '../../modifiers'
 import { object } from '../object'
 import { boolean, string, number } from '../'
 
@@ -24,7 +24,7 @@ describe('object()', () => {
 
   it('should work with data', () => {
     const schema1 = object({ name: string(), age: number(), isAdmin: boolean() })
-    const schema2 = object({ name: string([max(3)]) })
+    const schema2 = object({ name: string([maxLength(3)]) })
     const schema3 = object({
       venue: object({
         name: string(),
