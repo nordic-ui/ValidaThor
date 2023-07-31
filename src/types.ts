@@ -1,12 +1,7 @@
 import { boolean, date, number, object, regex, string } from './schemas'
+import type { Min, Max, Email, MinDate, MaxDate, MinLength, MaxLength } from './modifiers'
 
-export type HelperReturnType = {
-  name: string
-  args: {
-    message: string
-    [key: string]: any
-  }
-}
+export type Modifier = Min | Max | Email | MinDate | MaxDate | MinLength | MaxLength
 
 export type Schema =
   | ReturnType<typeof boolean>

@@ -13,7 +13,7 @@ export const object = (schema: Record<string, any>, message?: string) => ({
     return value
   },
   // TODO: add `refine`? Here's an example from Zod:
-  // refine((data) => data.password === data.passwordConfirmation, {
+  // .refine((data) => data.password === data.passwordConfirmation, {
   //   message: "Passwords don't match",
   //   path: ["passwordConfirmation"], // set the path of the error
   // })

@@ -1,12 +1,12 @@
 import { parse } from '../../core/parse'
-import { maxDate, minDate } from '../../helpers'
+import { maxDate, minDate } from '../../modifiers'
 import { date } from '../date'
 
 describe('date()', () => {
   it('should work with no args', () => {
     const schema = date()
 
-    expect(parse(schema, new Date())).toEqual(new Date())
+    expect(parse(schema, new Date('2023-07-31'))).toEqual(new Date('2023-07-31'))
 
     expect(() => parse(schema, 'hello world')).toThrowError('Expected a Date')
     expect(() => parse(schema, 123)).toThrowError('Expected a Date')
