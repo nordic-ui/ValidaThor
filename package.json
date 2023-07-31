@@ -1,14 +1,19 @@
 {
-  "name": "zodlike",
+  "name": "validathor",
   "version": "1.0.0",
+  "description": "A simple validation library",
+  "author": "Kevin Østerkilde <kevin@oesterkilde.dk>",
   "main": "index.js",
   "scripts": {
     "test": "vitest run --passWithNoTests --reporter verbose",
     "test:watch": "vitest watch --passWithNoTests --reporter verbose",
     "type-check": "yarn tsc --noEmit"
   },
-  "keywords": [],
-  "author": "Kevin Østerkilde",
+  "keywords": [
+    "validation",
+    "validator",
+    "schema validation"
+  ],
   "license": "MIT",
   "prettier": {
     "semi": false,
