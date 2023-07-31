@@ -9,11 +9,15 @@ export const number = (args?: HelperReturnType[], message?: string) => ({
     args?.forEach((arg) => {
       switch (arg.name) {
         case 'min': {
-          assert(value >= arg.args.min, arg.args.message)
+          if ('min' in arg.args) {
+            assert(value >= arg.args.min, arg.args.message)
+          }
           break
         }
         case 'max': {
-          assert(value <= arg.args.max, arg.args.message)
+          if ('max' in arg.args) {
+            assert(value <= arg.args.max, arg.args.message)
+          }
           break
         }
       }

@@ -1,9 +1,6 @@
-import { HelperReturnType } from '../types'
+import { min } from './min'
 
-export const minDate = (min: Date, message?: string): HelperReturnType => {
-  const errorMessage = message || 'Minimum value not met'
-  return {
-    name: 'minDate',
-    args: { minDate: min.valueOf(), message: errorMessage },
-  }
-}
+export const minDate = (date: Date, message?: string) => ({
+  ...min(date.valueOf(), message),
+  name: 'minDate' as const,
+})

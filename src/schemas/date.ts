@@ -8,11 +8,15 @@ export const date = (args?: HelperReturnType[], message?: string) => ({
     args?.forEach((arg) => {
       switch (arg.name) {
         case 'minDate': {
-          assert(value.valueOf() >= arg.args.minDate, arg.args.message)
+          if ('min' in arg.args) {
+            assert(value.valueOf() >= arg.args.min, arg.args.message)
+          }
           break
         }
         case 'maxDate': {
-          assert(value.valueOf() <= arg.args.maxDate, arg.args.message)
+          if ('max' in arg.args) {
+            assert(value.valueOf() <= arg.args.max, arg.args.message)
+          }
           break
         }
       }

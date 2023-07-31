@@ -1,9 +1,6 @@
-import { HelperReturnType } from '../types'
+import { max } from './max'
 
-export const maxDate = (max: Date, message?: string): HelperReturnType => {
-  const errorMessage = message || 'Maximum value exceeded'
-  return {
-    name: 'maxDate',
-    args: { maxDate: max.valueOf(), message: errorMessage },
-  }
-}
+export const maxDate = (date: Date, message?: string) => ({
+  ...max(date.valueOf(), message),
+  name: 'maxDate' as const,
+})

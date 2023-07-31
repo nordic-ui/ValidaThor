@@ -1,9 +1,8 @@
-import { HelperReturnType } from '../types'
-
-export const min = (min: number, message?: string): HelperReturnType => {
+export const min = (min: number, message?: string) => {
   const errorMessage = message || 'Minimum value not met'
+
   return {
-    name: 'min',
+    name: 'min' as const,
     args: { min, message: errorMessage },
   }
 }
