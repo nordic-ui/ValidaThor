@@ -1,7 +1,7 @@
+import { boolean, string, number } from '../'
 import { parse } from '../../core/parse'
 import { maxLength } from '../../modifiers'
 import { object } from '../object'
-import { boolean, string, number } from '../'
 
 describe('object()', () => {
   it('should work with no args', () => {
@@ -43,7 +43,7 @@ describe('object()', () => {
     expect(
       parse(schema3, {
         venue: { name: 'Petit Bain', location: { lat: 48.8355263, lng: 2.3741375 } },
-      })
+      }),
     ).toEqual({
       venue: {
         name: 'Petit Bain',
@@ -55,7 +55,7 @@ describe('object()', () => {
     })
 
     expect(() => parse(schema1, { name: 31, age: 'John', isAdmin: false })).toThrowError(
-      'Expected a string'
+      'Expected a string',
     )
     expect(() => parse(schema2, { name: 'John' })).toThrowError('Maximum value exceeded')
   })

@@ -2,12 +2,12 @@ import { parse } from '../core/parse'
 import type { Schema } from '../types'
 import { assert, TypeError } from '../utils'
 
-export const object = (schema: Record<string, any>, message?: string) => ({
-  parse: (value: Record<string, any>) => {
+export const object = (schema: Record<string, unknown>, message?: string) => ({
+  parse: (value: Record<string, unknown>) => {
     assert(typeof value === 'object', new TypeError(message || 'Expected an object'))
 
-    Object.entries(schema).forEach(([key, schema]: [string, Schema]) => {
-      parse(schema, value[key])
+    Object.entries(schema).forEach(([key, schema]) => {
+      parse(schema as Schema, value[key])
     })
 
     return value

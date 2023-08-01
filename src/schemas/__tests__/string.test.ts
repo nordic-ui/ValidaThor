@@ -1,6 +1,6 @@
 import { parse } from '../../core/parse'
-import { string } from '../string'
 import { email, minLength, maxLength } from '../../modifiers'
+import { string } from '../string'
 
 describe('string()', () => {
   it('should work with no args', () => {
@@ -35,7 +35,7 @@ describe('string()', () => {
     expect(() => parse(schema3, 'hello world')).toThrowError('Maximum value exceeded')
     expect(() => parse(schema4, 'x')).toThrowError('Expected a string with at least 2 characters')
     expect(() => parse(schema5, 'hello world')).toThrowError(
-      'Expected a string with at most 6 characters'
+      'Expected a string with at most 6 characters',
     )
   })
 
@@ -48,7 +48,7 @@ describe('string()', () => {
 
     expect(() => parse(schema1, 'notanemail')).toThrowError('Expected an email')
     expect(() => parse(schema2, 'invalid@invalid.com')).toThrowError(
-      'Expected an email ending with @example.com'
+      'Expected an email ending with @example.com',
     )
     expect(() => parse(schema3, 'invalid@invalid.com')).toThrowError('Email domain not allowed')
   })

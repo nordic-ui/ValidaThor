@@ -7,7 +7,7 @@ import { ValidationError } from './errors'
  */
 export function assert(
   condition: boolean | (() => boolean),
-  message: string | Error
+  message: string | Error,
 ): asserts condition {
   const _condition = typeof condition === 'function' ? condition() : condition
   if (!_condition) {

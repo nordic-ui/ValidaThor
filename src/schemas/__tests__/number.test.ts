@@ -1,6 +1,6 @@
 import { parse } from '../../core/parse'
-import { number } from '../number'
 import { max, min } from '../../modifiers'
+import { number } from '../number'
 
 describe('number()', () => {
   it('should work with no args', () => {
@@ -13,6 +13,7 @@ describe('number()', () => {
     // TODO: Maybe consider handling this case?
     expect(() => parse(schema, () => 123)).toThrowError('Expected a number')
     expect(() => parse(schema, NaN)).toThrowError('Expected a finite number')
+    // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
     expect(() => parse(schema, 3e333)).toThrowError('Expected a finite number')
     expect(() => parse(schema, Infinity)).toThrowError('Expected a finite number')
   })
