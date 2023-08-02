@@ -4,7 +4,10 @@ import { assert, TypeError } from '../utils'
 
 export const object = (schema: Record<string, unknown>, message?: string) => ({
   parse: (value: Record<string, unknown>) => {
-    assert(typeof value === 'object', new TypeError(message || 'Expected an object'))
+    assert(
+      typeof value === "object" && !Array.isArray(value) && value !== null,
+      new TypeError(message || "Expected an object"),
+    )
 
     Object.entries(schema).forEach(([key, schema]) => {
       parse(schema as Schema, value[key])
