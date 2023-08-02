@@ -3,6 +3,7 @@
   "core": "Core",
   "schemas": "Schemas",
   "modifiers": "Modifiers",
+  "utils": "Utilities",
   "contact": {
     "title": "Contact ↗",
     "type": "page",

@@ -1,7 +1,15 @@
-import { Callout } from 'nextra/components'
-
 # Parse
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/core/parse.ts).
-</Callout>
+The `parse()` core function is used to parse your schema and input data, and then run all the validations on your fields.
+
+It's exported as a separate function which you can use, but it's also important to know that each **schema** provides a `parse()` function.
+
+## Example
+
+```ts
+const mySchema = object({ ... });
+
+parse(mySchema, { ... });
+// Or you can do
+mySchema.parse({ ... });
+```
