@@ -1,0 +1,40 @@
+{
+  "name": "validathor",
+  "version": "0.0.0",
+  "description": "A simple validation library",
+  "author": "Kevin Østerkilde <kevin@oesterkilde.dk>",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run --passWithNoTests --reporter verbose",
+    "test:watch": "vitest watch --passWithNoTests --reporter verbose",
+    "lint": "eslint \"src/**/*.ts\"",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "keywords": [
+    "validation",
+    "validator",
+    "schema validation"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "prettier": {
+    "semi": false,
+    "printWidth": 100,
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6",
+    "vitest": "^0.33.0"
+  },
+  "dependencies": {
+    "tsup": "^7.1.0",
+    "vite-tsconfig-paths": "^4.2.0"
+  }
+}

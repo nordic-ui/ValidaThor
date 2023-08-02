@@ -1,5 +1,8 @@
 dist/
 
+.next
+.turbo
+
 # dependencies
 node_modules
 .yarn/cache

@@ -1,0 +1,8 @@
+{
+  "boolean": "Boolean",
+  "date": "Date",
+  "number": "Number",
+  "object": "Object",
+  "regex": "Regex",
+  "string": "String"
+}

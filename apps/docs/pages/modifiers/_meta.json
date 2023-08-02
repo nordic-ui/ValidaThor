@@ -1,0 +1,9 @@
+{
+  "email": "Email",
+  "min": "Min",
+  "max": "Max",
+  "min-length": "MinLength",
+  "max-length": "MaxLength",
+  "min-date": "MinDate",
+  "max-date": "MaxDate"
+}

@@ -28,7 +28,7 @@ const exampleSchema = object({
     path: string(),
     size: number(),
   }),
-  acceptedTerms: boolean()
+  acceptedTerms: boolean(),
   createdAt: date([
     minDate(new Date('2021/01/01')),
     maxDate(new Date()),

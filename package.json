@@ -1,34 +1,21 @@
 {
-  "name": "validathor",
-  "version": "1.0.0",
-  "description": "A simple validation library",
-  "author": "Kevin Østerkilde <kevin@oesterkilde.dk>",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
+  "private": true,
+  "name": "validathor-mono",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "yarn@1.22.19",
   "scripts": {
-    "build": "tsup",
-    "test": "vitest run --passWithNoTests --reporter verbose",
-    "test:watch": "vitest watch --passWithNoTests --reporter verbose",
-    "lint": "eslint 'src/**/*.ts'",
-    "type-check": "yarn tsc --noEmit",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "build": "turbo run build",
+    "dev": "turbo run dev --no-cache --continue",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build --filter=docs^... && changeset publish"
-  },
-  "keywords": [
-    "validation",
-    "validator",
-    "schema validation"
-  ],
-  "license": "MIT",
-  "files": [
-    "dist/**"
-  ],
-  "prettier": {
-    "semi": false,
-    "printWidth": 100,
-    "singleQuote": true
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
@@ -43,11 +30,6 @@
     "eslint-plugin-prettier": "^5.0.0",
     "jsdom": "^22.1.0",
     "prettier": "^3.0.0",
-    "typescript": "^5.1.6",
-    "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.33.0"
-  },
-  "dependencies": {
-    "tsup": "^7.1.0"
+    "turbo": "latest"
   }
 }
