@@ -1,12 +1,16 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: ['prettier', '@typescript-eslint', 'eslint-plugin-import-helpers'],
+  plugins: [
+    // 'prettier',
+    '@typescript-eslint',
+    'eslint-plugin-import-helpers'
+  ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
-    'plugin:prettier/recommended',
+    // 'plugin:prettier/recommended',
   ],
   settings: {
     next: {
@@ -29,15 +33,12 @@ module.exports = {
     ],
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',
-    'import-helpers/order-imports': [
-      'warn',
+    'import/order': [
+      'error',
       {
-        newlinesBetween: 'always',
-        groups: [['/^react/'], ['module'], ['/^~//'], ['parent', 'sibling', 'index']],
-        alphabetize: {
-          order: 'asc',
-          ignoreCase: true,
-        },
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        alphabetize: { order: 'asc', caseInsensitive: true },
+        'newlines-between': 'always',
       },
     ],
   },

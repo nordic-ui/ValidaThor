@@ -1,0 +1,12 @@
+{
+  "index": "Introduction",
+  "core": "Core",
+  "schemas": "Schemas",
+  "modifiers": "Modifiers",
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://twitter.com/Kosai106",
+    "newWindow": true
+  }
+}

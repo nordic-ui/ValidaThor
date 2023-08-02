@@ -25,6 +25,8 @@ describe('string()', () => {
     const schema3 = string([minLength(2), maxLength(6)])
     const schema4 = string([minLength(2, 'Expected a string with at least 2 characters')])
     const schema5 = string([maxLength(6, 'Expected a string with at most 6 characters')])
+    const schema6 = string([minLength(-2)])
+    const schema7 = string([maxLength(-6)])
 
     expect(parse(schema1, 'hello')).toEqual('hello')
     expect(parse(schema2, 'world')).toEqual('world')
@@ -36,6 +38,12 @@ describe('string()', () => {
     expect(() => parse(schema4, 'x')).toThrowError('Expected a string with at least 2 characters')
     expect(() => parse(schema5, 'hello world')).toThrowError(
       'Expected a string with at most 6 characters',
+    )
+    expect(() => parse(schema6, 'hello world')).toThrowError(
+      'Minimum length must be a positive number',
+    )
+    expect(() => parse(schema7, 'hello world')).toThrowError(
+      'Maximum length must be a positive number',
     )
   })
 
