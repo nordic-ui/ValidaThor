@@ -1,7 +1,27 @@
-import { Callout } from 'nextra/components'
-
 # MaxDate
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/modifiers/maxDate.ts).
-</Callout>
+A modifier that creates a validation rule to ensure that a given date is less or equal to the input date.
+
+## Schemas
+
+- `date`: [Learn more](/schemas/date)
+
+## Arguments
+
+- `date` The date which the input value should be less or equal to.
+- `message` (Optional): The error message to throw if the date is invalid.
+
+## Example
+
+```ts
+import { maxDate, date } from 'validathor';
+
+const maxDateRule = date([maxDate(new Date('2023-06-14'))]);
+
+try {
+  const parsedValue = maxDateRule.parse(new Date('2023-04-20'));
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

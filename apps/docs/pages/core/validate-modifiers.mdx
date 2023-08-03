@@ -3,16 +3,19 @@ import { Callout } from 'nextra/components'
 # ValidateModifiers
 
 <Callout type="info" emoji="ℹ️">
-  This function is for *primarily* internal use.
+  This function is *primarily* for internal use.
 </Callout>
 
 Some schemas accept modifiers, such as `min()` or `email()` which can modify the way a schema works.
+`validateModifiers()` is a function used within these schemas to validate this array of modifiers easily, rather than checking them one by one in the code.
 
-`validateModifiers()` is a function used within these schemas to run the modifiers' validations.
+It's exposed in the library, though I've yet to find a use for it myself in external code.
 
 ## Example
 
 ```ts
+import { validateModifiers } from 'validathor/core/validateModifiers';
+
 const myNumberModifiers = [min(2), max(12)];
 
 ValidateModifiers(4, myModifiers);

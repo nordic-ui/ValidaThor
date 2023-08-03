@@ -1,7 +1,27 @@
-import { Callout } from 'nextra/components'
-
 # MinLength
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/modifiers/minLength.ts).
-</Callout>
+A modifier that creates a validation rule to ensure that a given string is longer or equal in length to the given value.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `min` The number which the input value should be more or equal to.
+- `message` (Optional): The error message to throw if the value is invalid.
+
+## Example
+
+```ts
+import { minLength, string } from 'validathor';
+
+const minLengthRule = string([minLength(4)]);
+
+try {
+  const parsedValue = minLengthRule.parse('Hello');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

@@ -1,5 +1,8 @@
 {
   "index": "Introduction",
+  "---": {
+    "type": "separator"
+  },
   "core": "Core",
   "schemas": "Schemas",
   "modifiers": "Modifiers",

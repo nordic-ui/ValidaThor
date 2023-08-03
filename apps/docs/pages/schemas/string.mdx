@@ -1,7 +1,26 @@
-import { Callout } from 'nextra/components'
-
 # String
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/schemas/string.ts).
-</Callout>
+A function that creates a parsing rule to ensure that a given value is a string.
+
+## Arguments
+
+1. (Optional): A list of modifiers
+   - `minLength`: [Learn more](/modifiers/min-length)
+   - `maxLength`: [Learn more](/modifiers/max-length)
+   - `email`: [Learn more](/modifiers/email)
+2. (Optional): A custom error message to be displayed when the parsing fails. If not provided, the default message `Expected a string` will be used.
+
+## Example
+
+```ts
+import { string } from 'validathor';
+
+const stringRule = string(undefined, 'Value must be a boolean');
+
+try {
+  const parsedValue = stringRule.parse('Hello world');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

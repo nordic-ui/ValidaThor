@@ -1,7 +1,25 @@
-import { Callout } from 'nextra/components'
-
 # Date
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/schemas/date.ts).
-</Callout>
+A function that creates a parsing rule to ensure that a given value is a date.
+
+## Arguments
+
+1. (Optional): A list of modifiers
+    - `minDate`: [Learn more](/modifiers/min-date).
+    - `maxDate`: [Learn more](/modifiers/max-date).
+2. (Optional): A custom error message to be displayed when the parsing fails. If not provided, the default message `Expected a Date` will be used.
+
+## Example
+
+```ts
+import { date } from 'validathor';
+
+const dateRule = date(undefined, 'Value must be a date');
+
+try {
+  const parsedValue = dateRule.parse(new Date())
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message)
+}
+```

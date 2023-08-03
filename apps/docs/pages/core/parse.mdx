@@ -2,14 +2,16 @@
 
 The `parse()` core function is used to parse your schema and input data, and then run all the validations on your fields.
 
-It's exported as a separate function which you can use, but it's also important to know that each **schema** provides a `parse()` function.
+It's exported as a separate function which you can use, but it's also important to know that each schema provides a `parse()` function by itself - See the example below.
 
 ## Example
 
 ```ts
+import { parse } from 'validathor';
+
 const mySchema = object({ ... });
 
 parse(mySchema, { ... });
-// Or you can do
+// Or
 mySchema.parse({ ... });
 ```

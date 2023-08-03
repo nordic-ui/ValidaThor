@@ -1,7 +1,25 @@
-import { Callout } from 'nextra/components'
-
 # Number
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/schemas/number.ts).
-</Callout>
+A function that creates a parsing rule to ensure that a given value is a number.
+
+## Arguments
+
+1. (Optional): A list of modifiers
+    - `min`: [Learn more](/modifiers/min).
+    - `max`: [Learn more](/modifiers/max).
+2. (Optional): A custom error message to be displayed when the parsing fails. If not provided, the default message `Expected a number` will be used.
+
+## Examples
+
+```ts
+import { number } from 'validathor';
+
+const numberRule = number('Value must be a number');
+
+try {
+  const parsedValue = numberRule.parse(123);
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

@@ -1,7 +1,20 @@
-import { Callout } from 'nextra/components'
-
 # Assert
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/utils/assert.ts).
-</Callout>
+`assert` is used to check that a condition is truthy, otherwise it'll throw either a `ValidationError` or a custom error type.
+
+This function is used within each of our schemas and modifiers
+
+## Arguments
+
+- `condition` The condition to check.
+- `message?` The error message to throw if the condition is false.
+
+## Example
+
+```ts
+import { assert } from 'validathor';
+
+assert(isAdmin === true, 'You must be an admin to perform this action');
+// Or
+assert(typeof 123 === 'string', new TypeError('Expected a string'));
+```

@@ -1,7 +1,19 @@
-import { Callout } from 'nextra/components'
-
 # Errors
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/schemas/errors.ts).
-</Callout>
+Out of the box, `validathor` ships with two custom error types.
+
+These are used internally but could be useful for example to test that the right error type is thrown in your own code.
+
+## Arguments
+
+- `message` (optional, string): A custom error message to be displayed.
+- `cause` (optional, Error): The original error that caused this type error. If not provided, a generic error with the default message will be set as the cause.
+
+## Example
+
+```ts
+import { ValidationError, TypeError } from 'validathor';
+
+throw new ValidationError('Maximum length must be a positive number');
+throw new TypeError('Expected a number');
+```
