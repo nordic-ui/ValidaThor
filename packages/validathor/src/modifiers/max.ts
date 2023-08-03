@@ -1,4 +1,5 @@
 import { assert } from '../utils/assert'
+import { TypeError } from '../utils/errors'
 
 export type Max = {
   name: 'max'
@@ -11,6 +12,9 @@ export const max = (max: number, message?: string): Max => {
   return {
     name: 'max',
     validate: (value: number) => {
+      assert(typeof value === 'number', new TypeError(message || 'Expected a number'))
+      assert(isFinite(value), new TypeError(message || 'Expected a finite number'))
+
       assert(value <= max, errorMessage)
       return value
     },

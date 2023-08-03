@@ -7,6 +7,7 @@ describe('number()', () => {
     const schema = number()
 
     expect(parse(schema, 123)).toEqual(123)
+    expect(parse(schema, 123.123)).toEqual(123.123)
 
     expect(() => parse(schema, 'hello world')).toThrowError('Expected a number')
     expect(() => parse(schema, false)).toThrowError('Expected a number')

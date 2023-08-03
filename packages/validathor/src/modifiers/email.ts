@@ -8,7 +8,7 @@ export type Email = {
 /**
  * Used to validate that a string is an email
  * @param domain [optional] The domain that the email should end with
- * @param message [optional] The error message to display if the email is invalid
+ * @param message [optional] The error message to throw if the email is invalid
  */
 export const email = (domain?: `@${string}`, message?: string): Email => {
   const errorMessage = message

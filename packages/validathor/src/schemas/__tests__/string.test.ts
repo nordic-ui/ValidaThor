@@ -7,8 +7,13 @@ describe('string()', () => {
     const schema = string()
 
     expect(parse(schema, 'hello world')).toEqual('hello world')
+    expect(schema.parse('hello world')).toEqual('hello world')
     expect(() => parse(schema, 123)).toThrowError('Expected a string')
+    // @ts-expect-error: Passing wrong value on purpose
+    expect(() => schema.parse(123)).toThrowError('Expected a string')
     expect(() => parse(schema, false)).toThrowError('Expected a string')
+    // @ts-expect-error: Passing wrong value on purpose
+    expect(() => schema.parse(false)).toThrowError('Expected a string')
     // TODO: Maybe consider handling this case?
     expect(() => parse(schema, () => 'hi')).toThrowError('Expected a string')
   })
@@ -49,15 +54,15 @@ describe('string()', () => {
 
   it('should work with email() arg', () => {
     const schema1 = string([email()])
-    const schema2 = string([email('@example.com')])
-    const schema3 = string([email('@example.com', 'Email domain not allowed')])
+    const schema2 = string([email('@example.test')])
+    const schema3 = string([email('@example.test', 'Email domain not allowed')])
 
-    expect(parse(schema2, 'passing@example.com')).toEqual('passing@example.com')
+    expect(parse(schema2, 'passing@example.test')).toEqual('passing@example.test')
 
     expect(() => parse(schema1, 'notanemail')).toThrowError('Expected an email')
-    expect(() => parse(schema2, 'invalid@invalid.com')).toThrowError(
-      'Expected an email ending with @example.com',
+    expect(() => parse(schema2, 'invalid@invalid.test')).toThrowError(
+      'Expected an email ending with @example.test',
     )
-    expect(() => parse(schema3, 'invalid@invalid.com')).toThrowError('Email domain not allowed')
+    expect(() => parse(schema3, 'invalid@invalid.test')).toThrowError('Email domain not allowed')
   })
 })
