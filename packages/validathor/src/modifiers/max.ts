@@ -12,10 +12,13 @@ export const max = (max: number, message?: string): Max => {
   return {
     name: 'max',
     validate: (value: number) => {
+      // Type checks
       assert(typeof value === 'number', new TypeError(message || 'Expected a number'))
       assert(isFinite(value), new TypeError(message || 'Expected a finite number'))
 
+      // Validation checks
       assert(value <= max, errorMessage)
+
       return value
     },
   }

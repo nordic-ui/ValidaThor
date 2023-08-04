@@ -12,10 +12,13 @@ export const min = (min: number, message?: string): Min => {
   return {
     name: 'min',
     validate: (value: number) => {
-      assert(typeof value === 'number', new TypeError(message || 'Expected a number'))
-      assert(isFinite(value), new TypeError(message || 'Expected a finite number'))
+      // Type checks
+      assert(typeof value === 'number', new TypeError('Expected a number'))
+      assert(isFinite(value), new TypeError('Expected a finite number'))
 
+      // Validation checks
       assert(value >= min, errorMessage)
+
       return value
     },
   }

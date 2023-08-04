@@ -9,16 +9,32 @@ describe('boolean()', () => {
     expect(parse(schema, false)).toEqual(false)
     expect(parse(schema, !!'hello')).toEqual(true)
 
+    expect(schema.parse(true)).toEqual(true)
+    expect(schema.parse(false)).toEqual(false)
+    expect(schema.parse(!!'hello')).toEqual(true)
+
     expect(() => parse(schema, 'hello world')).toThrowError('Expected a boolean')
     expect(() => parse(schema, 123)).toThrowError('Expected a boolean')
     // TODO: Maybe consider handling this case?
     expect(() => parse(schema, () => false)).toThrowError('Expected a boolean')
+
+    // @ts-expect-error: Passing wrong value on purpose
+    expect(() => schema.parse('hello world')).toThrowError('Expected a boolean')
+    // @ts-expect-error: Passing wrong value on purpose
+    expect(() => schema.parse(123)).toThrowError('Expected a boolean')
+    // @ts-expect-error: Passing wrong value on purpose
+    expect(() => schema.parse(() => false)).toThrowError('Expected a boolean')
   })
 
   it('should work with custom error message', () => {
-    const schema = boolean('Invalid value')
+    const schema = boolean(undefined, 'Invalid value')
 
     expect(() => parse(schema, 'hello world')).toThrowError('Invalid value')
     expect(() => parse(schema, 123)).toThrowError('Invalid value')
+
+    // @ts-expect-error: Passing wrong value on purpose
+    expect(() => schema.parse('hello world')).toThrowError('Invalid value')
+    // @ts-expect-error: Passing wrong value on purpose
+    expect(() => schema.parse(123)).toThrowError('Invalid value')
   })
 })

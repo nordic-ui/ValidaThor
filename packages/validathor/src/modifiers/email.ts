@@ -1,4 +1,5 @@
 import { assert } from '../utils/assert'
+import { TypeError } from '../utils/errors'
 
 export type Email = {
   name: 'email'
@@ -20,11 +21,14 @@ export const email = (domain?: `@${string}`, message?: string): Email => {
   return {
     name: 'email',
     validate: (value: string) => {
+      // Type checks
+      assert(typeof value === 'string', new TypeError('Expected a string'))
+
+      // Validation checks
       const emailRegex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       assert(emailRegex.test(value), errorMessage)
-      if (domain) {
-        assert(value.endsWith(domain), errorMessage)
-      }
+      if (domain) assert(value.endsWith(domain), errorMessage)
+
       return value
     },
   }

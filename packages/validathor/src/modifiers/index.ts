@@ -1,3 +1,4 @@
+export { custom, type Custom } from './custom'
 export { min, type Min } from './min'
 export { max, type Max } from './max'
 export { minDate, type MinDate } from './minDate'

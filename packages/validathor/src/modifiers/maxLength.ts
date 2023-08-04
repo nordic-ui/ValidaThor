@@ -13,11 +13,14 @@ export const maxLength = (max: number, message?: string): MaxLength => {
   return {
     name: 'maxLength',
     validate: (value: string) => {
-      assert(typeof max === 'number', new TypeError(message || 'Expected a number'))
-      assert(isFinite(max), new TypeError(message || 'Expected a finite number'))
+      // Type checks
+      assert(typeof max === 'number', new TypeError('Expected a number'))
+      assert(isFinite(max), new TypeError('Expected a finite number'))
 
+      // Validation checks
       assert(max >= 0, negativeMessage)
       assert(value.length <= max, errorMessage)
+
       return value
     },
   }

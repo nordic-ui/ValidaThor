@@ -1,12 +1,8 @@
-import type { Min, Max, Email, MinDate, MaxDate, MinLength, MaxLength } from './modifiers'
-import { boolean, date, number, object, regex, string } from './schemas'
+import type { Custom, Min, Max, Email, MinDate, MaxDate, MinLength, MaxLength } from './modifiers'
 
-export type Modifier = Min | Max | Email | MinDate | MaxDate | MinLength | MaxLength
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Modifier = Custom<any> | Min | Max | Email | MinDate | MaxDate | MinLength | MaxLength
 
-export type Schema =
-  | ReturnType<typeof boolean>
-  | ReturnType<typeof date>
-  | ReturnType<typeof number>
-  | ReturnType<typeof object>
-  | ReturnType<typeof regex>
-  | ReturnType<typeof string>
+export type Schema<T> = {
+  parse: (value: T) => T
+}
