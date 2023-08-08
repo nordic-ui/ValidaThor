@@ -11,23 +11,28 @@ export type Email = {
  * @param domain [optional] The domain that the email should end with
  * @param message [optional] The error message to throw if the email is invalid
  */
-export const email = (domain?: `@${string}`, message?: string): Email => {
-  const errorMessage = message
-    ? message
-    : domain
-    ? `Expected an email ending with ${domain}`
-    : 'Expected an email'
-
+export const email = (
+  domain?: `@${string}`,
+  message?: {
+    type_error?: string
+    error?: string
+    domain_error?: string
+  },
+): Email => {
   return {
     name: 'email',
     validate: (value: string) => {
+      const emailRegex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       // Type checks
-      assert(typeof value === 'string', new TypeError('Expected a string'))
+      assert(typeof value === 'string', new TypeError(message?.type_error || 'Expected a string'))
+      assert(emailRegex.test(value), new TypeError(message?.type_error || 'Expected an email'))
 
       // Validation checks
-      const emailRegex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
-      assert(emailRegex.test(value), errorMessage)
-      if (domain) assert(value.endsWith(domain), errorMessage)
+      if (domain)
+        assert(
+          value.endsWith(domain),
+          message?.domain_error || `Expected an email ending with ${domain}`,
+        )
 
       return value
     },

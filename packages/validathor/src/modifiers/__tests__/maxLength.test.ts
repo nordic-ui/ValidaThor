@@ -1,13 +1,13 @@
 import { ValidationError, TypeError } from '../../utils/errors'
-import { minLength } from '../minLength'
+import { maxLength } from '../maxLength'
 
-describe('minLength()', () => {
+describe('maxLength()', () => {
   it('should work', () => {
-    const modifier1 = minLength(2)
+    const modifier1 = maxLength(4)
     // @ts-expect-error: Passing wrong value on purpose
-    const modifier2 = minLength('invalid')
+    const modifier2 = maxLength('invalid')
 
-    expect(modifier1.name).toEqual('minLength')
+    expect(modifier1.name).toEqual('maxLength')
     expect(modifier1.validate('foo')).toEqual('foo')
     // @ts-expect-error: Passing wrong value on purpose
     expect(() => modifier1.validate(123)).toThrowError(new TypeError('Expected a string'))
@@ -15,12 +15,12 @@ describe('minLength()', () => {
   })
 
   it('should work with custom error message', () => {
-    const modifier1 = minLength(4, { error: 'Invalid value' })
-    const modifier2 = minLength(2, { type_error: 'Invalid type' })
+    const modifier1 = maxLength(2, { error: 'Invalid value' })
+    const modifier2 = maxLength(2, { type_error: 'Invalid type' })
     // @ts-expect-error: Passing wrong value on purpose
-    const modifier3 = minLength('invalid', { type_error: 'Invalid type' })
-    const modifier4 = minLength(-6, { min_length_error: 'Negative numbers not allowed' })
-    const modifier5 = minLength(6, { error: 'Too short' })
+    const modifier3 = maxLength('invalid', { type_error: 'Invalid type' })
+    const modifier4 = maxLength(-6, { max_length_error: 'Negative numbers not allowed' })
+    const modifier5 = maxLength(2, { error: 'Too short' })
 
     expect(() => modifier1.validate('foo')).toThrowError(new ValidationError('Invalid value'))
     // @ts-expect-error: Passing wrong value on purpose

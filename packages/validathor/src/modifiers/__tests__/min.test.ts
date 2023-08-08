@@ -8,15 +8,14 @@ describe('min()', () => {
     expect(modifier.name).toEqual('min')
     expect(modifier.validate(3)).toEqual(3)
     // @ts-expect-error: Passing wrong value on purpose
-    expect(() => modifier.validate('foo')).toThrowError('Expected a number')
-    // @ts-expect-error: Passing wrong value on purpose
-    expect(() => modifier.validate('foo')).toThrowError(TypeError)
+    expect(() => modifier.validate('foo')).toThrowError(new TypeError('Expected a number'))
   })
 
   it('should work with custom error message', () => {
-    const modifier = min(2, 'Invalid value')
+    const modifier = min(2, { error: 'Invalid value', type_error: 'Invalid type' })
 
-    expect(() => modifier.validate(1)).toThrowError('Invalid value')
-    expect(() => modifier.validate(1)).toThrowError(ValidationError)
+    expect(() => modifier.validate(1)).toThrowError(new ValidationError('Invalid value'))
+    // @ts-expect-error: Passing wrong value on purpose
+    expect(() => modifier.validate('foo')).toThrowError(new ValidationError('Invalid type'))
   })
 })

@@ -6,15 +6,21 @@ export type Max = {
   validate: (value: number) => number
 }
 
-export const max = (max: number, message?: string): Max => {
-  const errorMessage = message || 'Maximum value exceeded'
+export const max = (
+  max: number,
+  message?: {
+    type_error?: string
+    error?: string
+  },
+): Max => {
+  const errorMessage = message?.error || 'Maximum value exceeded'
 
   return {
     name: 'max',
     validate: (value: number) => {
       // Type checks
-      assert(typeof value === 'number', new TypeError(message || 'Expected a number'))
-      assert(isFinite(value), new TypeError(message || 'Expected a finite number'))
+      assert(typeof value === 'number', new TypeError(message?.type_error || 'Expected a number'))
+      assert(isFinite(value), new TypeError(message?.type_error || 'Expected a finite number'))
 
       // Validation checks
       assert(value <= max, errorMessage)
