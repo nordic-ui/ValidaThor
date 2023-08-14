@@ -1,7 +1,23 @@
-import { Callout } from 'nextra/components'
-
 # Boolean
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/schemas/boolean.ts).
-</Callout>
+A function that creates a parsing rule to ensure that a given value is a boolean.
+
+## Arguments
+
+1. (Optional): A custom error message to be displayed when the parsing fails. If not provided, the default message `Expected a Date` will be used.
+
+
+## Example
+
+```ts
+import { boolean } from 'validathor';
+
+const booleanRule = boolean('Value must be a boolean');
+
+try {
+  const parsedValue = booleanRule.parse(true);
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

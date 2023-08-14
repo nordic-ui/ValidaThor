@@ -1,7 +1,27 @@
-import { Callout } from 'nextra/components'
-
 # Email
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/modifiers/email.ts).
-</Callout>
+A modifier that creates a validation rule to ensure that a given string is an email.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `domain` (optional, string): The domain that the email should end with.
+- `message` (optional, string): A custom error message to be displayed when the validation fails. If not provided, the default message "Expected an email" will be used.
+
+## Example
+
+```ts
+import { email, string } from 'validathor';
+
+const emailRule = string([email()]);
+
+try {
+  const parsedValue = emailRule.parse('johndoe@example.test');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

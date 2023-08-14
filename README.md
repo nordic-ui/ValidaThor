@@ -9,7 +9,7 @@ Inspired by the likes of [Zod](https://github.com/colinhacks/zod) and [Valibot](
 This is a very short-term roadmap mind you and nothing here is final
 
 - [x] ⚙️ Setup build system and package the library
-- [ ] 📚 Add some basic documentation
+- [x] 📚 Add some basic documentation
 - [ ] 🧬 Improve TypeScript types
 
 ## Example

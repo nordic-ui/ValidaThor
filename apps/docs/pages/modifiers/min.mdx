@@ -1,7 +1,27 @@
-import { Callout } from 'nextra/components'
-
 # Min
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/modifiers/min.ts).
-</Callout>
+A modifier that creates a validation rule to ensure that a given numeric value meets the minimum requirement.
+
+## Schemas
+
+- `number`: [Learn more](/schemas/number)
+
+## Arguments
+
+- `min` (number): The minimum value that the input value must meet or exceed.
+- `message` (optional, string): A custom error message to be displayed when the validation fails. If not provided, the default message "Minimum value not met" will be used.
+
+## Example
+
+```ts
+import { min, number } from 'validathor';
+
+const minRule = number([min(10)]);
+
+try {
+  const parsedValue = minRule.parse(42);
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

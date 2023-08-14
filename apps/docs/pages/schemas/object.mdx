@@ -1,7 +1,23 @@
-import { Callout } from 'nextra/components'
-
 # Object
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/schemas/object.ts).
-</Callout>
+A function that creates a parsing rule to ensure that a given value is an object.
+
+## Arguments
+
+1. A record of schemas
+2. (Optional): A custom error message to be displayed when the parsing fails. If not provided, the default message `Expected an object` will be used.
+
+## Example
+
+```ts
+import { object, string } from 'validathor';
+
+const objectRule = object({ name: string() }, 'Value must be an object');
+
+try {
+  const parsedValue = objectRule.parse({ name: 'John Doe' });
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

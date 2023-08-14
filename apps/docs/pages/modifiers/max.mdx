@@ -1,7 +1,27 @@
-import { Callout } from 'nextra/components'
-
 # Max
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/modifiers/max.ts).
-</Callout>
+A modifier that creates a validation rule to ensure that a given numeric value meets the maximum requirement.
+
+## Schemas
+
+- `number`: [Learn more](/schemas/number)
+
+## Arguments
+
+- `max` (number): The maximum value that the input value must meet or exceed.
+- `message` (optional, string): A custom error message to be displayed when the validation fails. If not provided, the default message "Maximum value exceeded" will be used.
+
+## Example
+
+```ts
+import { max, number } from 'validathor';
+
+const maxRule = number([max(10)]);
+
+try {
+  const parsedValue = maxRule.parse(4);
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

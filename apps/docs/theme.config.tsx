@@ -1,4 +1,5 @@
-import { DocsThemeConfig } from 'nextra-theme-docs'
+import { useRouter } from 'next/router'
+import { DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 import React from 'react'
 
 const WordMark = () => <span className="logo-wordmark">Valida<span>Thor</span> <span className="emoji-fix">⚡️</span></span>
@@ -9,6 +10,33 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/kosai106/validathor',
   },
   docsRepositoryBase: 'https://github.com/Kosai106/ValidaThor/tree/main/apps/docs',
+  useNextSeoProps() {
+    const { asPath } = useRouter()
+    return {
+      titleTemplate: asPath === '/' ? '%s' : '%s – ValidaThor ⚡️',
+    }
+  },
+  head: () => {
+    const { asPath } = useRouter()
+    const { frontMatter } = useConfig()
+    const url = 'https://validathor.oesterkilde.dk' + asPath
+ 
+    return (
+      <>
+        <meta property="og:url" content={url} />
+        <meta property="og:title" content={frontMatter.title || 'ValidaThor ⚡️'} />
+        <meta
+          property="og:description"
+          content={frontMatter.description || 'A super simple validation library.'}
+        />
+      </>
+    )
+  },
+
+  sidebar: {
+    defaultMenuCollapseLevel: 1,
+    autoCollapse: true,
+  },
   footer: {
     // Disables the included theme footer
     component: <></>

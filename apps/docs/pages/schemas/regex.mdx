@@ -1,7 +1,22 @@
-import { Callout } from 'nextra/components'
-
 # Regex
 
-<Callout emoji="⚠️">
-  **Documentation is coming** - In the meantime, check out the [code on GitHub](https://github.com/Kosai106/ValidaThor/blob/main/packages/validathor/src/schemas/regex.ts).
-</Callout>
+A function that creates a parsing rule to ensure that a given value is a regex.
+
+## Arguments
+
+1. (Optional): A custom error message to be displayed when the parsing fails. If not provided, the default message `Expected a RegExp` will be used.
+
+## Example
+
+```ts
+import { regex } from 'validathor';
+
+const regexRule = regex('Value must be a regex');
+
+try {
+  const parsedValue = regexRule.parse(/(on|off)/i);
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
