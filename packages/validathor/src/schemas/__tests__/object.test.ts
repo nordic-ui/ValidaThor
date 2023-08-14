@@ -4,7 +4,7 @@ import { maxLength } from '../../modifiers'
 import { object } from '../object'
 
 describe('object()', () => {
-  it('should work with no args', () => {
+  it('should work with no modifiers', () => {
     const schema = object({})
 
     expect(parse(schema, {})).toEqual({})
@@ -27,7 +27,7 @@ describe('object()', () => {
   })
 
   it('should work with custom error message', () => {
-    const schema = object({}, 'Object shape not permitted')
+    const schema = object({}, { type_error: 'Object shape not permitted' })
 
     expect(() => parse(schema, 123)).toThrowError('Object shape not permitted')
     // @ts-expect-error: Passing wrong value on purpose

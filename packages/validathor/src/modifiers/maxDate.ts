@@ -13,8 +13,6 @@ export const maxDate = (
     error?: string
   },
 ): MaxDate => {
-  const errorMessage = message?.error || 'Maximum value exceeded'
-
   return {
     name: 'maxDate',
     validate: (value: Date) => {
@@ -23,7 +21,7 @@ export const maxDate = (
       assert(value instanceof Date, new TypeError(message?.type_error || 'Expected a date'))
 
       // Validation checks
-      assert(value.valueOf() <= date.valueOf(), errorMessage)
+      assert(value.valueOf() <= date.valueOf(), message?.error || 'Maximum value exceeded')
 
       return value
     },

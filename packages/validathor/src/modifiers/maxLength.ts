@@ -14,9 +14,6 @@ export const maxLength = (
     error?: string
   },
 ): MaxLength => {
-  const negativeMessage = message?.max_length_error || 'Maximum length must be a positive number'
-  const errorMessage = message?.error || 'Maximum value exceeded'
-
   return {
     name: 'maxLength',
     validate: (value: string) => {
@@ -26,8 +23,8 @@ export const maxLength = (
       assert(isFinite(max), new TypeError(message?.type_error || 'Expected a finite number'))
 
       // Validation checks
-      assert(max >= 0, negativeMessage)
-      assert(value.length <= max, errorMessage)
+      assert(max >= 0, message?.max_length_error || 'Maximum length must be a positive number')
+      assert(value.length <= max, message?.error || 'Maximum value exceeded')
 
       return value
     },

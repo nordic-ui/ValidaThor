@@ -13,8 +13,6 @@ export const max = (
     error?: string
   },
 ): Max => {
-  const errorMessage = message?.error || 'Maximum value exceeded'
-
   return {
     name: 'max',
     validate: (value: number) => {
@@ -23,7 +21,7 @@ export const max = (
       assert(isFinite(value), new TypeError(message?.type_error || 'Expected a finite number'))
 
       // Validation checks
-      assert(value <= max, errorMessage)
+      assert(value <= max, message?.error || 'Maximum value exceeded')
 
       return value
     },

@@ -1,6 +1,11 @@
 import { assert, TypeError } from '../utils'
 
-export const object = (schema: Record<string, unknown>, message?: string) => ({
+export const object = (
+  schema: Record<string, unknown>,
+  message?: {
+    type_error?: string
+  },
+) => ({
   parse: (value: Record<string, unknown>) => {
     assert(
       value !== null &&
@@ -13,7 +18,7 @@ export const object = (schema: Record<string, unknown>, message?: string) => ({
         !(value instanceof Number) &&
         !(value instanceof RegExp) &&
         !(value instanceof String),
-      new TypeError(message || 'Expected an object'),
+      new TypeError(message?.type_error || 'Expected an object'),
     )
 
     Object.entries(schema).forEach(([key, schema]) => {

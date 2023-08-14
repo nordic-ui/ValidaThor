@@ -1,10 +1,10 @@
 import { parse } from '../../core/parse'
-import { maxDate, minDate } from '../../modifiers'
+import { custom, maxDate, minDate } from '../../modifiers'
 import { ValidationError, TypeError } from '../../utils/errors'
 import { date } from '../date'
 
 describe('date()', () => {
-  it('should work with no args', () => {
+  it('should work with no modifiers', () => {
     const schema = date()
 
     expect(parse(schema, new Date('2023-07-31'))).toEqual(new Date('2023-07-31'))
@@ -17,12 +17,12 @@ describe('date()', () => {
   })
 
   it('should work with custom error message', () => {
-    const schema = date([], 'Date out of range')
+    const schema = date([], { type_error: 'Not a date' })
 
-    expect(() => parse(schema, 123)).toThrowError(new ValidationError('Date out of range'))
+    expect(() => parse(schema, 123)).toThrowError(new ValidationError('Not a date'))
   })
 
-  it('should work with minDate() and maxDate() args', () => {
+  it('should work with minDate() and maxDate() modifiers', () => {
     const schema1 = date([minDate(new Date('2021/01/01'))])
     const schema2 = date([maxDate(new Date('2021/12/31'))])
     const schema3 = date([minDate(new Date('2021/01/01')), maxDate(new Date('2021/12/31'))])
@@ -47,6 +47,19 @@ describe('date()', () => {
     )
     expect(() => parse(schema5, new Date('2022/01/01'))).toThrowError(
       new ValidationError('Date is too late'),
+    )
+  })
+
+  it('should work with custom() modifier', () => {
+    const schema1 = date([
+      custom((value) => [[value.getUTCDate() === 31, new TypeError('End of the month (maybe)')]]),
+    ])
+
+    expect(() => parse(schema1, new Date('2023/06/01'))).not.toThrowError(
+      new ValidationError('End of the month (maybe)'),
+    )
+    expect(() => parse(schema1, new Date('2023/06/31'))).toThrowError(
+      new ValidationError('End of the month (maybe)'),
     )
   })
 })

@@ -14,9 +14,6 @@ export const minLength = (
     error?: string
   },
 ): MinLength => {
-  const negativeMessage = message?.min_length_error || 'Minimum length must be a positive number'
-  const errorMessage = message?.error || 'Minimum value not met'
-
   return {
     name: 'minLength',
     validate: (value: string) => {
@@ -26,8 +23,8 @@ export const minLength = (
       assert(isFinite(min), new TypeError(message?.type_error || 'Expected a finite number'))
 
       // Validation checks
-      assert(min >= 0, negativeMessage)
-      assert(value.length >= min, errorMessage)
+      assert(min >= 0, message?.min_length_error || 'Minimum length must be a positive number')
+      assert(value.length >= min, message?.error || 'Minimum value not met')
 
       return value
     },

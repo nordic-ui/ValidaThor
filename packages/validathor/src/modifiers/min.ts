@@ -13,8 +13,6 @@ export const min = (
     error?: string
   },
 ): Min => {
-  const errorMessage = message?.error || 'Minimum value not met'
-
   return {
     name: 'min',
     validate: (value: number) => {
@@ -23,7 +21,7 @@ export const min = (
       assert(isFinite(value), new TypeError(message?.type_error || 'Expected a finite number'))
 
       // Validation checks
-      assert(value >= min, errorMessage)
+      assert(value >= min, message?.error || 'Minimum value not met')
 
       return value
     },

@@ -1,10 +1,10 @@
 import { parse } from '../../core/parse'
-import { email, minLength, maxLength } from '../../modifiers'
+import { email, minLength, maxLength, custom } from '../../modifiers'
 import { ValidationError, TypeError } from '../../utils/errors'
 import { string } from '../string'
 
 describe('string()', () => {
-  it('should work with no args', () => {
+  it('should work with no modifiers', () => {
     const schema = string()
 
     expect(parse(schema, 'hello world')).toEqual('hello world')
@@ -20,12 +20,12 @@ describe('string()', () => {
   })
 
   it('should work with custom error message', () => {
-    const schema = string([], 'Invalid value')
+    const schema = string([], { type_error: 'Invalid value' })
 
     expect(() => parse(schema, 123)).toThrowError(new TypeError('Invalid value'))
   })
 
-  it('should work with min() and max() args', () => {
+  it('should work with min() and max() modifiers', () => {
     const schema1 = string([minLength(2)])
     const schema2 = string([maxLength(6)])
     const schema3 = string([minLength(2), maxLength(6)])
@@ -61,7 +61,7 @@ describe('string()', () => {
     )
   })
 
-  it('should work with email() arg', () => {
+  it('should work with email() modifier', () => {
     const schema1 = string([email()])
     const schema2 = string([email('@example.test')])
     const schema3 = string([email('@example.test', { domain_error: 'Email domain not allowed' })])
@@ -76,6 +76,19 @@ describe('string()', () => {
     )
     expect(() => parse(schema3, 'invalid@invalid.test')).toThrowError(
       new ValidationError('Email domain not allowed'),
+    )
+  })
+
+  it('should work with custom() modifier', () => {
+    const schema = string([
+      custom((value) => [[value === 'John Doe', new ValidationError('Should be "John Doe"')]]),
+    ])
+
+    expect(() => parse(schema, 'John Doe')).not.toThrowError(
+      new ValidationError('Should be "John Doe"'),
+    )
+    expect(() => parse(schema, 'Jane Doe')).toThrowError(
+      new ValidationError('Should be "John Doe"'),
     )
   })
 })

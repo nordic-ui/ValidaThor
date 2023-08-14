@@ -13,6 +13,7 @@
     "test:watch": "vitest watch --passWithNoTests --reporter verbose",
     "lint": "eslint \"src/**/*.ts\"",
     "type-check": "tsc --noEmit",
+    "diagnostics": "tsc --diagnostics",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "keywords": [

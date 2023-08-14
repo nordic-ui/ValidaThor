@@ -13,8 +13,6 @@ export const minDate = (
     error?: string
   },
 ): MinDate => {
-  const errorMessage = message?.error || 'Minimum value not met'
-
   return {
     name: 'minDate',
     validate: (value: Date) => {
@@ -23,7 +21,7 @@ export const minDate = (
       assert(value instanceof Date, new TypeError(message?.type_error || 'Expected a date'))
 
       // Validation checks
-      assert(value.valueOf() >= date.valueOf(), errorMessage)
+      assert(value.valueOf() >= date.valueOf(), message?.error || 'Minimum value not met')
 
       return value
     },
