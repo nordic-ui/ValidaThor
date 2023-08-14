@@ -1,0 +1,34 @@
+# Custom
+
+A modifier that creates a validation rule to ensure that a a custom assertion is true.
+
+If you have specific needs that are not met by existing modifiers, the `custom` modifier could be something to reach for. It works with all of the primary schema types, except `object`.
+
+## Schemas
+
+- `boolean`: [Learn more](/schemas/boolean).
+- `date`: [Learn more](/schemas/date).
+- `number`: [Learn more](/schemas/number).
+- `regex`: [Learn more](/schemas/regex).
+- `string`: [Learn more](/schemas/string).
+
+## Arguments
+
+- `assertions`: A tuple consisting of an assertion and the related error.
+
+## Example
+
+```ts
+import { custom, string, ValidationError } from 'validathor';
+
+const customRule = string([custom((value) =>
+  [[value.toLowerCase() === value, new ValidationError('Lowercase only')]]
+)]);
+
+try {
+  const parsedValue = customRule.parse('only_lowercase_chars');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
