@@ -1,7 +1,8 @@
 {
   "index": "Introduction",
   "---": {
-    "type": "separator"
+    "type": "separator",
+    "title": "API Reference"
   },
   "core": "Core",
   "schemas": "Schemas",
