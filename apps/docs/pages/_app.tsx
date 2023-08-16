@@ -1,6 +1,10 @@
+import type { AppProps } from 'next/app';
+
+import { useAnalytics } from '../lib/analytics';
+
 import '../styles.css'
  
-// This default export is required in a new `pages/_app.js` file.
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }: AppProps) {
+  useAnalytics();
   return <Component {...pageProps} />
 }
