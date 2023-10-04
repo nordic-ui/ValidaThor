@@ -12,7 +12,7 @@ export const useAnalytics = () => {
   useEffect(() => {
     load(process.env.NEXT_PUBLIC_FATHOM_SITE_ID, {
       url: 'https://cdn.usefathom.com/script.js',
-      includedDomains: ['oesterkilde.dk', 'www.oesterkilde.dk', '*.oesterkilde.dk'],
+      includedDomains: ['validathor.oesterkilde.dk'],
     });
 
     const onRouteChangeComplete = () => {
