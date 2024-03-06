@@ -1,6 +1,7 @@
-import { boolean, string, number } from '../'
-import { parse } from '../../core/parse'
-import { maxLength } from '../../modifiers'
+import { parse } from '@/core/parse'
+import { maxLength } from '@/modifiers'
+import { boolean, string, number } from '@/schemas'
+
 import { object } from '../object'
 
 describe('object()', () => {

@@ -1,6 +1,6 @@
-import { validateModifiers } from '../core/validateModifiers'
-import type { Custom, MaxDate, MinDate } from '../modifiers'
-import { assert, TypeError } from '../utils'
+import { validateModifiers } from '@/core/validateModifiers'
+import type { Custom, MaxDate, MinDate } from '@/modifiers'
+import { assert, TypeError } from '@/utils'
 
 export type DateSchemaArgs = Array<MinDate | MaxDate | Custom<Date>>
 

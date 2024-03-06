@@ -1,6 +1,6 @@
-import { validateModifiers } from '../core/validateModifiers'
-import type { Custom, Max, Min } from '../modifiers'
-import { assert, TypeError } from '../utils'
+import { validateModifiers } from '@/core/validateModifiers'
+import type { Custom, Max, Min } from '@/modifiers'
+import { assert, TypeError } from '@/utils'
 
 export type NumberSchemaArgs = Array<Min | Max | Custom<number>>
 

@@ -1,4 +1,4 @@
-import { assert, TypeError } from '../utils'
+import { assert, TypeError } from '@/utils'
 
 export const object = (
   schema: Record<string, unknown>,

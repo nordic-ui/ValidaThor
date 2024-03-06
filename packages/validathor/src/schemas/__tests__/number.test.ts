@@ -1,6 +1,7 @@
-import { parse } from '../../core/parse'
-import { custom, max, min } from '../../modifiers'
-import { ValidationError, TypeError } from '../../utils/errors'
+import { parse } from '@/core/parse'
+import { custom, max, min } from '@/modifiers'
+import { ValidationError, TypeError } from '@/utils/errors'
+
 import { number } from '../number'
 
 describe('number()', () => {

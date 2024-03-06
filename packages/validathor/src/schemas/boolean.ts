@@ -1,6 +1,6 @@
-import { validateModifiers } from '../core/validateModifiers'
-import type { Custom } from '../modifiers/custom'
-import { assert, TypeError } from '../utils'
+import { validateModifiers } from '@/core/validateModifiers'
+import type { Custom } from '@/modifiers/custom'
+import { assert, TypeError } from '@/utils'
 
 export type BooleanSchemaArgs = Array<Custom<boolean>>
 

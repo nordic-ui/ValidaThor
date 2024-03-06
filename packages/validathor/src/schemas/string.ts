@@ -1,6 +1,6 @@
-import { validateModifiers } from '../core/validateModifiers'
-import type { Custom, Email, MaxLength, MinLength } from '../modifiers'
-import { assert, TypeError } from '../utils'
+import { validateModifiers } from '@/core/validateModifiers'
+import type { Custom, Email, MaxLength, MinLength } from '@/modifiers'
+import { assert, TypeError } from '@/utils'
 
 export type StringSchemaArgs = Array<MinLength | MaxLength | Email | Custom<string>>
 

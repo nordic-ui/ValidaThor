@@ -1,4 +1,4 @@
-import type { Modifier } from '../types'
+import type { Modifier } from '@/types'
 
 export const validateModifiers = (value: unknown, modifiers?: Modifier[]) => {
   // 🤷‍♂️ Idk why but I need to cast value to never to make it work

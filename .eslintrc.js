@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -36,6 +37,13 @@ module.exports = {
     'import/order': [
       'error',
       {
+        "pathGroups": [
+          {
+            "pattern": "@/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
         alphabetize: { order: 'asc', caseInsensitive: true },
         'newlines-between': 'always',

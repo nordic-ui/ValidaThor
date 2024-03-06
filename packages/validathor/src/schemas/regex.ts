@@ -1,4 +1,4 @@
-import { assert, TypeError } from '../utils'
+import { assert, TypeError } from '@/utils'
 
 export const regex = (message?: { type_error?: string }) => ({
   parse: (value: RegExp) => {

@@ -1,4 +1,5 @@
-import { ValidationError, TypeError } from '../../utils/errors'
+import { ValidationError, TypeError } from '@/utils/errors'
+
 import { minLength } from '../minLength'
 
 describe('minLength()', () => {

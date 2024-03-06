@@ -1,5 +1,6 @@
-import { parse } from '../../core/parse'
-import { TypeError } from '../../utils/errors'
+import { parse } from '@/core/parse'
+import { TypeError } from '@/utils/errors'
+
 import { boolean } from '../boolean'
 
 describe('boolean()', () => {

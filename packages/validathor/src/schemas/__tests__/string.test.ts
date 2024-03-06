@@ -1,6 +1,7 @@
-import { parse } from '../../core/parse'
-import { email, minLength, maxLength, custom } from '../../modifiers'
-import { ValidationError, TypeError } from '../../utils/errors'
+import { parse } from '@/core/parse'
+import { email, minLength, maxLength, custom } from '@/modifiers'
+import { ValidationError, TypeError } from '@/utils/errors'
+
 import { string } from '../string'
 
 describe('string()', () => {

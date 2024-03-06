@@ -1,5 +1,5 @@
-import { assert } from '../utils/assert'
-import { TypeError } from '../utils/errors'
+import { assert } from '@/utils/assert'
+import { TypeError } from '@/utils/errors'
 
 export type MinLength = {
   name: 'minLength'

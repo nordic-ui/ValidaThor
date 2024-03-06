@@ -1,4 +1,5 @@
-import { TypeError, ValidationError } from '../../utils/errors'
+import { TypeError, ValidationError } from '@/utils/errors'
+
 import { custom } from '../custom'
 
 describe('custom()', () => {

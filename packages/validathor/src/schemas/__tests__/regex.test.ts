@@ -1,5 +1,6 @@
-import { parse } from '../../core/parse'
-import { ValidationError, TypeError } from '../../utils/errors'
+import { parse } from '@/core/parse'
+import { ValidationError, TypeError } from '@/utils/errors'
+
 import { regex } from '../regex'
 
 describe('regex()', () => {

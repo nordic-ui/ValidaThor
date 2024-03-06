@@ -1,6 +1,7 @@
-import { parse } from '../../core/parse'
-import { custom, maxDate, minDate } from '../../modifiers'
-import { ValidationError, TypeError } from '../../utils/errors'
+import { parse } from '@/core/parse'
+import { custom, maxDate, minDate } from '@/modifiers'
+import { ValidationError, TypeError } from '@/utils/errors'
+
 import { date } from '../date'
 
 describe('date()', () => {
