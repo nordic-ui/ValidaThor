@@ -1,4 +1,12 @@
-// Z
+// type TypeErrorCode = `ERR_TYP_${number}`
+// type ValidationErrorCode = `ERR_VAL_${number}`
+
+// type ErrorPayload<T> = {
+//   code: T
+//   message: (...args: Array<string | number>) => string
+// }
+
+// type ErrorCodes<T extends string> = Record<T, ErrorPayload<T>>
 
 // const TYPE_ERROR_CODE: ErrorCodes<TypeErrorCode> = {
 const TYPE_ERROR_CODE = {
