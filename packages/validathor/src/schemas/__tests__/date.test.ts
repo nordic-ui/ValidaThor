@@ -1,20 +1,24 @@
 import { parse } from '@/core/parse'
-import { custom, maxDate, minDate } from '@/modifiers'
-import { ValidationError, TypeError } from '@/utils/errors'
+import { custom, max, min } from '@/modifiers'
+import { ValidationError, TypeError } from '@/utils/errors/errors'
 
 import { date } from '../date'
 
 describe('date()', () => {
+  it('should be named correctly', () => {
+    expect(date().name).toEqual('date')
+  })
+
   it('should work with no modifiers', () => {
     const schema = date()
 
     expect(parse(schema, new Date('2023-07-31'))).toEqual(new Date('2023-07-31'))
 
-    expect(() => parse(schema, 'hello world')).toThrowError(new TypeError('Expected a Date'))
-    expect(() => parse(schema, 123)).toThrowError(new TypeError('Expected a Date'))
-    expect(() => parse(schema, false)).toThrowError(new TypeError('Expected a Date'))
+    expect(() => parse(schema, 'hello world')).toThrowError(new TypeError('Expected a date'))
+    expect(() => parse(schema, 123)).toThrowError(new TypeError('Expected a date'))
+    expect(() => parse(schema, false)).toThrowError(new TypeError('Expected a date'))
     // TODO: Maybe consider handling this case?
-    expect(() => parse(schema, () => new Date())).toThrowError(new TypeError('Expected a Date'))
+    expect(() => parse(schema, () => new Date())).toThrowError(new TypeError('Expected a date'))
   })
 
   it('should work with custom error message', () => {
@@ -24,24 +28,24 @@ describe('date()', () => {
   })
 
   it('should work with minDate() and maxDate() modifiers', () => {
-    const schema1 = date([minDate(new Date('2021/01/01'))])
-    const schema2 = date([maxDate(new Date('2021/12/31'))])
-    const schema3 = date([minDate(new Date('2021/01/01')), maxDate(new Date('2021/12/31'))])
-    const schema4 = date([minDate(new Date('2021/01/01'), { error: 'Date is too early' })])
-    const schema5 = date([maxDate(new Date('2021/12/31'), { error: 'Date is too late' })])
+    const schema1 = date([min(new Date('2021/01/01'))])
+    const schema2 = date([max(new Date('2021/12/31'))])
+    const schema3 = date([min(new Date('2021/01/01')), max(new Date('2021/12/31'))])
+    const schema4 = date([min(new Date('2021/01/01'), { error: 'Date is too early' })])
+    const schema5 = date([max(new Date('2021/12/31'), { error: 'Date is too late' })])
 
     expect(parse(schema1, new Date('2021/01/02'))).toEqual(new Date('2021/01/02'))
     expect(parse(schema2, new Date('2021/12/30'))).toEqual(new Date('2021/12/30'))
     expect(parse(schema3, new Date('2021/06/15'))).toEqual(new Date('2021/06/15'))
 
     expect(() => parse(schema1, new Date('2020/12/31'))).toThrowError(
-      new ValidationError('Minimum value not met'),
+      new ValidationError('Value must be at least 2020-12-31T23:00:00.000Z'),
     )
     expect(() => parse(schema2, new Date('2022/01/01'))).toThrowError(
-      new ValidationError('Maximum value exceeded'),
+      new ValidationError('Value must be at most 2021-12-30T23:00:00.000Z'),
     )
     expect(() => parse(schema3, new Date('2022/01/01'))).toThrowError(
-      new ValidationError('Maximum value exceeded'),
+      new ValidationError('Value must be at most 2021-12-30T23:00:00.000Z'),
     )
     expect(() => parse(schema4, new Date('2020/12/31'))).toThrowError(
       new ValidationError('Date is too early'),

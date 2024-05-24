@@ -1,4 +1,4 @@
-import { ValidationError, TypeError } from '@/utils/errors'
+import { ValidationError, TypeError } from '@/utils/errors/errors'
 
 import { email } from '../email'
 

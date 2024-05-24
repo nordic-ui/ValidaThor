@@ -1,4 +1,4 @@
-import { assert } from './assert'
+import { assert } from '../assert'
 
 const ERROR_MESSAGE = 'Error message'
 

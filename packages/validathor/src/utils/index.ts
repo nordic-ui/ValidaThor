@@ -1,2 +1,2 @@
-export { assert } from './assert'
-export { ValidationError, TypeError } from './errors'
+export { assert } from './assert/assert'
+export { ValidationError, TypeError } from './errors/errors'

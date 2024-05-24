@@ -1,10 +1,14 @@
 import { parse } from '@/core/parse'
-import { custom, max, min } from '@/modifiers'
-import { ValidationError, TypeError } from '@/utils/errors'
+import { custom, max, min, enumerator } from '@/modifiers'
+import { ValidationError, TypeError } from '@/utils/errors/errors'
 
 import { number } from '../number'
 
 describe('number()', () => {
+  it('should be named correctly', () => {
+    expect(number().name).toEqual('number')
+  })
+
   it('should work with no modifiers', () => {
     const schema = number()
 
@@ -38,11 +42,30 @@ describe('number()', () => {
     expect(parse(schema2, 5)).toEqual(5)
     expect(parse(schema3, 4)).toEqual(4)
 
-    expect(() => parse(schema1, 1)).toThrowError(new ValidationError('Minimum value not met'))
-    expect(() => parse(schema2, 7)).toThrowError(new ValidationError('Maximum value exceeded'))
-    expect(() => parse(schema3, 7)).toThrowError(new ValidationError('Maximum value exceeded'))
+    expect(() => parse(schema1, 1)).toThrowError(
+      new ValidationError('Value must be at least 2 or more'),
+    )
+    expect(() => parse(schema2, 7)).toThrowError(
+      new ValidationError('Value must be at most 6 or less'),
+    )
+    expect(() => parse(schema3, 7)).toThrowError(
+      new ValidationError('Value must be at most 6 or less'),
+    )
+    expect(() => parse(schema3, 1)).toThrowError(
+      new ValidationError('Value must be at least 2 or more'),
+    )
     expect(() => parse(schema4, 1)).toThrowError(new ValidationError('Value too small'))
     expect(() => parse(schema5, 7)).toThrowError(new ValidationError('Value too large'))
+  })
+
+  it('should work with enumerator() modifier', () => {
+    const schema = number([enumerator([1, 2, 3, 4, 5])])
+
+    expect(parse(schema, 1)).toEqual(1)
+    expect(parse(schema, 3)).toEqual(3)
+
+    expect(() => parse(schema, 420)).toThrowError(new ValidationError('Expected a valid value'))
+    expect(() => parse(schema, 'invalid')).toThrowError(new ValidationError('Expected a number'))
   })
 
   it('should work with custom() modifier', () => {

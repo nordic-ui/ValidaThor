@@ -1,5 +1,6 @@
-import { assert } from '@/utils/assert'
-import { TypeError } from '@/utils/errors'
+import { assert } from '@/utils/assert/assert'
+import { ERROR_CODES } from '@/utils/errors/errorCodes'
+import { TypeError } from '@/utils/errors/errors'
 
 export type Email = {
   name: 'email'
@@ -20,18 +21,24 @@ export const email = (
   },
 ): Email => {
   return {
-    name: 'email',
+    name: 'email' as const,
     validate: (value: string) => {
       const emailRegex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       // Type checks
-      assert(typeof value === 'string', new TypeError(message?.type_error || 'Expected a string'))
-      assert(emailRegex.test(value), new TypeError(message?.type_error || 'Expected an email'))
+      assert(
+        typeof value === 'string',
+        new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_2000.message()),
+      )
+      assert(
+        emailRegex.test(value),
+        new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_2001.message()),
+      )
 
       // Validation checks
       if (domain)
         assert(
           value.endsWith(domain),
-          message?.domain_error || `Expected an email ending with ${domain}`,
+          message?.domain_error || ERROR_CODES.ERR_VAL_2005.message(domain),
         )
 
       return value

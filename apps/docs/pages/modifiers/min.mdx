@@ -1,27 +1,63 @@
-# Min
+# Min modifier
 
-A modifier that creates a validation rule to ensure that a given numeric value meets the minimum requirement.
+A modifier which creates a validation rule to ensure that a given value is longer or equal in length to the given input.
 
 ## Schemas
 
 - `number`: [Learn more](/schemas/number).
+- `string`: [Learn more](/schemas/string).
+- `date`: [Learn more](/schemas/date).
 
 ## Arguments
 
-- `min`: The minimum value that the input value must meet or exceed.
+- `min` (number | date): The minimum value that the input value must be more or equal to.
 - `message` (Optional): A custom object with errors messages to be displayed when validation fails or there are type errors.
 
 ## Example
 
-```ts
-import { min, number } from 'validathor';
+import { Tabs, Tab } from 'nextra/components'
 
-const minRule = number([min(10)]);
+<Tabs items={['Number', 'String', 'Date']}>
+  <Tab>
+    ```ts
+    import { min, number } from '@nordic-ui/validathor';
 
-try {
-  const parsedValue = minRule.parse(42);
-  console.log('Parsed value:', parsedValue);
-} catch (error) {
-  console.error('Parsing failed:', error.message);
-}
-```
+    const schema = number([min(10)]);
+
+    try {
+      const parsedValue = schema.parse(42);
+      console.log('Parsed value:', parsedValue);
+    } catch (error) {
+      console.error('Parsing failed:', error.message);
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```ts
+    import { min, string } from '@nordic-ui/validathor';
+
+    const schema = string([min(3)]);
+
+    try {
+      const parsedValue = schema.parse('hello');
+      console.log('Parsed value:', parsedValue);
+    } catch (error) {
+      console.error('Parsing failed:', error.message);
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```ts
+    import { min, date } from '@nordic-ui/validathor';
+
+    const schema = date([min(new Date('2024-05-10'))]);
+
+    try {
+      const parsedValue = schema.parse(new Date('2026-03-24'));
+      console.log('Parsed value:', parsedValue);
+    } catch (error) {
+      console.error('Parsing failed:', error.message);
+    }
+    ```
+  </Tab>
+</Tabs>

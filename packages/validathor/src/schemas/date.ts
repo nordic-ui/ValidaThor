@@ -1,12 +1,18 @@
 import { validateModifiers } from '@/core/validateModifiers'
-import type { Custom, MaxDate, MinDate } from '@/modifiers'
+import type { Custom, Max, Min } from '@/modifiers'
+import { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
+import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export type DateSchemaArgs = Array<MinDate | MaxDate | Custom<Date>>
+export type DateSchemaArgs = Array<Min<Date> | Max<Date> | Custom<Date>>
 
-export const date = (args?: DateSchemaArgs, message?: { type_error?: string }) => ({
-  parse: (value: Date) => {
-    assert(value instanceof Date, new TypeError(message?.type_error || 'Expected a Date'))
+export const date = (args?: DateSchemaArgs, message?: { type_error?: string }): Parser<Date> => ({
+  name: 'date' as const,
+  parse: (value: unknown) => {
+    assert(
+      value instanceof Date,
+      new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_3000.message()),
+    )
 
     validateModifiers(value, args)
 

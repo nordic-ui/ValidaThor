@@ -1,9 +1,13 @@
 import { parse } from '@/core/parse'
-import { TypeError } from '@/utils/errors'
+import { TypeError } from '@/utils/errors/errors'
 
 import { boolean } from '../boolean'
 
 describe('boolean()', () => {
+  it('should be named correctly', () => {
+    expect(boolean().name).toEqual('boolean')
+  })
+
   it('should work', () => {
     const schema = boolean()
 
@@ -20,11 +24,8 @@ describe('boolean()', () => {
     // TODO: Maybe consider handling this case?
     expect(() => parse(schema, () => false)).toThrowError(new TypeError('Expected a boolean'))
 
-    // @ts-expect-error: Passing wrong value on purpose
     expect(() => schema.parse('hello world')).toThrowError(new TypeError('Expected a boolean'))
-    // @ts-expect-error: Passing wrong value on purpose
     expect(() => schema.parse(123)).toThrowError(new TypeError('Expected a boolean'))
-    // @ts-expect-error: Passing wrong value on purpose
     expect(() => schema.parse(() => false)).toThrowError(new TypeError('Expected a boolean'))
   })
 
@@ -35,11 +36,8 @@ describe('boolean()', () => {
     expect(() => parse(schema, 'hello world')).toThrowError(new TypeError('Invalid value'))
     expect(() => parse(schema, 123)).toThrowError(new TypeError('Invalid value'))
 
-    // @ts-expect-error: Passing wrong value on purpose
     expect(() => schema.parse(undefined)).toThrowError(new TypeError('Invalid value'))
-    // @ts-expect-error: Passing wrong value on purpose
     expect(() => schema.parse('hello world')).toThrowError(new TypeError('Invalid value'))
-    // @ts-expect-error: Passing wrong value on purpose
     expect(() => schema.parse(123)).toThrowError(new TypeError('Invalid value'))
   })
 })

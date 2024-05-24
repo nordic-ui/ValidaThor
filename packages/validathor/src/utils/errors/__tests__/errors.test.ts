@@ -1,4 +1,4 @@
-import { ValidationError, TypeError } from './errors'
+import { ValidationError, TypeError } from '../errors'
 
 describe('ValidationError', () => {
   it('should work', () => {
@@ -7,7 +7,8 @@ describe('ValidationError', () => {
     expect(error).toEqual(new Error('Validation error'))
     expect(error).toHaveProperty('name', 'ValidationError')
     expect(error).toHaveProperty('message', 'Validation error')
-    expect(error).toHaveProperty('cause', new Error('Validation error'))
+    expect(error).toHaveProperty('cause', undefined)
+    expect(error).toHaveProperty('stack', expect.any(String))
   })
 
   it('should work with a message', () => {
@@ -16,7 +17,8 @@ describe('ValidationError', () => {
     expect(error).toEqual(new Error('oh no'))
     expect(error).toHaveProperty('name', 'ValidationError')
     expect(error).toHaveProperty('message', 'oh no')
-    expect(error).toHaveProperty('cause', new Error('oh no'))
+    expect(error).toHaveProperty('cause', undefined)
+    expect(error).toHaveProperty('stack', expect.any(String))
   })
 
   it('should work with a cause', () => {
@@ -26,6 +28,7 @@ describe('ValidationError', () => {
     expect(error).toHaveProperty('name', 'ValidationError')
     expect(error).toHaveProperty('message', 'oops')
     expect(error).toHaveProperty('cause', new Error('not again'))
+    expect(error).toHaveProperty('stack', expect.any(String))
   })
 })
 
@@ -36,7 +39,8 @@ describe('TypeError', () => {
     expect(error).toEqual(new Error('Type error'))
     expect(error).toHaveProperty('name', 'TypeError')
     expect(error).toHaveProperty('message', 'Type error')
-    expect(error).toHaveProperty('cause', new Error('Type error'))
+    expect(error).toHaveProperty('cause', undefined)
+    expect(error).toHaveProperty('stack', expect.any(String))
   })
 
   it('should work with a message', () => {
@@ -45,7 +49,8 @@ describe('TypeError', () => {
     expect(error).toEqual(new Error('oh no'))
     expect(error).toHaveProperty('name', 'TypeError')
     expect(error).toHaveProperty('message', 'oh no')
-    expect(error).toHaveProperty('cause', new Error('oh no'))
+    expect(error).toHaveProperty('cause', undefined)
+    expect(error).toHaveProperty('stack', expect.any(String))
   })
 
   it('should work with a cause', () => {
@@ -55,5 +60,6 @@ describe('TypeError', () => {
     expect(error).toHaveProperty('name', 'TypeError')
     expect(error).toHaveProperty('message', 'oops')
     expect(error).toHaveProperty('cause', new Error('not again'))
+    expect(error).toHaveProperty('stack', expect.any(String))
   })
 })

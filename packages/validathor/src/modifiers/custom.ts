@@ -1,4 +1,4 @@
-import { assert } from '@/utils/assert'
+import { assert } from '@/utils/assert/assert'
 
 export type Custom<T> = {
   name: 'custom'
@@ -7,13 +7,12 @@ export type Custom<T> = {
 
 type CustomAssertions<T> = (value: T) => Array<[boolean | (() => boolean), string | Error]>
 
-export const custom = <T>(assertions: CustomAssertions<T>): Custom<T> => {
+export const custom = <T = unknown>(assertions: CustomAssertions<T>): Custom<T> => {
   return {
-    name: 'custom',
+    name: 'custom' as const,
     validate: (value) => {
       // Validation checks
-      assertions(value as T).forEach((assertion) => {
-        const [condition, errorMessage] = assertion
+      assertions(value).forEach(([condition, errorMessage]) => {
         assert(condition, errorMessage)
       })
 

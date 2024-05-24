@@ -1,4 +1,4 @@
-import { TypeError, ValidationError } from '@/utils/errors'
+import { TypeError, ValidationError } from '@/utils/errors/errors'
 
 import { custom } from '../custom'
 

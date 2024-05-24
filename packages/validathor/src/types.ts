@@ -1,8 +1,11 @@
-import type { Custom, Min, Max, Email, MinDate, MaxDate, MinLength, MaxLength } from '@/modifiers'
+import type { Custom, Min, Max, Email, Enumerator } from '@/modifiers'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Modifier = Custom<any> | Min | Max | Email | MinDate | MaxDate | MinLength | MaxLength
+export type Modifier<T> =
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Custom<any> | Enumerator<T> | Min<T> | Max<T> | Email
 
-export type Schema<T> = {
-  parse: (value: T) => T
+// TODO: Improve the parser type to more accurately reflect the return type
+export type Parser<T> = {
+  name: string
+  parse: (input: unknown) => T
 }

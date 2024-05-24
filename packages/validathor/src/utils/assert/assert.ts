@@ -1,4 +1,4 @@
-import { ValidationError } from './errors'
+import { ValidationError } from '../errors/errors'
 
 /**
  * Asserts that a condition is true, otherwise throws a ValidationError

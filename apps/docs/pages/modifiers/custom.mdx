@@ -1,6 +1,6 @@
-# Custom
+# Custom modifier
 
-A modifier that creates a validation rule to ensure that a a custom assertion is true.
+A modifier which creates a validation rule to ensure that a a custom assertion is true.
 
 If you have specific needs that are not met by existing modifiers, the `custom` modifier could be something to reach for. It works with all of the primary schema types, except `object`.
 
@@ -19,7 +19,7 @@ If you have specific needs that are not met by existing modifiers, the `custom` 
 ## Example
 
 ```ts
-import { custom, string, ValidationError } from 'validathor';
+import { custom, string, ValidationError } from '@nordic-ui/validathor';
 
 const customRule = string([custom((value) =>
   [[value.toLowerCase() === value, new ValidationError('Lowercase only')]]

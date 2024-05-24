@@ -1,12 +1,20 @@
+import { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
+import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export const object = (
-  schema: Record<string, unknown>,
+// Helper type to infer the schema shape and convert to the correct types
+type InferSchemaType<T> = {
+  [P in keyof T]: T[P] extends Parser<infer U> ? U : never
+}
+
+export const object = <T extends Record<string, Parser<unknown>>>(
+  schema: T,
   message?: {
     type_error?: string
   },
 ) => ({
-  parse: (value: Record<string, unknown>) => {
+  name: 'object' as const,
+  parse: (value: unknown): InferSchemaType<T> => {
     assert(
       value !== null &&
         value instanceof Object &&
@@ -18,14 +26,14 @@ export const object = (
         !(value instanceof Number) &&
         !(value instanceof RegExp) &&
         !(value instanceof String),
-      new TypeError(message?.type_error || 'Expected an object'),
+      new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_5000.message()),
     )
 
-    Object.entries(schema).forEach(([key, schema]) => {
-      // @ts-expect-error: `schema` is not typed correctly
-      schema.parse(value[key])
+    const result: Record<string, unknown> = {}
+    Object.entries(schema).forEach(([key, parser]) => {
+      // Safely use the parser on each property
+      result[key] = parser.parse((value as Record<string, unknown>)[key])
     })
-
-    return value
+    return result as InferSchemaType<T>
   },
 })

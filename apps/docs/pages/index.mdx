@@ -13,7 +13,7 @@ import { Callout } from 'nextra/components'
 </Callout>
 
 ```sh npm2yarn
-npm i validathor
+npm i @nordic-ui/validathor
 ```
 
 import { Tabs, Tab } from 'nextra/components'
@@ -25,63 +25,41 @@ Here's a basic example usecase
 <Tabs items={['Schema', 'Usage #1', 'Usage #2']}>
   <Tab>
     ```js
-      import {
-        // Schemas
-        object, string, number, boolean, date,
-        // Modifiers
-        min, max, minLength, email,
-      } from 'validathor';
+    import {
+      // Schemas
+      object, string, number, boolean, date,
+      // Modifiers
+      min, max, email,
+    } from '@nordic-ui/validathor';
 
-      // Define the shape of your schema
-      // Make use of modifiers in places where it makes sense
-      const exampleSchema = object({
-        name: string([minLength(2)]),
-        age: number([min(13), max(100)]),
-        email: string([email()]),
-        avatar: object({
-          path: string(),
-          size: number([min(0)]),
-        }),
-        acceptedTerms: boolean(),
-        createdAt: date([
-          minDate(new Date('2021/01/01')),
-          maxDate(new Date()),
-        ]),
-      });
+    // Define the shape of your schema
+    // Make use of modifiers in places where it makes sense
+    const exampleSchema = object({
+      name: string([min(2)]),
+      age: number([min(13), max(100)]),
+      email: string([email()]),
+      avatar: object({
+        path: string(),
+        size: number([min(0)]),
+      }),
+      acceptedTerms: boolean(),
+      createdAt: date([
+        minDate(new Date('2021/01/01')),
+        maxDate(new Date()),
+      ]),
+    });
     ```
   </Tab>
   <Tab>
     ```js
-      import { parse } from 'validathor';
+    import { parse } from '@nordic-ui/validathor';
 
-      // If the input data matches the schema, nothing will happen,
-      // Otherwise an error will be thrown to help the user
-      try {
-        parse(
-          exampleSchema,
-          {
-            name: 'John Doe',
-            age: 35,
-            email: 'email@example.com',
-            avatar: {
-              path: 'https://placekeanu.com/200/200',
-              size: 2048
-            },
-            acceptedTerms: true,
-            createdAt: new Date('01/08/2023')
-          }
-        );
-      } catch(err) {
-        // Do something with the error
-      };
-    ```
-  </Tab>
-  <Tab>
-    ```js
-      // If the input data matches the schema, nothing will happen,
-      // Otherwise an error will be thrown to help the user
-      try {
-        exampleSchema.parse({
+    // If the input data matches the schema, nothing will happen,
+    // Otherwise an error will be thrown to help the user
+    try {
+      parse(
+        exampleSchema,
+        {
           name: 'John Doe',
           age: 35,
           email: 'email@example.com',
@@ -91,10 +69,32 @@ Here's a basic example usecase
           },
           acceptedTerms: true,
           createdAt: new Date('01/08/2023')
-        })
-      } catch(err) {
-        // Do something with the error
-      };
+        }
+      );
+    } catch(err) {
+      // Do something with the error
+    };
+    ```
+  </Tab>
+  <Tab>
+    ```js
+    // If the input data matches the schema, nothing will happen,
+    // Otherwise an error will be thrown to help the user
+    try {
+      exampleSchema.parse({
+        name: 'John Doe',
+        age: 35,
+        email: 'email@example.com',
+        avatar: {
+          path: 'https://placekeanu.com/200/200',
+          size: 2048
+        },
+        acceptedTerms: true,
+        createdAt: new Date('01/08/2023')
+      })
+    } catch(err) {
+      // Do something with the error
+    };
     ```
   </Tab>
 </Tabs>
@@ -102,6 +102,5 @@ Here's a basic example usecase
 
 ## Credits
 
-• Built by [Kevin Østerkilde](https://oesterkilde.dk/?utm_campaign=validathor&utm_source=docs&utm_medium=introduction)
-
-• Inspired by the likes of [Zod](https://github.com/colinhacks/zod) and [Valibot](https://github.com/fabian-hiller/valibot).
+- Built by [Kevin Østerkilde](https://oesterkilde.dk/?utm_campaign=validathor&utm_source=docs&utm_medium=introduction)
+- Inspired by the likes of [Zod](https://github.com/colinhacks/zod) and [Valibot](https://github.com/fabian-hiller/valibot).

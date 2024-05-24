@@ -1,0 +1,48 @@
+# Enumerator modifier
+
+A modifier which creates a validation rule to ensure that a given value is less or equal to the given input.
+
+## Schemas
+
+- `number`: [Learn more](/schemas/number).
+- `string`: [Learn more](/schemas/string).
+
+## Arguments
+
+- `input` (number[] | string[]): The array of values which the input value must be one of.
+- `message` (Optional): A custom object with errors messages to be displayed when validation fails or there are type errors.
+
+## Example
+
+import { Tabs, Tab } from 'nextra/components'
+
+<Tabs items={['Number', 'String']}>
+  <Tab>
+    ```ts
+      import { enumerator, number } from '@nordic-ui/validathor';
+
+      const schema = number([enumerator([0, 25, 50, 75, 100])]);
+
+      try {
+        const parsedValue = schema.parse(75);
+        console.log('Parsed value:', parsedValue);
+      } catch (error) {
+        console.error('Parsing failed:', error.message);
+      }
+      ```
+  </Tab>
+  <Tab>
+    ```ts
+      import { enumerator, string } from '@nordic-ui/validathor';
+
+      const schema = string([enumerator(['Red', 'Green', 'Blue'])]);
+
+      try {
+        const parsedValue = schema.parse('Green');
+        console.log('Parsed value:', parsedValue);
+      } catch (error) {
+        console.error('Parsing failed:', error.message);
+      }
+    ```
+  </Tab>
+</Tabs>

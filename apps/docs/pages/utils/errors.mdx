@@ -1,4 +1,4 @@
-# Errors
+# Errors utility
 
 Out of the box, `validathor` ships with two custom error types.
 
@@ -12,7 +12,7 @@ These are used internally but could be useful for example to test that the right
 ## Example
 
 ```ts
-import { ValidationError, TypeError } from 'validathor';
+import { ValidationError, TypeError } from '@nordic-ui/validathor';
 
 throw new ValidationError('Maximum length must be a positive number');
 throw new TypeError('Expected a number');

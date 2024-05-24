@@ -1,6 +1,6 @@
 import { Callout } from 'nextra/components'
 
-# ValidateModifiers
+# ValidateModifiers core function
 
 <Callout type="info" emoji="ℹ️">
   This function is *primarily* for internal use.
@@ -14,7 +14,8 @@ It's exposed in the library, though I've yet to find a use for it myself in exte
 ## Example
 
 ```ts
-import { validateModifiers } from 'validathor/core/validateModifiers';
+import { min, max } from '@nordic-ui/validathor';
+import { validateModifiers } from '@nordic-ui/validathor/core/validateModifiers';
 
 const numberModifiers = [min(2), max(12)];
 

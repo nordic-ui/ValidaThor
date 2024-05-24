@@ -1,27 +1,83 @@
-import { assert } from '@/utils/assert'
-import { TypeError } from '@/utils/errors'
+import { assert } from '@/utils/assert/assert'
+import { ERROR_CODES } from '@/utils/errors/errorCodes'
+import { TypeError } from '@/utils/errors/errors'
 
-export type Max = {
+export type Max<T> = {
   name: 'max'
-  validate: (value: number) => number
+  validate: (value: T) => T
 }
 
-export const max = (
-  max: number,
-  message?: {
-    type_error?: string
-    error?: string
-  },
-): Max => {
-  return {
-    name: 'max',
-    validate: (value: number) => {
-      // Type checks
-      assert(typeof value === 'number', new TypeError(message?.type_error || 'Expected a number'))
-      assert(isFinite(value), new TypeError(message?.type_error || 'Expected a finite number'))
+type ErrorMessages = Partial<{
+  type_error: string
+  max_length_error: string
+  error: string
+}>
 
-      // Validation checks
-      assert(value <= max, message?.error || 'Maximum value exceeded')
+export function max<T extends number | string | Date>(
+  max: T extends Date ? Date : number,
+  message?: ErrorMessages,
+): Max<T> {
+  return {
+    name: 'max' as const,
+    validate: (value: T) => {
+      assert(
+        typeof value === 'number' || typeof value === 'string' || value instanceof Date,
+        new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_0000.message()),
+      )
+
+      if (typeof value === 'number') {
+        // Type checks
+        assert(
+          typeof max === 'number',
+          new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_1000.message()),
+        )
+        assert(
+          isFinite(value),
+          new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_1001.message()),
+        )
+        assert(
+          isFinite(max),
+          new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_1001.message()),
+        )
+
+        // Validation checks
+        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_1011.message())
+        assert(value <= max, message?.error || ERROR_CODES.ERR_VAL_2004.message(max))
+      }
+
+      if (typeof value === 'string') {
+        // Type checks
+        assert(
+          typeof max === 'number',
+          new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_1000.message()),
+        )
+        assert(
+          isFinite(max),
+          new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_1001.message()),
+        )
+
+        // Validation checks
+        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_1011.message())
+        assert(value.length <= max, message?.error || ERROR_CODES.ERR_VAL_2003.message(max))
+      }
+
+      if (value instanceof Date) {
+        // Type checks
+        assert(
+          max instanceof Date,
+          new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_3000.message()),
+        )
+
+        // Validation checks
+        assert(
+          !isNaN(max.getTime()),
+          message?.max_length_error || ERROR_CODES.ERR_TYP_3002.message(),
+        )
+        assert(
+          value.getTime() <= max.getTime(),
+          message?.error || ERROR_CODES.ERR_VAL_3002.message(max.toISOString()),
+        )
+      }
 
       return value
     },

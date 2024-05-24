@@ -1,19 +1,19 @@
-# Date
+# Date schema
 
-A function that creates a parsing rule to ensure that a given value is a date.
+A function which creates a parsing rule to ensure that a given value is a date.
 
 ## Arguments
 
 1. (Optional): A list of modifiers
-    - `minDate`: [Learn more](/modifiers/min-date).
-    - `maxDate`: [Learn more](/modifiers/max-date).
+    - `min`: [Learn more](/modifiers/min).
+    - `max`: [Learn more](/modifiers/max).
     - `custom`: [Learn more](/modifiers/custom).
 2. (Optional): A custom object with errors messages to be displayed when validation fails or there are type errors.
 
 ## Example
 
 ```ts
-import { date } from 'validathor';
+import { date } from '@nordic-ui/validathor';
 
 const dateRule = date(undefined, 'Value must be a date');
 

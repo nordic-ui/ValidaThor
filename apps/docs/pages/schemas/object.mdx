@@ -1,6 +1,6 @@
-# Object
+# Object schema
 
-A function that creates a parsing rule to ensure that a given value is an object.
+A function which creates a parsing rule to ensure that a given value is an object.
 
 ## Arguments
 
@@ -10,7 +10,7 @@ A function that creates a parsing rule to ensure that a given value is an object
 ## Example
 
 ```ts
-import { object, string } from 'validathor';
+import { object, string } from '@nordic-ui/validathor';
 
 const objectRule = object({ name: string() }, 'Value must be an object');
 

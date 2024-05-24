@@ -5,3 +5,28 @@
 .emoji-fix {
   font-weight: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
+
+.callout {
+  margin: 0 0 1em;
+  padding: 1em;
+  /* border: 1px solid #eee; */
+  background: rgba(0 0 0 / 0.05);
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+
+.callout--info {
+  border-left-color: #3498db;
+}
+
+.callout--warning {
+  border-left-color: #f1c40f;
+}
+
+.callout--error {
+  border-left-color: #e74c3c;
+}
+
+.callout--success {
+  border-left-color: #2ecc71;
+}

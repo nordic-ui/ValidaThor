@@ -1,12 +1,12 @@
-# String
+# String schema
 
-A function that creates a parsing rule to ensure that a given value is a string.
+A function which creates a parsing rule to ensure that a given value is a string.
 
 ## Arguments
 
 1. (Optional): A list of modifiers
-   - `minLength`: [Learn more](/modifiers/min-length).
-   - `maxLength`: [Learn more](/modifiers/max-length).
+   - `min`: [Learn more](/modifiers/min).
+   - `max`: [Learn more](/modifiers/max).
    - `email`: [Learn more](/modifiers/email).
    - `custom`: [Learn more](/modifiers/custom).
 2. (Optional): A custom object with errors messages to be displayed when validation fails or there are type errors.
@@ -14,7 +14,7 @@ A function that creates a parsing rule to ensure that a given value is a string.
 ## Example
 
 ```ts
-import { string } from 'validathor';
+import { string } from '@nordic-ui/validathor';
 
 const stringRule = string(undefined, 'Value must be a boolean');
 

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { DocsThemeConfig, useConfig } from 'nextra-theme-docs'
+import { Callout, DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 import React from 'react'
 
 const WordMark = () => <span className="logo-wordmark">Valida<span>Thor</span> <span className="emoji-fix">⚡️</span></span>
@@ -45,7 +45,27 @@ const config: DocsThemeConfig = {
     key: 'alpha-banner',
     text: <p><span className="emoji-fix">⚠️</span> This project is still in early alpha. Please report bugs on GitHub.</p>,
     dismissible: true,
-  }
+  },
+
+  // search: {
+  //   component: (props) => {
+  //     console.log(props)
+  //     return (<div>Search</div>)
+  //   }
+  // }
+
+  main({ children }) {
+
+    return (
+      <>
+        <Callout type="info">
+          ValidaThor is still a work in progress and isn't yet published on NPM.
+        </Callout>
+
+        {children}
+      </>
+    );
+  },
 }
 
 export default config
