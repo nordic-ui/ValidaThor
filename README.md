@@ -15,9 +15,9 @@ This is a very short-term roadmap mind you and nothing here is final
 ## Example
 
 ```tsx
-import { parse } from 'validathor';
-import { object, string, number, boolean, date } from 'validathor/schemas';
-import { min, max, minLength, maxLength, email } from 'validathor/modifiers';
+import { parse } from '@nordic-ui/validathor';
+import { object, string, number, boolean, date } from '@nordic-ui/validathor/schemas';
+import { min, max, minLength, maxLength, email } from '@nordic-ui/validathor/modifiers';
 
 // Define your schema shape
 const exampleSchema = object({
