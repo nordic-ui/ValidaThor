@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "validathor-mono",
   "workspaces": [
     "apps/*",

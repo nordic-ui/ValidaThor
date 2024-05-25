@@ -11,6 +11,7 @@ node_modules
 .yarn/build-state.yml
 .pnp.*
 .npm
+.npmrc
 web_modules/
 
 # Coverage
