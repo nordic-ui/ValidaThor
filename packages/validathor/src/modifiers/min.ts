@@ -69,12 +69,12 @@ export function min<T extends number | string | Date>(
         )
 
         // Validation checks
+        const minValueUTC = min.getTime() + min.getTimezoneOffset() * 60 * 1000
+        const maxValueUTC = value.getTime() + value.getTimezoneOffset() * 60 * 1000
+
+        assert(!isNaN(minValueUTC), message?.min_length_error || ERROR_CODES.ERR_TYP_3001.message())
         assert(
-          !isNaN(min.getTime()),
-          message?.min_length_error || ERROR_CODES.ERR_TYP_3001.message(),
-        )
-        assert(
-          value.getTime() >= min.getTime(),
+          maxValueUTC >= minValueUTC,
           message?.error || ERROR_CODES.ERR_VAL_3001.message(min.toISOString()),
         )
       }
