@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { Callout, DocsThemeConfig, useConfig } from 'nextra-theme-docs'
+import { DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 import React from 'react'
 
 const WordMark = () => <span className="logo-wordmark">Valida<span>Thor</span> <span className="emoji-fix">⚡️</span></span>
@@ -58,10 +58,6 @@ const config: DocsThemeConfig = {
 
     return (
       <>
-        <Callout type="info">
-          ValidaThor is still a work in progress and isn't yet published on NPM.
-        </Callout>
-
         {children}
       </>
     );
