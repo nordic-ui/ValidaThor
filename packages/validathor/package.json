@@ -1,5 +1,5 @@
 {
-  "name": "validathor",
+  "name": "@nordic-ui/validathor",
   "version": "0.0.1",
   "description": "A simple validation library",
   "author": "Kevin Østerkilde <kevin@oesterkilde.dk>",
