@@ -48,7 +48,7 @@ import {
   // Schemas
   object, string, number, boolean, date,
   // Modifiers
-  min, max, minLength, maxLength, email,
+  min, max, email,
 } from '@nordic-ui/validathor';
 
 // Define your schema shape

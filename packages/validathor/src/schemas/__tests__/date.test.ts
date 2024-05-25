@@ -35,7 +35,7 @@ describe('date()', () => {
     expect(() => parse(schema, 123)).toThrowError(new ValidationError('Not a date'))
   })
 
-  it('should work with minDate() and maxDate() modifiers', () => {
+  it('should work with min() and max() modifiers', () => {
     const schema1 = date([min(new Date('2021/01/01'))])
     const schema2 = date([max(new Date('2021/12/31'))])
     const schema3 = date([min(new Date('2021/01/01')), max(new Date('2021/12/31'))])
