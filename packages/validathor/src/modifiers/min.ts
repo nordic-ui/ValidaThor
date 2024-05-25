@@ -22,7 +22,7 @@ export function min<T extends number | string | Date>(
     validate: (value: T) => {
       assert(
         typeof value === 'number' || typeof value === 'string' || value instanceof Date,
-        new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_0000.message()),
+        new TypeError(message?.type_error || ERROR_CODES['ERR_TYP_0000'].message()),
       )
 
       if (typeof value === 'number') {
@@ -42,7 +42,7 @@ export function min<T extends number | string | Date>(
 
         // Validation checks
         assert(min >= 0, message?.min_length_error || ERROR_CODES.ERR_VAL_1010.message())
-        assert(value >= min, message?.error || ERROR_CODES.ERR_VAL_2002.message(min))
+        assert(value >= min, message?.error || ERROR_CODES.ERR_VAL_2002.message(String(min)))
       }
 
       if (typeof value === 'string') {
@@ -58,7 +58,7 @@ export function min<T extends number | string | Date>(
 
         // Validation checks
         assert(min >= 0, message?.min_length_error || ERROR_CODES.ERR_VAL_1010.message())
-        assert(value.length >= min, message?.error || ERROR_CODES.ERR_VAL_2001.message(min))
+        assert(value.length >= min, message?.error || ERROR_CODES.ERR_VAL_2001.message(String(min)))
       }
 
       if (value instanceof Date) {

@@ -1,15 +1,14 @@
-// type TypeErrorCode = `ERR_TYP_${number}`
-// type ValidationErrorCode = `ERR_VAL_${number}`
+type TypeErrorCode = `ERR_TYP_${number}`
+type ValidationErrorCode = `ERR_VAL_${number}`
 
-// type ErrorPayload<T> = {
-//   code: T
-//   message: (...args: Array<string | number>) => string
-// }
+type ErrorPayload<T> = {
+  code: T
+  message: (...args: string[]) => string
+}
 
-// type ErrorCodes<T extends string> = Record<T, ErrorPayload<T>>
+type ErrorCodes<T extends string> = Record<T, ErrorPayload<T>>
 
-// const TYPE_ERROR_CODE: ErrorCodes<TypeErrorCode> = {
-const TYPE_ERROR_CODE = {
+const TYPE_ERROR_CODE: ErrorCodes<TypeErrorCode> = {
   // Generic type errors
   ERR_TYP_0000: {
     code: 'ERR_TYP_1000',
@@ -75,8 +74,7 @@ const TYPE_ERROR_CODE = {
   },
 }
 
-// const VALIDATION_ERROR_CODE: ErrorCodes<ValidationErrorCode> = {
-const VALIDATION_ERROR_CODE = {
+const VALIDATION_ERROR_CODE: ErrorCodes<ValidationErrorCode> = {
   // Generic validation errors
   ERR_VAL_0000: {
     code: 'ERR_VAL_0000',
@@ -99,19 +97,19 @@ const VALIDATION_ERROR_CODE = {
   },
   ERR_VAL_2001: {
     code: 'ERR_VAL_2001',
-    message: (min: number) => `Value must be at least ${min} characters long`,
+    message: (min: string) => `Value must be at least ${min} characters long`,
   },
   ERR_VAL_2002: {
     code: 'ERR_VAL_2002',
-    message: (min: number) => `Value must be at least ${min} or more`,
+    message: (min: string) => `Value must be at least ${min} or more`,
   },
   ERR_VAL_2003: {
     code: 'ERR_VAL_2003',
-    message: (max: number) => `Value must be at most ${max} characters long`,
+    message: (max: string) => `Value must be at most ${max} characters long`,
   },
   ERR_VAL_2004: {
     code: 'ERR_VAL_2004',
-    message: (max: number) => `Value must be at most ${max} or less`,
+    message: (max: string) => `Value must be at most ${max} or less`,
   },
   ERR_VAL_2005: {
     code: 'ERR_VAL_2005',
@@ -147,7 +145,7 @@ const VALIDATION_ERROR_CODE = {
   },
 }
 
-export const ERROR_CODES = {
+export const ERROR_CODES: ErrorCodes<TypeErrorCode> & ErrorCodes<ValidationErrorCode> = {
   ...TYPE_ERROR_CODE,
   ...VALIDATION_ERROR_CODE,
-} as const
+}
