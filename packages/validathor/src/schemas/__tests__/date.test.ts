@@ -5,6 +5,14 @@ import { ValidationError, TypeError } from '@/utils/errors/errors'
 import { date } from '../date'
 
 describe('date()', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   it('should be named correctly', () => {
     expect(date().name).toEqual('date')
   })
