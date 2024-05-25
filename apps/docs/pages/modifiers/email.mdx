@@ -16,7 +16,11 @@ A modifier which creates a validation rule to ensure that a given string is an e
 ```ts
 import { email, string } from '@nordic-ui/validathor';
 
-const emailRule = string([email()]);
+const emailRule = string([
+  email("@google.com", {
+    domain_error: "Not a permitted email domain",
+  }),
+]);
 
 try {
   const parsedValue = emailRule.parse('johndoe@example.test');

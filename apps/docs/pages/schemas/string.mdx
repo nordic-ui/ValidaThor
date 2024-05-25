@@ -16,7 +16,7 @@ A function which creates a parsing rule to ensure that a given value is a string
 ```ts
 import { string } from '@nordic-ui/validathor';
 
-const stringRule = string(undefined, 'Value must be a boolean');
+const stringRule = string(undefined, 'Value must be a string');
 
 try {
   const parsedValue = stringRule.parse('Hello world');

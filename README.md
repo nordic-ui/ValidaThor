@@ -17,11 +17,11 @@ This is a very short-term roadmap mind you and nothing here is final
 ```tsx
 import { parse } from '@nordic-ui/validathor';
 import { object, string, number, boolean, date } from '@nordic-ui/validathor/schemas';
-import { min, max, minLength, maxLength, email } from '@nordic-ui/validathor/modifiers';
+import { min, max, email } from '@nordic-ui/validathor/modifiers';
 
 // Define your schema shape
 const exampleSchema = object({
-  name: string([minLength(2)]),
+  name: string([min(2)]),
   age: number([min(13), max(100)]),
   email: string([email()]),
   avatar: object({
@@ -30,8 +30,8 @@ const exampleSchema = object({
   }),
   acceptedTerms: boolean(),
   createdAt: date([
-    minDate(new Date('2021/01/01')),
-    maxDate(new Date()),
+    min(new Date('2021/01/01')),
+    max(new Date()),
   ]),
 });
 

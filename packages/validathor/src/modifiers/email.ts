@@ -16,7 +16,6 @@ export const email = (
   domain?: `@${string}`,
   message?: {
     type_error?: string
-    error?: string
     domain_error?: string
   },
 ): Email => {
