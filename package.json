@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "packageManager": "yarn@1.22.19",
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "build:lib": "turbo run build --filter=validathor",
