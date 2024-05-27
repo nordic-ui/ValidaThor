@@ -68,13 +68,13 @@ export function max<T extends number | string | Date>(
           new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_3000.message()),
         )
 
-        const maxValueUTC = max.getTime() + max.getTimezoneOffset() * 60 * 1000
-        const minValueUTC = value.getTime() + value.getTimezoneOffset() * 60 * 1000
-
         // Validation checks
-        assert(!isNaN(maxValueUTC), message?.max_length_error || ERROR_CODES.ERR_TYP_3002.message())
         assert(
-          minValueUTC <= maxValueUTC,
+          !isNaN(max.getTime()),
+          message?.max_length_error || ERROR_CODES.ERR_TYP_3002.message(),
+        )
+        assert(
+          value.getTime() <= max.getTime(),
           message?.error || ERROR_CODES.ERR_VAL_3002.message(max.toISOString()),
         )
       }

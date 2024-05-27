@@ -12,5 +12,6 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
+    globalSetup: './test/global-setup.ts',
   },
 })

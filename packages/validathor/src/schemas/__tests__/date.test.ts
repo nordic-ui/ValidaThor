@@ -47,13 +47,13 @@ describe('date()', () => {
     expect(parse(schema3, new Date('2021/06/15'))).toEqual(new Date('2021/06/15'))
 
     expect(() => parse(schema1, new Date('2020/12/31'))).toThrowError(
-      new ValidationError('Value must be at least 2020-12-31T23:00:00.000Z'),
+      new ValidationError('Value must be at least 2021-01-01T00:00:00.000Z'),
     )
     expect(() => parse(schema2, new Date('2022/01/01'))).toThrowError(
-      new ValidationError('Value must be at most 2021-12-30T23:00:00.000Z'),
+      new ValidationError('Value must be at most 2021-12-31T00:00:00.000Z'),
     )
     expect(() => parse(schema3, new Date('2022/01/01'))).toThrowError(
-      new ValidationError('Value must be at most 2021-12-30T23:00:00.000Z'),
+      new ValidationError('Value must be at most 2021-12-31T00:00:00.000Z'),
     )
     expect(() => parse(schema4, new Date('2020/12/31'))).toThrowError(
       new ValidationError('Date is too early'),
@@ -65,13 +65,11 @@ describe('date()', () => {
 
   it('should work with custom() modifier', () => {
     const schema1 = date([
-      custom((value) => [[value.getUTCDate() === 31, new TypeError('End of the month (maybe)')]]),
+      custom((value) => [[value.getDate() !== 31, 'End of the month (maybe)']]),
     ])
 
-    expect(() => parse(schema1, new Date('2023/06/01'))).not.toThrowError(
-      new ValidationError('End of the month (maybe)'),
-    )
-    expect(() => parse(schema1, new Date('2023/06/31'))).toThrowError(
+    expect(parse(schema1, new Date('2024/05/12'))).toEqual(new Date('2024/05/12'))
+    expect(() => parse(schema1, new Date('2024/05/31'))).toThrowError(
       new ValidationError('End of the month (maybe)'),
     )
   })
