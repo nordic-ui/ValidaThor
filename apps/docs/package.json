@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@nordic-ui/docs",
+  "name": "docs",
   "version": "0.0.1",
   "scripts": {
     "dev": "next dev",
@@ -9,6 +9,11 @@
     "lint": "next lint"
   },
   "license": "MIT",
+  "prettier": {
+    "semi": false,
+    "printWidth": 100,
+    "singleQuote": true
+  },
   "dependencies": {
     "clsx": "^2.1.0",
     "fathom-client": "^3.5.0",
