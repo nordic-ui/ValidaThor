@@ -38,8 +38,8 @@ Here's a basic example usecase
       }),
       acceptedTerms: boolean(),
       createdAt: date([
-        minDate(new Date('2021/01/01')),
-        maxDate(new Date()),
+        min(new Date('2021/01/01')),
+        max(new Date()),
       ]),
     });
     ```

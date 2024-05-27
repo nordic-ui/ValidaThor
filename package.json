@@ -8,6 +8,7 @@
   "packageManager": "yarn@1.22.19",
   "scripts": {
     "build": "turbo run build",
+    "build:lib": "turbo run build --filter=validathor",
     "dev": "turbo run dev --no-cache --continue",
     "test": "turbo run test",
     "lint": "turbo run lint",

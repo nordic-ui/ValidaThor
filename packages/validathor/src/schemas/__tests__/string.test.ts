@@ -44,7 +44,7 @@ describe('string()', () => {
     )
   })
 
-  it('should work with minLength() and maxLength() modifiers', () => {
+  it('should work with min() and max() modifiers', () => {
     const schema1 = string([min(2)])
     const schema2 = string([max(6)])
     const schema3 = string([min(2), max(6)])
