@@ -37,11 +37,11 @@ module.exports = {
     'import/order': [
       'error',
       {
-        "pathGroups": [
+        pathGroups: [
           {
-            "pattern": "@/**",
-            "group": "internal",
-            "position": "after"
+            pattern: "@/**",
+            group: "internal",
+            position: "after"
           }
         ],
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],

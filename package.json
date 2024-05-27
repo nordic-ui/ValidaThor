@@ -6,7 +6,6 @@
     "packages/*"
   ],
   "packageManager": "yarn@1.22.19",
-  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "build:lib": "turbo run build --filter=validathor",
@@ -17,6 +16,7 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "changeset": "changeset",
+    "add-changelog": "changeset add",
     "version-packages": "changeset version",
     "release": "turbo run build --filter=docs^... && changeset publish"
   },
