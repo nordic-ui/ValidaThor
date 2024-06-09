@@ -11,7 +11,7 @@ jobs:
       - name: Setup Nodejs and npm
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: '18'
 
       - name: Setup yarn
         run: npm install -g yarn
@@ -19,13 +19,14 @@ jobs:
       - name: Setup Nodejs with yarn caching
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: '18'
           cache: yarn
-      
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - run: |
+      - name: Run tests, lint and type checks
+        run: |
           yarn test
           yarn lint
           yarn type-check
