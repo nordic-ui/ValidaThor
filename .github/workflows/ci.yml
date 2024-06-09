@@ -6,26 +6,24 @@ jobs:
   unit_test-lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Setup Nodejs and npm
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
-
-      - name: Setup yarn
-        run: npm install -g yarn
+          node-version: '20'
 
       - name: Setup Nodejs with yarn caching
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: '20'
           cache: yarn
-      
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - run: |
+      - name: Run tests, lint and type checks
+        run: |
           yarn test
           yarn lint
           yarn type-check
