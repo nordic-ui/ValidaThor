@@ -1,5 +1,11 @@
 # @nordic-ui/validathor
 
+## 0.0.3
+
+### Patch Changes
+
+- de69ad7: Correctly moved some dependencies to devDependencies
+
 ## 0.0.2
 
 ### Patch Changes
