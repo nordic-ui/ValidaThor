@@ -6388,6 +6388,11 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
+validathor@*:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/validathor/-/validathor-1.0.0.tgz#63c4bc1e26aba286584f5f17f7684c1e6b9b8aa4"
+  integrity sha512-okRraZlGFIcyxNquqch6n50e2wImC3v7sDKWzVVTPRLhYUyxWJMfXHO0u1mjk4nGaoMEe16jaQIgu48dPPg/EA==
+
 vfile-location@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/vfile-location/-/vfile-location-4.1.0.tgz#69df82fb9ef0a38d0d02b90dd84620e120050dd0"
