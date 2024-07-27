@@ -15,30 +15,28 @@ This is a very short-term roadmap mind you and nothing here is final
 ## Example
 
 ```tsx
-import { parse } from '@nordic-ui/validathor';
-import { object, string, number, boolean, date } from '@nordic-ui/validathor/schemas';
-import { min, max, email } from '@nordic-ui/validathor/modifiers';
+import * as v from '@nordic-ui/validathor';
 
 // Define your schema shape
-const exampleSchema = object({
-  name: string([min(2)]),
-  age: number([min(13), max(100)]),
-  email: string([email()]),
-  avatar: object({
-    path: string(),
-    size: number(),
+const exampleSchema = v.object({
+  name: v.string([v.min(2)]),
+  age: v.number([v.min(13), v.max(100)]),
+  email: v.string([v.email()]),
+  avatar: v.object({
+    path: v.string(),
+    size: v.number(),
   }),
-  acceptedTerms: boolean(),
-  createdAt: date([
-    min(new Date('2021/01/01')),
-    max(new Date()),
+  acceptedTerms: v.boolean(),
+  createdAt: v.date([
+    v.min(new Date('2021/01/01')),
+    v.max(new Date()),
   ]),
 });
 
 // If the input data matches the schema, nothing will happen,
 // Otherwise an error will be thrown to help the user
 try {
-  parse(
+  v.parse(
     exampleSchema,
     {
       name: 'John Doe',
