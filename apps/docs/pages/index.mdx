@@ -19,39 +19,34 @@ Here's a basic example usecase
 <Tabs items={['Schema', 'Usage #1', 'Usage #2']}>
   <Tab>
     ```js
-    import {
-      // Schemas
-      object, string, number, boolean, date,
-      // Modifiers
-      min, max, email,
-    } from '@nordic-ui/validathor';
+    import * as v from '@nordic-ui/validathor';
 
     // Define the shape of your schema
     // Make use of modifiers in places where it makes sense
-    const exampleSchema = object({
-      name: string([min(2)]),
-      age: number([min(13), max(100)]),
-      email: string([email()]),
-      avatar: object({
-        path: string(),
-        size: number([min(0)]),
+    const exampleSchema = v.object({
+      name: v.string([v.min(2)]),
+      age: v.number([v.min(13), v.max(100)]),
+      email: v.string([v.email()]),
+      avatar: v.object({
+        path: v.string(),
+        size: v.number([v.min(0)]),
       }),
-      acceptedTerms: boolean(),
-      createdAt: date([
-        min(new Date('2021/01/01')),
-        max(new Date()),
+      acceptedTerms: v.boolean(),
+      createdAt: v.date([
+        v.min(new Date('2021/01/01')),
+        v.max(new Date()),
       ]),
     });
     ```
   </Tab>
   <Tab>
     ```js
-    import { parse } from '@nordic-ui/validathor';
+    import * as v from '@nordic-ui/validathor';
 
     // If the input data matches the schema, nothing will happen,
     // Otherwise an error will be thrown to help the user
     try {
-      parse(
+      v.parse(
         exampleSchema,
         {
           name: 'John Doe',

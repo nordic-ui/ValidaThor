@@ -1,5 +1,6 @@
 // Core
 export { parse } from '@/core/parse'
+export { validateModifiers } from '@/core/validateModifiers'
 
 // Schemas
 export { boolean } from '@/schemas/boolean'
@@ -20,4 +21,6 @@ export { min } from '@/modifiers/min'
 
 // Utils
 export { assert, TypeError, ValidationError } from '@/utils'
-export type { Parser } from '@/types'
+
+// Types
+export type { Parser, Modifier } from '@/types'

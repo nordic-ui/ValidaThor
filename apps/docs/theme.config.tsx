@@ -37,6 +37,10 @@ const config: DocsThemeConfig = {
           property="og:description"
           content={frontMatter.description || 'A super simple validation library.'}
         />
+        <meta
+          name="description"
+          content={frontMatter.description || 'A super simple validation library.'}
+        />
       </>
     )
   },
