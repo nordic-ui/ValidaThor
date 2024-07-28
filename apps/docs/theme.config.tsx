@@ -8,7 +8,7 @@ const WordMark = () => (
   </span>
 )
 
-const config: DocsThemeConfig = {
+const config = {
   logo: <WordMark />,
   project: {
     link: 'https://github.com/kosai106/validathor',
@@ -74,6 +74,6 @@ const config: DocsThemeConfig = {
   main({ children }) {
     return <>{children}</>
   },
-}
+} satisfies DocsThemeConfig
 
 export default config
