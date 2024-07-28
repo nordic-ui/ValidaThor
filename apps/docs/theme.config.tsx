@@ -27,19 +27,48 @@ const config = {
 
     return (
       <>
+        <meta
+          name="description"
+          content={frontMatter.description || 'A super simple validation library.'}
+        />
+        <meta
+          name="keywords"
+          content={
+            frontMatter.keywords ||
+            [
+              'nordic-ui',
+              'ValidaThor',
+              'Validation',
+              'Validation library',
+              'Validation library for JavaScript',
+              'Validation library for TypeScript',
+            ].join(', ')
+          }
+        />
+
+        {/* Open Graph */}
         <meta property="og:url" content={url} />
         <meta property="og:title" content={frontMatter.title || 'ValidaThor ⚡️'} />
         <meta
           property="og:image"
           content={frontMatter.image || 'https://validathor.oesterkilde.dk/meta.png'}
         />
+        <meta property="og:image:alt" content="Validathor banner" />
         <meta
           property="og:description"
           content={frontMatter.description || 'A super simple validation library.'}
         />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image:alt" content="Validathor banner" />
+        <meta name="twitter:title" content={frontMatter.title || 'ValidaThor ⚡️'} />
         <meta
-          name="description"
+          name="twitter:description"
           content={frontMatter.description || 'A super simple validation library.'}
+        />
+        <meta
+          name="twitter:image"
+          content={frontMatter.image || 'https://validathor.oesterkilde.dk/meta.png'}
         />
       </>
     )
