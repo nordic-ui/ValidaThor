@@ -1,6 +1,6 @@
 import { validateModifiers } from '@/core/validateModifiers'
 import type { Custom, Enumerator, Max, Min } from '@/modifiers'
-import { Parser } from '@/types'
+import type { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 

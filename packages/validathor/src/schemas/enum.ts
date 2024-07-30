@@ -1,4 +1,4 @@
-import { Parser } from '@/types'
+import type { Parser } from '@/types'
 import { assert, TypeError, ValidationError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
