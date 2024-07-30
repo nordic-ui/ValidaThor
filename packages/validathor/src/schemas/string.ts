@@ -6,12 +6,12 @@ import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
 /** An array of the accepted modifier types */
-export type StringSchemaArgs = Array<
+export type StringSchemaModifiers = Array<
   Min<string> | Max<string> | Email | Enumerator<string> | Custom<string>
 >
 
 export const string = (
-  args?: StringSchemaArgs,
+  modifiers?: StringSchemaModifiers,
   message?: {
     type_error?: string
   },
@@ -24,7 +24,7 @@ export const string = (
     )
     assert(value !== '', new TypeError(message?.type_error || ERROR_CODES.ERR_VAL_2000.message()))
 
-    validateModifiers(value, args)
+    validateModifiers(value, modifiers)
 
     return value
   },

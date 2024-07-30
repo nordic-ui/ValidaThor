@@ -4,12 +4,12 @@ import type { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export type NumberSchemaArgs = Array<
+export type NumberSchemaModifiers = Array<
   Min<number> | Max<number> | Enumerator<number> | Custom<number>
 >
 
 export const number = (
-  args?: NumberSchemaArgs,
+  modifiers?: NumberSchemaModifiers,
   message?: {
     type_error?: string
   },
@@ -25,7 +25,7 @@ export const number = (
       new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_1001.message()),
     )
 
-    validateModifiers(value, args)
+    validateModifiers(value, modifiers)
 
     return value
   },

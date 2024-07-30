@@ -4,9 +4,12 @@ import type { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export type DateSchemaArgs = Array<Min<Date> | Max<Date> | Custom<Date>>
+export type DateSchemaModifiers = Array<Min<Date> | Max<Date> | Custom<Date>>
 
-export const date = (args?: DateSchemaArgs, message?: { type_error?: string }): Parser<Date> => ({
+export const date = (
+  modifiers?: DateSchemaModifiers,
+  message?: { type_error?: string },
+): Parser<Date> => ({
   name: 'date' as const,
   parse: (value: unknown) => {
     assert(
@@ -14,7 +17,7 @@ export const date = (args?: DateSchemaArgs, message?: { type_error?: string }): 
       new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_3000.message()),
     )
 
-    validateModifiers(value, args)
+    validateModifiers(value, modifiers)
 
     return value
   },
