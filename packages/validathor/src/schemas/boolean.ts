@@ -4,10 +4,10 @@ import type { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export type BooleanSchemaArgs = Array<Custom<boolean>>
+export type BooleanSchemaModifiers = Array<Custom<boolean>>
 
 export const boolean = (
-  args?: BooleanSchemaArgs,
+  modifiers?: BooleanSchemaModifiers,
   message?: {
     type_error?: string
   },
@@ -19,7 +19,7 @@ export const boolean = (
       new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_7000.message()),
     )
 
-    validateModifiers(value, args)
+    validateModifiers(value, modifiers)
 
     return value
   },

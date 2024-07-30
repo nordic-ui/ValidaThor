@@ -1,5 +1,11 @@
 # @nordic-ui/validathor
 
+## 0.0.4
+
+### Patch Changes
+
+- Rename schema `args` to `modifiers` to better indicate intent to end user
+
 ## 0.0.3
 
 ### Patch Changes
