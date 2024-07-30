@@ -1,3 +1,4 @@
+export { array } from './array'
 export { boolean } from './boolean'
 export { date } from './date'
 export { number } from './number'

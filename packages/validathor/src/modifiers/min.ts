@@ -41,7 +41,7 @@ export function min<T extends number | string | Date>(
         )
 
         // Validation checks
-        assert(min >= 0, message?.min_length_error || ERROR_CODES.ERR_VAL_1010.message())
+        assert(min >= 0, message?.min_length_error || ERROR_CODES.ERR_VAL_0100.message())
         assert(value >= min, message?.error || ERROR_CODES.ERR_VAL_2002.message(String(min)))
       }
 
@@ -57,7 +57,7 @@ export function min<T extends number | string | Date>(
         )
 
         // Validation checks
-        assert(min >= 0, message?.min_length_error || ERROR_CODES.ERR_VAL_1010.message())
+        assert(min >= 0, message?.min_length_error || ERROR_CODES.ERR_VAL_0100.message())
         assert(value.length >= min, message?.error || ERROR_CODES.ERR_VAL_2001.message(String(min)))
       }
 

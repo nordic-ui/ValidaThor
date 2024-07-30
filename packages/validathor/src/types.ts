@@ -5,7 +5,7 @@ export type Modifier<T> =
   Custom<any> | Enumerator<T> | Min<T> | Max<T> | Email
 
 // TODO: Improve the parser type to more accurately reflect the return type
-export type Parser<T> = {
+export type Parser<T, U = unknown> = {
   name: string
-  parse: (input: unknown) => T
+  parse: (input: U) => T
 }

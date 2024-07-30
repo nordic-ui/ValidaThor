@@ -21,7 +21,7 @@ ValidaThor is a lightweight library that allows you to validate your data using 
 
 ### Features
 
-- Define custom schema shapes using `object`, `string`, `number`, `boolean`, and `date` types
+- Define custom schema shapes using `array`, `object`, `string`, `number`, `boolean`, and `date` types
 - Use modifiers (e.g., `min`, `max`, `email`, or even custom modifiers) to add constraints to your schema
 - Validate input data against your defined schema
 
@@ -42,35 +42,29 @@ Then, import the library and start defining your schemas and modifiers!
 Here's a basic example of how you can use ValidaThor to validate some input data:
 
 ```ts
-import {
-  // Core
-  parse,
-  // Schemas
-  object, string, number, boolean, date,
-  // Modifiers
-  min, max, email,
-} from '@nordic-ui/validathor';
+import * as v from '@nordic-ui/validathor';
 
 // Define your schema shape
-const exampleSchema = object({
-  name: string([min(2)]),
-  age: number([min(13), max(100)]),
-  email: string([email()]),
-  avatar: object({
-    path: string(),
-    size: number(),
+const exampleSchema = v.object({
+  name: v.string([v.min(2)]),
+  age: v.number([v.min(13), v.max(100)]),
+  email: v.string([v.email()]),
+  avatar: v.object({
+    path: v.string(),
+    size: v.number(),
   }),
-  acceptedTerms: boolean(),
-  createdAt: date([
-    min(new Date('2021/01/01')),
-    max(new Date()),
+  acceptedTerms: v.boolean(),
+  createdAt: v.date([
+    v.min(new Date('2021/01/01')),
+    v.max(new Date()),
   ]),
+  tags: v.array(string())
 });
 
 // If the input data matches the schema, nothing will happen,
 // Otherwise an error will be thrown to help the user
 try {
-  parse(
+  v.parse(
     exampleSchema,
     {
       name: 'John Doe',
@@ -79,6 +73,7 @@ try {
       avatar: { path: 'https://placekeanu.com/200/200', size: 2048 },
       acceptedTerms: true,
       createdAt: new Date('01/08/2023'),
+      tags: ['tag1', 'tag2', 'tag3']
     }
   );
 } catch (err) {

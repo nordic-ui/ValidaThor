@@ -41,7 +41,7 @@ export function max<T extends number | string | Date>(
         )
 
         // Validation checks
-        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_1011.message())
+        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_0200.message())
         assert(value <= max, message?.error || ERROR_CODES.ERR_VAL_2004.message(String(max)))
       }
 
@@ -57,7 +57,7 @@ export function max<T extends number | string | Date>(
         )
 
         // Validation checks
-        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_1011.message())
+        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_0200.message())
         assert(value.length <= max, message?.error || ERROR_CODES.ERR_VAL_2003.message(String(max)))
       }
 
