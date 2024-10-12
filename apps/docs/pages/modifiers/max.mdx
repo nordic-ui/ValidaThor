@@ -18,7 +18,7 @@ A modifier which creates a validation rule to ensure that a given value is less 
 
 import { Tabs, Tab } from 'nextra/components'
 
-<Tabs items={['Number', 'String', 'Date']}>
+<Tabs items={['Number', 'String', 'Date', 'Array']}>
   <Tab>
     ```ts
       import { max, number } from '@nordic-ui/validathor';
@@ -60,5 +60,19 @@ import { Tabs, Tab } from 'nextra/components'
         console.error('Parsing failed:', error.message);
       }
     ```
+  </Tab>
+  <Tab>
+    ```ts
+      import { max, array } from '@nordic-ui/validathor';
+
+      const schema = array([max(3)]);
+
+      try {
+        const parsedValue = schema.parse([1, 2]);
+        console.log('Parsed value:', parsedValue);
+      } catch (error) {
+        console.error('Parsing failed:', error.message);
+      }
+      ```
   </Tab>
 </Tabs>

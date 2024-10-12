@@ -18,7 +18,7 @@ A modifier which creates a validation rule to ensure that a given value is longe
 
 import { Tabs, Tab } from 'nextra/components'
 
-<Tabs items={['Number', 'String', 'Date']}>
+<Tabs items={['Number', 'String', 'Date', 'Array']}>
   <Tab>
     ```ts
     import { min, number } from '@nordic-ui/validathor';
@@ -55,6 +55,20 @@ import { Tabs, Tab } from 'nextra/components'
 
     try {
       const parsedValue = schema.parse(new Date('2026-03-24'));
+      console.log('Parsed value:', parsedValue);
+    } catch (error) {
+      console.error('Parsing failed:', error.message);
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```ts
+    import { min, array } from '@nordic-ui/validathor';
+
+    const schema = array([min(3)]);
+
+    try {
+      const parsedValue = schema.parse(1, 2, 3, 4);
       console.log('Parsed value:', parsedValue);
     } catch (error) {
       console.error('Parsing failed:', error.message);
