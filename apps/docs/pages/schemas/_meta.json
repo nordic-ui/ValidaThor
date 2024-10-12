@@ -1,8 +1,10 @@
 {
+  "array": "Array",
   "boolean": "Boolean",
   "date": "Date",
   "number": "Number",
   "object": "Object",
   "regex": "Regex",
-  "string": "String"
+  "string": "String",
+  "tuple": "Tuple"
 }

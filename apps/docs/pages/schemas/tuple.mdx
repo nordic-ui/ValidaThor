@@ -1,0 +1,23 @@
+# Tuple schema
+
+A function which creates a parsing rule to ensure that a given value is a tuple.
+
+## Arguments
+
+1. A schema
+2. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+
+## Example
+
+```ts
+import { tuple, string, number } from '@nordic-ui/validathor';
+
+const tupleRule = tuple([string(), number()], 'Value must be a tuple');
+
+try {
+  const parsedValue = tupleRule.parse(['Hello', 123]);
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

@@ -12,6 +12,7 @@ export { number } from '@/schemas/number'
 export { object } from '@/schemas/object'
 export { regex } from '@/schemas/regex'
 export { string } from '@/schemas/string'
+export { tuple } from '@/schemas/tuple'
 
 // Modifiers
 export { custom } from '@/modifiers/custom'
