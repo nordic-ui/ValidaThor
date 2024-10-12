@@ -3,6 +3,7 @@ export { parse } from '@/core/parse'
 export { validateModifiers } from '@/core/validateModifiers'
 
 // Schemas
+export { array } from '@/schemas/array'
 export { boolean } from '@/schemas/boolean'
 export { date } from '@/schemas/date'
 // TODO: Not exported directly because it's experimental
