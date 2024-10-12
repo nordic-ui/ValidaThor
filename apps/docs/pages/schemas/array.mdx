@@ -1,0 +1,27 @@
+# Array schema
+
+A function which creates a parsing rule to ensure that a given value is an array.
+
+## Arguments
+
+1. A schema
+2. (Optional): A list of modifiers
+    - `min`: [Learn more](/modifiers/min).
+    - `max`: [Learn more](/modifiers/max).
+    - `custom`: [Learn more](/modifiers/custom).
+3. (Optional): A custom object with errors messages to be displayed when validation fails or there are type errors.
+
+## Example
+
+```ts
+import { array, string } from '@nordic-ui/validathor';
+
+const arrayRule = array(string(), undefined, 'Value must be an array');
+
+try {
+  const parsedValue = arrayRule.parse(['Hello', 'world']);
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

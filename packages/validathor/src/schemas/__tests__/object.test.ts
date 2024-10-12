@@ -35,7 +35,33 @@ describe('object()', () => {
     expect(() => schema.parse(123)).toThrowError('Object shape not permitted')
   })
 
-  it('should work with data', () => {
+  it('should work with nested objects', () => {
+    const getUserResponseSchema = object({
+      id: number(),
+      name: string([min(1)]),
+      obj: object({
+        foo: object({ bar: string() }),
+      }),
+    })
+
+    expect(
+      getUserResponseSchema.parse({
+        id: 1,
+        name: 'John',
+        obj: {
+          foo: { bar: 'baz' },
+        },
+      }),
+    ).toEqual({
+      id: 1,
+      name: 'John',
+      obj: {
+        foo: { bar: 'baz' },
+      },
+    })
+  })
+
+  it('should work with complex data', () => {
     const schema1 = object({ name: string(), age: number(), isAdmin: boolean() })
     const schema2 = object({ name: string([max(3)]) })
     const schema3 = object({
@@ -109,36 +135,19 @@ describe('object()', () => {
     expect(() => schema2.parse({ name: 'John' })).toThrowError(
       'Value must be at most 3 characters long',
     )
+    expect(() =>
+      schema3.parse({
+        venue: {
+          name: 'Petit Bain',
+          location: { lat: 48.8355263, lng: 2.3741375 },
+          eventIds: ['first', 'second'],
+        },
+      }),
+    ).toThrowError('Expected a number')
   })
 })
 
 describe('[FUTURE]', () => {
-  it('should work with nested objects', () => {
-    const getUserResponseSchema = object({
-      id: number(),
-      name: string([min(1)]),
-      obj: object({
-        foo: object({ bar: string() }),
-      }),
-    })
-
-    expect(
-      getUserResponseSchema.parse({
-        id: 1,
-        name: 'John',
-        obj: {
-          foo: { bar: 'baz' },
-        },
-      }),
-    ).toEqual({
-      id: 1,
-      name: 'John',
-      obj: {
-        foo: { bar: 'baz' },
-      },
-    })
-  })
-
   it('should do stuff', () => {
     const envSchema = object({
       // TODO: Add support for enums

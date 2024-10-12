@@ -9,3 +9,5 @@ export type Parser<T, U = unknown> = {
   name: string
   parse: (input: U) => T
 }
+
+export type MaybeArray<T> = T | T[]

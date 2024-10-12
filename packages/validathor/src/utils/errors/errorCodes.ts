@@ -170,6 +170,22 @@ const VALIDATION_ERROR_CODE: ErrorCodes<ValidationErrorCode> = {
     code: 'ERR_VAL_8001',
     message: () => 'Expected a non-empty input',
   },
+  ERR_VAL_8101: {
+    code: 'ERR_VAL_8101',
+    message: (min: string) => `Value must be at least ${min} x long`,
+  },
+  ERR_VAL_8102: {
+    code: 'ERR_VAL_8102',
+    message: (min: string) => `Value must be at least ${min} or more`,
+  },
+  ERR_VAL_8103: {
+    code: 'ERR_VAL_8103',
+    message: (max: string) => `Value must be at most ${max} x long`,
+  },
+  ERR_VAL_8104: {
+    code: 'ERR_VAL_8104',
+    message: (max: string) => `Value must be at most ${max} or less`,
+  },
 }
 
 export const ERROR_CODES: ErrorCodes<TypeErrorCode> & ErrorCodes<ValidationErrorCode> = {
