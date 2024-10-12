@@ -1,5 +1,11 @@
 # @nordic-ui/validathor
 
+## 0.0.5
+
+### Patch Changes
+
+- Added array and tuple schemas
+
 ## 0.0.4
 
 ### Patch Changes
