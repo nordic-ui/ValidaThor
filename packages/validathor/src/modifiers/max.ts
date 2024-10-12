@@ -2,6 +2,8 @@ import { assert } from '@/utils/assert/assert'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 import { TypeError } from '@/utils/errors/errors'
 
+type Input = number | string | Date | (number | string | Date)[]
+
 export type Max<T> = {
   name: 'max'
   validate: (value: T) => T
@@ -13,7 +15,7 @@ type ErrorMessages = Partial<{
   error: string
 }>
 
-export function max<T extends number | string | Date>(
+export function max<T extends Input>(
   max: T extends Date ? Date : number,
   message?: ErrorMessages,
 ): Max<T> {
@@ -21,7 +23,10 @@ export function max<T extends number | string | Date>(
     name: 'max' as const,
     validate: (value: T) => {
       assert(
-        typeof value === 'number' || typeof value === 'string' || value instanceof Date,
+        typeof value === 'number' ||
+          typeof value === 'string' ||
+          value instanceof Date ||
+          Array.isArray(value),
         new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_0000.message()),
       )
 
@@ -41,7 +46,7 @@ export function max<T extends number | string | Date>(
         )
 
         // Validation checks
-        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_1011.message())
+        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_0200.message())
         assert(value <= max, message?.error || ERROR_CODES.ERR_VAL_2004.message(String(max)))
       }
 
@@ -57,7 +62,7 @@ export function max<T extends number | string | Date>(
         )
 
         // Validation checks
-        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_1011.message())
+        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_0200.message())
         assert(value.length <= max, message?.error || ERROR_CODES.ERR_VAL_2003.message(String(max)))
       }
 
@@ -77,6 +82,22 @@ export function max<T extends number | string | Date>(
           value.getTime() <= max.getTime(),
           message?.error || ERROR_CODES.ERR_VAL_3002.message(max.toISOString()),
         )
+      }
+
+      if (Array.isArray(value)) {
+        // Type checks
+        assert(
+          typeof max === 'number',
+          new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_1000.message()),
+        )
+        assert(
+          isFinite(max),
+          new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_1001.message()),
+        )
+
+        // Validation checks
+        assert(max >= 0, message?.max_length_error || ERROR_CODES.ERR_VAL_0200.message())
+        assert(value.length <= max, message?.error || ERROR_CODES.ERR_VAL_8103.message(String(max)))
       }
 
       return value

@@ -14,6 +14,10 @@ const TYPE_ERROR_CODE: ErrorCodes<TypeErrorCode> = {
     code: 'ERR_TYP_1000',
     message: () => 'Expected a valid value',
   },
+  ERR_TYP_0001: {
+    code: 'ERR_TYP_1000',
+    message: () => "Value can't be null or undefined",
+  },
 
   // Number type errors
   ERR_TYP_1000: {
@@ -64,13 +68,19 @@ const TYPE_ERROR_CODE: ErrorCodes<TypeErrorCode> = {
   // Enum type errors
   ERR_TYP_6000: {
     code: 'ERR_TYP_6000',
-    message: () => 'Expected an array',
+    message: () => 'Expected a tuple',
   },
 
   // Boolean type errors
   ERR_TYP_7000: {
     code: 'ERR_TYP_7000',
     message: () => 'Expected a boolean',
+  },
+
+  // Array type errors
+  ERR_TYP_8000: {
+    code: 'ERR_TYP_8000',
+    message: () => 'Expected an array',
   },
 }
 
@@ -80,16 +90,21 @@ const VALIDATION_ERROR_CODE: ErrorCodes<ValidationErrorCode> = {
     code: 'ERR_VAL_0000',
     message: () => 'Validation error',
   },
-  ERR_VAL_1010: {
-    code: 'ERR_VAL_1010',
+  ERR_VAL_0100: {
+    code: 'ERR_VAL_0100',
     message: () => 'Minimum length must be a positive number',
   },
-  ERR_VAL_1011: {
-    code: 'ERR_VAL_1011',
+  ERR_VAL_0200: {
+    code: 'ERR_VAL_0200',
     message: () => 'Maximum length must be a positive number',
   },
 
   // Number validation errors
+  ERR_VAL_1000: {
+    code: 'ERR_VAL_1000',
+    message: () => 'Expected a non-empty number',
+  },
+
   // String validation errors
   ERR_VAL_2000: {
     code: 'ERR_VAL_2000',
@@ -142,6 +157,38 @@ const VALIDATION_ERROR_CODE: ErrorCodes<ValidationErrorCode> = {
   ERR_VAL_6000: {
     code: 'ERR_VAL_6000',
     message: () => 'Expected a non-empty input',
+  },
+
+  // Boolean validation errors
+  ERR_VAL_7000: {
+    code: 'ERR_VAL_7000',
+    message: () => 'Expected a boolean',
+  },
+
+  // Array validation errors
+  ERR_VAL_8000: {
+    code: 'ERR_VAL_8000',
+    message: () => 'Value must be an array',
+  },
+  ERR_VAL_8001: {
+    code: 'ERR_VAL_8001',
+    message: () => 'Expected a non-empty input',
+  },
+  ERR_VAL_8101: {
+    code: 'ERR_VAL_8101',
+    message: (min: string) => `Value must be at least ${min} x long`,
+  },
+  ERR_VAL_8102: {
+    code: 'ERR_VAL_8102',
+    message: (min: string) => `Value must be at least ${min} or more`,
+  },
+  ERR_VAL_8103: {
+    code: 'ERR_VAL_8103',
+    message: (max: string) => `Value must be at most ${max} x long`,
+  },
+  ERR_VAL_8104: {
+    code: 'ERR_VAL_8104',
+    message: (max: string) => `Value must be at most ${max} or less`,
   },
 }
 

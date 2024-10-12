@@ -1,6 +1,6 @@
 import { parse } from '@/core/parse'
 import { max, min } from '@/modifiers'
-import { boolean, string, number } from '@/schemas'
+import { boolean, string, number, array } from '@/schemas'
 
 import { enum_ } from '../enum'
 import { object } from '../object'
@@ -35,7 +35,33 @@ describe('object()', () => {
     expect(() => schema.parse(123)).toThrowError('Object shape not permitted')
   })
 
-  it('should work with data', () => {
+  it('should work with nested objects', () => {
+    const getUserResponseSchema = object({
+      id: number(),
+      name: string([min(1)]),
+      obj: object({
+        foo: object({ bar: string() }),
+      }),
+    })
+
+    expect(
+      getUserResponseSchema.parse({
+        id: 1,
+        name: 'John',
+        obj: {
+          foo: { bar: 'baz' },
+        },
+      }),
+    ).toEqual({
+      id: 1,
+      name: 'John',
+      obj: {
+        foo: { bar: 'baz' },
+      },
+    })
+  })
+
+  it('should work with complex data', () => {
     const schema1 = object({ name: string(), age: number(), isAdmin: boolean() })
     const schema2 = object({ name: string([max(3)]) })
     const schema3 = object({
@@ -45,6 +71,7 @@ describe('object()', () => {
           lat: number(),
           lng: number(),
         }),
+        eventIds: array(number([min(1)])),
       }),
     })
 
@@ -55,7 +82,11 @@ describe('object()', () => {
     })
     expect(
       parse(schema3, {
-        venue: { name: 'Petit Bain', location: { lat: 48.8355263, lng: 2.3741375 } },
+        venue: {
+          name: 'Petit Bain',
+          location: { lat: 48.8355263, lng: 2.3741375 },
+          eventIds: [4, 8, 15, 16, 23, 42],
+        },
       }),
     ).toEqual({
       venue: {
@@ -64,6 +95,7 @@ describe('object()', () => {
           lat: 48.8355263,
           lng: 2.3741375,
         },
+        eventIds: [4, 8, 15, 16, 23, 42],
       },
     })
     expect(schema1.parse({ name: 'John', age: 31, isAdmin: false })).toEqual({
@@ -73,7 +105,11 @@ describe('object()', () => {
     })
     expect(
       schema3.parse({
-        venue: { name: 'Petit Bain', location: { lat: 48.8355263, lng: 2.3741375 } },
+        venue: {
+          name: 'Petit Bain',
+          location: { lat: 48.8355263, lng: 2.3741375 },
+          eventIds: [4, 8, 15, 16, 23, 42],
+        },
       }),
     ).toEqual({
       venue: {
@@ -82,6 +118,7 @@ describe('object()', () => {
           lat: 48.8355263,
           lng: 2.3741375,
         },
+        eventIds: [4, 8, 15, 16, 23, 42],
       },
     })
 
@@ -98,27 +135,19 @@ describe('object()', () => {
     expect(() => schema2.parse({ name: 'John' })).toThrowError(
       'Value must be at most 3 characters long',
     )
+    expect(() =>
+      schema3.parse({
+        venue: {
+          name: 'Petit Bain',
+          location: { lat: 48.8355263, lng: 2.3741375 },
+          eventIds: ['first', 'second'],
+        },
+      }),
+    ).toThrowError('Expected a number')
   })
 })
 
 describe('[FUTURE]', () => {
-  it('should work with nested objects', () => {
-    const getUserResponseSchema = object({
-      id: number(),
-      name: string([min(1)]),
-    })
-
-    expect(
-      getUserResponseSchema.parse({
-        id: 1,
-        name: 'John',
-      }),
-    ).toEqual({
-      id: 1,
-      name: 'John',
-    })
-  })
-
   it('should do stuff', () => {
     const envSchema = object({
       // TODO: Add support for enums
@@ -150,6 +179,15 @@ describe('[FUTURE]', () => {
         VITE_ENABLE_DEV_TOOLS: 'false',
       }),
     ).toThrowError('Expected a boolean')
+
+    expect(() =>
+      envSchema.parse({
+        VITE_ENVIRONMENT: 'fake',
+        VITE_API_BASE_URL: 'http://localhost:3000',
+        VITE_ENABLE_MOCK_APIS: true,
+        VITE_ENABLE_DEV_TOOLS: false,
+      }),
+    ).toThrowError('Expected a valid value')
   })
 
   it('should do more stuff', () => {
@@ -157,6 +195,7 @@ describe('[FUTURE]', () => {
       name: string([min(1), max(50)]),
       description: string([min(2), max(50)]),
       price: number([min(2), max(100)]),
+      imageIds: array(number([min(1)])),
     })
 
     expect(
@@ -164,11 +203,13 @@ describe('[FUTURE]', () => {
         name: 'Foo',
         description: 'Bar',
         price: 10,
+        imageIds: [1, 2, 3],
       }),
     ).toEqual({
       name: 'Foo',
       description: 'Bar',
       price: 10,
+      imageIds: [1, 2, 3],
     })
   })
 })

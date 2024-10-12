@@ -20,7 +20,7 @@ export { max } from '@/modifiers/max'
 export { min } from '@/modifiers/min'
 
 // Utils
-export { assert, TypeError, ValidationError } from '@/utils'
+export { assert, assertType, TypeError, ValidationError } from '@/utils'
 
 // Types
 export type { Parser, Modifier } from '@/types'

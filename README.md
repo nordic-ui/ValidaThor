@@ -31,6 +31,7 @@ const exampleSchema = v.object({
     v.min(new Date('2021/01/01')),
     v.max(new Date()),
   ]),
+  tags: v.array(string())
 });
 
 // If the input data matches the schema, nothing will happen,
@@ -47,7 +48,8 @@ try {
         size: 2048
       },
       acceptedTerms: true,
-      createdAt: new Date('01/08/2023')
+      createdAt: new Date('01/08/2023'),
+      tags: ['tag1', 'tag2', 'tag3']
     }
   );
 } catch(err) {
