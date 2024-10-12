@@ -14,6 +14,10 @@ const TYPE_ERROR_CODE: ErrorCodes<TypeErrorCode> = {
     code: 'ERR_TYP_1000',
     message: () => 'Expected a valid value',
   },
+  ERR_TYP_0001: {
+    code: 'ERR_TYP_1000',
+    message: () => "Value can't be null or undefined",
+  },
 
   // Number type errors
   ERR_TYP_1000: {

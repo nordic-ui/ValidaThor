@@ -4,12 +4,15 @@ import type { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export type NumberSchemaModifiers = Array<
-  Min<number> | Max<number> | Enumerator<number> | Custom<number>
->
+export type NumberSchemaModifiers = (
+  | Min<number>
+  | Max<number>
+  | Enumerator<number>
+  | Custom<number>
+)[]
 
 export const number = (
-  modifiers?: NumberSchemaModifiers,
+  modifiers: NumberSchemaModifiers = [],
   message?: {
     type_error?: string
   },

@@ -1,6 +1,5 @@
-import { assert } from '@/utils/assert/assert'
+import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
-import { TypeError } from '@/utils/errors/errors'
 
 export type Enumerator<T> = {
   name: 'enumerator'
@@ -8,21 +7,8 @@ export type Enumerator<T> = {
 }
 
 // Overload definitions
-export function enumerator(
-  input: Array<string>,
-  message?: {
-    type_error?: string
-    error?: string
-  },
-): Enumerator<string>
-
-export function enumerator(
-  input: Array<number>,
-  message?: {
-    type_error?: string
-    error?: string
-  },
-): Enumerator<number>
+export function enumerator(input: string[]): Enumerator<string>
+export function enumerator(input: number[]): Enumerator<number>
 
 // TODO: Add support for date and object types maybe?
 export function enumerator<T extends string | number>(

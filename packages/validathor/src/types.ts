@@ -10,4 +10,9 @@ export type Parser<T, U = unknown> = {
   parse: (input: U) => T
 }
 
+// Helper type to infer the schema shape and convert to the correct types
+export type InferSchemaType<T> = {
+  [P in keyof T]: T[P] extends Parser<infer U> ? U : never
+}
+
 export type MaybeArray<T> = T | T[]

@@ -4,10 +4,10 @@ import type { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export type DateSchemaModifiers = Array<Min<Date> | Max<Date> | Custom<Date>>
+export type DateSchemaModifiers = (Min<Date> | Max<Date> | Custom<Date>)[]
 
 export const date = (
-  modifiers?: DateSchemaModifiers,
+  modifiers: DateSchemaModifiers = [],
   message?: { type_error?: string },
 ): Parser<Date> => ({
   name: 'date' as const,

@@ -2,10 +2,10 @@ import type { Parser } from '@/types'
 import { assert, TypeError, ValidationError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export type EnumSchemaModifiers = Array<string | number>
+export type EnumSchemaModifiers = (string | number)[]
 
 export const enum_ = (
-  modifiers?: EnumSchemaModifiers,
+  modifiers: EnumSchemaModifiers = [],
   message?: {
     type_error?: string
     error?: string | ((value: string | number) => string)
@@ -19,7 +19,7 @@ export const enum_ = (
     )
 
     assert(
-      (modifiers ?? []).includes(value),
+      modifiers.includes(value),
       new ValidationError(
         typeof message?.error === 'function'
           ? message?.error(value)

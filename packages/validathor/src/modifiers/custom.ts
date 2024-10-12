@@ -5,7 +5,7 @@ export type Custom<T> = {
   validate: (value: T) => T
 }
 
-type CustomAssertions<T> = (value: T) => Array<[boolean | (() => boolean), string | Error]>
+type CustomAssertions<T> = (value: T) => [boolean | (() => boolean), string | Error][]
 
 export const custom = <T = unknown>(assertions: CustomAssertions<T>): Custom<T> => {
   return {
