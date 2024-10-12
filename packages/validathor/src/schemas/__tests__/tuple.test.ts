@@ -6,7 +6,7 @@ import { tuple } from '../tuple'
 
 describe('tuple()', () => {
   it('should be named correctly', () => {
-    expect(tuple([number()]).name).toEqual('tuple')
+    expect(tuple([]).name).toEqual('tuple')
   })
 
   it.each([
@@ -28,7 +28,9 @@ describe('tuple()', () => {
     const schema1 = tuple([number(), string()])
     const schema2 = tuple([number([max(10)]), string()])
 
-    expect(() => parse(schema1, ['hello', true])).toThrowError()
-    expect(() => parse(schema2, [69, 'hello'])).toThrowError()
+    expect(() => parse(schema1, ['hello', true])).toThrowError(new TypeError('Expected a number'))
+    expect(() => parse(schema2, [69, 'hello'])).toThrowError(
+      new TypeError('Value must be at most 10 or less'),
+    )
   })
 })

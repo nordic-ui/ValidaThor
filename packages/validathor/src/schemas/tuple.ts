@@ -1,6 +1,10 @@
 import type { Parser } from '@/types'
-import { assert, TypeError } from '@/utils'
+import { assert, assertType, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
+
+const isParser = <T>(input: unknown): input is Parser<T> => {
+  return input !== null && typeof input === 'object' && 'parse' in input
+}
 
 export const tuple = <T extends Parser<unknown>[]>(
   schema: T,
@@ -22,6 +26,14 @@ export const tuple = <T extends Parser<unknown>[]>(
       ),
     )
 
-    return value.map((item, index) => schema[index].parse(item)) as T[]
+    return value.reduce((result: T[], item: T, index) => {
+      assertType<Parser<T>>(
+        schema[index],
+        isParser<T>,
+        new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_0000.message()),
+      )
+      result.push(schema[index].parse(item))
+      return result
+    }, [])
   },
 })
