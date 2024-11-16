@@ -1,10 +1,7 @@
+import { isParser } from '@/guards'
 import type { Parser } from '@/types'
 import { assert, assertType, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
-
-const isParser = <T>(input: unknown): input is T => {
-  return input !== null && typeof input === 'object' && 'parse' in input
-}
 
 export const tuple = <T extends Parser<unknown>[]>(
   schema: T,

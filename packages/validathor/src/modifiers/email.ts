@@ -21,7 +21,7 @@ export const email = (
 ): Email => {
   return {
     name: 'email' as const,
-    validate: (value: string) => {
+    validate: (value) => {
       const emailRegex = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       // Type checks
       assert(
