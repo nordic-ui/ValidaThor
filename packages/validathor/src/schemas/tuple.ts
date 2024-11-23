@@ -10,7 +10,7 @@ export const tuple = <T extends Parser<unknown>[]>(
   },
 ): Parser<T[]> => ({
   name: 'tuple' as const,
-  parse: (value: unknown): T[] => {
+  parse: (value): T[] => {
     assert(
       Array.isArray(value),
       new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_0000.message()),
