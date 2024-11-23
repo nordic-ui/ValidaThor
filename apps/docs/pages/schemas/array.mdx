@@ -25,3 +25,20 @@ try {
   console.error('Parsing failed:', error.message);
 }
 ```
+
+## Future
+
+In one of the next upcoming releases, the `Array` schema will support mixed schemas, so you'd be able to for example do the following:
+
+```ts
+import { array, string, number } from '@nordic-ui/validathor';
+
+const arrayRule = array([string(), number()]);
+
+try {
+  const parsedValue = arrayRule.parse(['Hello', 42, 'world']);
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
