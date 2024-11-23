@@ -1,7 +1,7 @@
 import { Parser } from '@/types'
 
 export const isParser = <T>(input: unknown): input is T => {
-  return input !== null && typeof input === 'object' && 'parse' in input
+  return input !== null && typeof input === 'object' && 'parse' in input && 'name' in input
 }
 
 export const isParserRecords = <T extends Record<string, Parser<unknown>>>(

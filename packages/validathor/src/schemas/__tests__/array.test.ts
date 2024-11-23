@@ -125,10 +125,11 @@ describe('array()', () => {
   })
 })
 
-describe('[FUTURE]', () => {
-  it.fails('should work with mixed schemas', () => {
-    const schema = array<string | number>([string(), number()])
-
+describe('[FUTURE] mixed schemas', () => {
+  it.fails.each([
+    array<string | number>([string(), number()]),
+    array<number | string>([number(), string()]),
+  ])('should work with mixed schemas', (schema) => {
     expect(parse(schema, ['hello', 'world', 123])).toEqual(['hello', 'world', 123])
     expect(() => parse(schema, ['foo', true, 'baz'])).toThrowError(
       new TypeError('Value must be at most 2 x long'),

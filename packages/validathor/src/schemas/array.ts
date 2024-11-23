@@ -13,7 +13,7 @@ type AcceptedParserPrimitives =
   | boolean
   | Date
   | object
-  | Array<AcceptedParserPrimitives>
+  | AcceptedParserPrimitives[]
 
 type ParserMap = {
   string: Parser<string>
@@ -21,11 +21,32 @@ type ParserMap = {
   boolean: Parser<boolean>
   Date: Parser<Date>
   object: Parser<object>
-  Array: Parser<Array<AcceptedParserPrimitives>>
+  Array: Parser<AcceptedParserPrimitives[]>
 }
 
-type GetParser<T> = T extends keyof ParserMap ? ParserMap[T] : never
-type MixedParser<T> = T extends AcceptedParserPrimitives ? GetParser<keyof ParserMap & T> : never
+type PrimitiveTypeMap = {
+  string: 'string'
+  number: 'number'
+  boolean: 'boolean'
+  Date: 'Date'
+  object: 'object'
+}
+
+// Ensure PrimitiveTypeName returns only valid keys of ParserMap
+type PrimitiveTypeName<T extends AcceptedParserPrimitives> = T extends keyof PrimitiveTypeMap
+  ? PrimitiveTypeMap[T]
+  : never
+
+// Now, define the GetParser type function that retrieves the correct parser based on T
+type GetParser<T extends AcceptedParserPrimitives> = T extends (infer U)[]
+  ? Parser<U[]>
+  : PrimitiveTypeName<T> extends keyof ParserMap
+  ? ParserMap[PrimitiveTypeName<T>] extends Parser<infer U>
+    ? Parser<U>
+    : never
+  : never
+
+type MixedParser<T extends AcceptedParserPrimitives> = GetParser<T>
 
 export const array = <T extends AcceptedParserPrimitives>(
   schema: MaybeArray<MixedParser<T>>,
@@ -33,11 +54,6 @@ export const array = <T extends AcceptedParserPrimitives>(
   message?: { type_error?: string },
 ): Parser<T[]> => {
   const _schema = Array.isArray(schema) ? schema : [schema]
-
-  assert(
-    Array.isArray(_schema),
-    new TypeError(message?.type_error || ERROR_CODES.ERR_VAL_8000.message()),
-  )
 
   return {
     name: 'array' as const,
@@ -49,18 +65,14 @@ export const array = <T extends AcceptedParserPrimitives>(
 
       validateModifiers(value, modifiers)
 
-      // return value.reduce((result: T[], item: unknown, index: number) => {
-      //   const parser = _schema[index % _schema.length]
-      //   const parsedItem = parser.parse(item as any)
-      //   validateModifiers([parsedItem], [modifiers[index % modifiers.length]])
-      //   result.push(parsedItem)
-      //   return result
-      // }, [])
-
-      return value.reduce((result: T[], item: unknown) => {
-        _schema.forEach((s) => result.push(s.parse(item)))
-        return result
+      // Use reduce to ensure the type is correctly inferred
+      const result: T[] = value.reduce((acc: unknown[], item: AcceptedParserPrimitives, index) => {
+        const parser = _schema[index % _schema.length] // Handle cyclic schema application
+        acc.push(parser.parse(item))
+        return acc
       }, [])
+
+      return result
     },
   }
 }
