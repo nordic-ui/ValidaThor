@@ -1,6 +1,6 @@
 import { parse } from '@/core/parse'
 import { max, min } from '@/modifiers'
-import { boolean, string, number, object } from '@/schemas'
+import { boolean, string, number, object, date } from '@/schemas'
 
 import { array } from '../array'
 
@@ -47,14 +47,38 @@ describe('array()', () => {
     const schema1 = array(string())
     const schema2 = array(number())
     const schema3 = array(boolean())
+    const schema4 = array(date())
+    const schema5 = array(object({ name: string() }))
+    const schema6 = array(array([number()]))
 
     expect(parse(schema1, ['hello', 'world'])).toEqual(['hello', 'world'])
     expect(parse(schema2, [1, 2, 3])).toEqual([1, 2, 3])
     expect(parse(schema3, [true, false])).toEqual([true, false])
+    expect(
+      parse(schema4, [new Date('2018-03-06T09:00:00.000Z'), new Date('2024-11-16T17:07:39.128Z')]),
+    ).toEqual([new Date('2018-03-06T09:00:00.000Z'), new Date('2024-11-16T17:07:39.128Z')])
+    expect(parse(schema5, [{ name: 'Obi-Wan Kenobi' }, { name: 'Anakin Skywalker' }])).toEqual([
+      { name: 'Obi-Wan Kenobi' },
+      { name: 'Anakin Skywalker' },
+    ])
+    expect(
+      parse(schema6, [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+      ]),
+    ).toEqual([
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ])
 
     expect(parse(schema1, [])).toEqual([])
     expect(parse(schema2, [])).toEqual([])
     expect(parse(schema3, [])).toEqual([])
+    expect(parse(schema4, [])).toEqual([])
+    expect(parse(schema5, [])).toEqual([])
+    expect(parse(schema6, [])).toEqual([])
   })
 
   it('should work with modifiers', () => {
@@ -101,10 +125,11 @@ describe('array()', () => {
   })
 })
 
-describe('[FUTURE]', () => {
-  it.fails('should work with mixed schemas', () => {
-    const schema = array<string | number>([string(), number()])
-
+describe('[FUTURE] mixed schemas', () => {
+  it.fails.each([
+    array<string | number>([string(), number()]),
+    array<number | string>([number(), string()]),
+  ])('should work with mixed schemas', (schema) => {
     expect(parse(schema, ['hello', 'world', 123])).toEqual(['hello', 'world', 123])
     expect(() => parse(schema, ['foo', true, 'baz'])).toThrowError(
       new TypeError('Value must be at most 2 x long'),

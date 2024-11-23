@@ -20,7 +20,7 @@ export function enumerator<T extends string | number>(
 ): Enumerator<T> {
   return {
     name: 'enumerator' as const,
-    validate: (value: T) => {
+    validate: (value) => {
       // Type checks
       assert(
         input.includes(value),

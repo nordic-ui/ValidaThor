@@ -21,7 +21,7 @@ export function min<T extends Input>(
 ): Min<T> {
   return {
     name: 'min' as const,
-    validate: (value: T) => {
+    validate: (value) => {
       assert(
         typeof value === 'number' ||
           typeof value === 'string' ||

@@ -21,7 +21,7 @@ export function max<T extends Input>(
 ): Max<T> {
   return {
     name: 'max' as const,
-    validate: (value: T) => {
+    validate: (value) => {
       assert(
         typeof value === 'number' ||
           typeof value === 'string' ||

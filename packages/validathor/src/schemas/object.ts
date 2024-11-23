@@ -1,17 +1,7 @@
+import { isParserRecords } from '@/guards'
 import type { InferSchemaType, Parser } from '@/types'
 import { assert, assertType, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
-
-const isRecord = <T>(input: unknown): input is T =>
-  input instanceof Object &&
-  !(input instanceof Array) &&
-  !(input instanceof Boolean) &&
-  !(input instanceof Date) &&
-  !(input instanceof Error) &&
-  !(input instanceof Function) &&
-  !(input instanceof Number) &&
-  !(input instanceof RegExp) &&
-  !(input instanceof String)
 
 export const object = <T extends Record<string, Parser<unknown>>>(
   schema: T,
@@ -27,7 +17,7 @@ export const object = <T extends Record<string, Parser<unknown>>>(
     )
     assertType<Record<string, unknown>>(
       value,
-      isRecord<T>,
+      isParserRecords<T>,
       new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_5000.message()),
     )
 
