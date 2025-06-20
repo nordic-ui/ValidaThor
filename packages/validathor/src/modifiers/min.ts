@@ -4,9 +4,9 @@ import { TypeError } from '@/utils/errors/errors'
 
 type Input = number | string | Date | (number | string | Date)[]
 
-export type Min<T> = {
+export type Min<TValue> = {
   name: 'min'
-  validate: (value: T) => T
+  validate: (value: TValue) => TValue
 }
 
 type ErrorMessages = Partial<{
@@ -15,10 +15,10 @@ type ErrorMessages = Partial<{
   error: string
 }>
 
-export function min<T extends Input>(
-  min: T extends Date ? Date : number,
+export function min<TValue extends Input>(
+  min: TValue extends Date ? Date : number,
   message?: ErrorMessages,
-): Min<T> {
+): Min<TValue> {
   return {
     name: 'min' as const,
     validate: (value) => {

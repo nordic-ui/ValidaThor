@@ -1,9 +1,9 @@
 import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export type Enumerator<T> = {
+export type Enumerator<TValue> = {
   name: 'enumerator'
-  validate: (value: T) => T
+  validate: (value: TValue) => TValue
 }
 
 // Overload definitions
@@ -11,13 +11,13 @@ export function enumerator(input: string[]): Enumerator<string>
 export function enumerator(input: number[]): Enumerator<number>
 
 // TODO: Add support for date and object types maybe?
-export function enumerator<T extends string | number>(
-  input: T[],
+export function enumerator<TValue extends string | number>(
+  input: TValue[],
   message?: {
     type_error?: string
     error?: string
   },
-): Enumerator<T> {
+): Enumerator<TValue> {
   return {
     name: 'enumerator' as const,
     validate: (value) => {

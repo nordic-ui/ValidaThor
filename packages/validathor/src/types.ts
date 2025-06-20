@@ -1,18 +1,18 @@
 import type { Custom, Min, Max, Email, Enumerator } from '@/modifiers'
 
-export type Modifier<T> =
+export type Modifier<TValue> =
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Custom<any> | Enumerator<T> | Min<T> | Max<T> | Email
+  Custom<any> | Enumerator<TValue> | Min<TValue> | Max<TValue> | Email
 
 // TODO: Improve the parser type to more accurately reflect the return type
-export type Parser<T, U = unknown> = {
+export type Parser<TInput, TOutput = unknown> = {
   name: string
-  parse: (input: U) => T
+  parse: (input: TOutput) => TInput
 }
 
 // Helper type to infer the schema shape and convert to the correct types
-export type InferSchemaType<T> = {
-  [P in keyof T]: T[P] extends Parser<infer U> ? U : never
+export type InferSchemaType<TSchema> = {
+  [PKey in keyof TSchema]: TSchema[PKey] extends Parser<infer U> ? U : never
 }
 
-export type MaybeArray<T> = T | T[]
+export type MaybeArray<TInput> = TInput | TInput[]

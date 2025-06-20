@@ -1,13 +1,13 @@
 import { assert } from '@/utils/assert/assert'
 
-export type Custom<T> = {
+export type Custom<TValue> = {
   name: 'custom'
-  validate: (value: T) => T
+  validate: (value: TValue) => TValue
 }
 
-type CustomAssertions<T> = (value: T) => [boolean | (() => boolean), string | Error][]
+type CustomAssertions<TValue> = (value: TValue) => [boolean | (() => boolean), string | Error][]
 
-export const custom = <T = unknown>(assertions: CustomAssertions<T>): Custom<T> => {
+export const custom = <TValue = unknown>(assertions: CustomAssertions<TValue>): Custom<TValue> => {
   return {
     name: 'custom' as const,
     validate: (value) => {

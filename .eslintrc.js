@@ -2,16 +2,12 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  plugins: [
-    // 'prettier',
-    '@typescript-eslint',
-    'eslint-plugin-import-helpers'
-  ],
+  plugins: ['prettier', '@typescript-eslint', 'eslint-plugin-import-helpers'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
-    // 'plugin:prettier/recommended',
+    'plugin:prettier/recommended',
   ],
   settings: {
     next: {
@@ -39,10 +35,10 @@ module.exports = {
       {
         pathGroups: [
           {
-            pattern: "@/**",
-            group: "internal",
-            position: "after"
-          }
+            pattern: '@/**',
+            group: 'internal',
+            position: 'after',
+          },
         ],
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
         alphabetize: { order: 'asc', caseInsensitive: true },

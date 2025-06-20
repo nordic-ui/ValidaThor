@@ -11,7 +11,7 @@ export const date = (
   message?: { type_error?: string },
 ): Parser<Date> => ({
   name: 'date' as const,
-  parse: (value: unknown) => {
+  parse: (value) => {
     assert(
       value instanceof Date,
       new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_3000.message()),

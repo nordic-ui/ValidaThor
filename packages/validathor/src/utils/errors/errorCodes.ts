@@ -1,12 +1,12 @@
 type TypeErrorCode = `ERR_TYP_${number}`
 type ValidationErrorCode = `ERR_VAL_${number}`
 
-type ErrorPayload<T> = {
-  code: T
+type ErrorPayload<TErrorCode> = {
+  code: TErrorCode
   message: (...args: string[]) => string
 }
 
-type ErrorCodes<T extends string> = Record<T, ErrorPayload<T>>
+type ErrorCodes<TError extends string> = Record<TError, ErrorPayload<TError>>
 
 const TYPE_ERROR_CODE: ErrorCodes<TypeErrorCode> = {
   // Generic type errors

@@ -4,9 +4,9 @@ import { TypeError } from '@/utils/errors/errors'
 
 type Input = number | string | Date | (number | string | Date)[]
 
-export type Max<T> = {
+export type Max<TValue> = {
   name: 'max'
-  validate: (value: T) => T
+  validate: (value: TValue) => TValue
 }
 
 type ErrorMessages = Partial<{
@@ -15,10 +15,10 @@ type ErrorMessages = Partial<{
   error: string
 }>
 
-export function max<T extends Input>(
-  max: T extends Date ? Date : number,
+export function max<TValue extends Input>(
+  max: TValue extends Date ? Date : number,
   message?: ErrorMessages,
-): Max<T> {
+): Max<TValue> {
   return {
     name: 'max' as const,
     validate: (value) => {

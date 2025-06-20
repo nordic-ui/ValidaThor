@@ -48,16 +48,16 @@ type GetParser<T extends AcceptedParserPrimitives> = T extends (infer U)[]
 
 type MixedParser<T extends AcceptedParserPrimitives> = GetParser<T>
 
-export const array = <T extends AcceptedParserPrimitives>(
-  schema: MaybeArray<MixedParser<T>>,
+export const array = <TSchema extends AcceptedParserPrimitives>(
+  schema: MaybeArray<MixedParser<TSchema>>,
   modifiers: ArraySchemaModifiers = [],
   message?: { type_error?: string },
-): Parser<T[]> => {
+): Parser<TSchema[]> => {
   const _schema = Array.isArray(schema) ? schema : [schema]
 
   return {
     name: 'array' as const,
-    parse: (value): T[] => {
+    parse: (value): TSchema[] => {
       assert(
         Array.isArray(value),
         new TypeError(message?.type_error || ERROR_CODES.ERR_VAL_8000.message()),
@@ -66,11 +66,14 @@ export const array = <T extends AcceptedParserPrimitives>(
       validateModifiers(value, modifiers)
 
       // Use reduce to ensure the type is correctly inferred
-      const result: T[] = value.reduce((acc: unknown[], item: AcceptedParserPrimitives, index) => {
-        const parser = _schema[index % _schema.length] // Handle cyclic schema application
-        acc.push(parser.parse(item))
-        return acc
-      }, [])
+      const result: TSchema[] = value.reduce(
+        (acc: unknown[], item: AcceptedParserPrimitives, index) => {
+          const parser = _schema[index % _schema.length] // Handle cyclic schema application
+          acc.push(parser.parse(item))
+          return acc
+        },
+        [],
+      )
 
       return result
     },

@@ -1,5 +1,5 @@
 import type { Parser } from '@/types'
 
-export const parse = <T>(schema: Parser<T>, value: unknown) => {
+export const parse = <TSchema>(schema: Parser<TSchema>, value: unknown) => {
   return schema.parse(value)
 }

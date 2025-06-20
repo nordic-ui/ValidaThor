@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import { DocsThemeConfig, useConfig } from 'nextra-theme-docs'
-import React from 'react'
 
 const WordMark = () => (
   <span className="logo-wordmark">
@@ -11,9 +10,9 @@ const WordMark = () => (
 const config = {
   logo: <WordMark />,
   project: {
-    link: 'https://github.com/kosai106/validathor',
+    link: 'https://github.com/nordic-ui/ValidaThor',
   },
-  docsRepositoryBase: 'https://github.com/Kosai106/ValidaThor/tree/main/apps/docs',
+  docsRepositoryBase: 'https://github.com/nordic-ui/ValidaThor/tree/main/apps/docs',
   useNextSeoProps() {
     const { asPath } = useRouter()
     return {
