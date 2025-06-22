@@ -64,7 +64,9 @@ describe('number()', () => {
     expect(parse(schema, 1)).toEqual(1)
     expect(parse(schema, 3)).toEqual(3)
 
-    expect(() => parse(schema, 420)).toThrowError(new ValidationError('Expected a valid value'))
+    expect(() => parse(schema, 420)).toThrowError(
+      new ValidationError('Value is not in the allowed list'),
+    )
     expect(() => parse(schema, 'invalid')).toThrowError(new ValidationError('Expected a number'))
   })
 

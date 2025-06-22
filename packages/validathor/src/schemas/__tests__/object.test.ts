@@ -187,7 +187,7 @@ describe('[FUTURE]', () => {
         VITE_ENABLE_MOCK_APIS: true,
         VITE_ENABLE_DEV_TOOLS: false,
       }),
-    ).toThrowError('Expected a valid value')
+    ).toThrowError('Value is not a valid enum option')
   })
 
   it('should do more stuff', () => {

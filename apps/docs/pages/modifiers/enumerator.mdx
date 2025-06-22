@@ -1,6 +1,6 @@
 # Enumerator modifier
 
-A modifier which creates a validation rule to ensure that a given value is less or equal to the given input.
+A modifier which creates a validation rule to ensure that a given value is one of the allowed values in the provided list.
 
 ## Schemas
 
@@ -9,14 +9,14 @@ A modifier which creates a validation rule to ensure that a given value is less 
 
 ## Arguments
 
-- `input` (number[] | string[]): The array of values which the input value must be one of.
+- `input` (number[] | string[] | TypeScript enum): The array of values or TypeScript enum which the input value must be one of.
 - `message` (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
 
 ## Example
 
 import { Tabs, Tab } from 'nextra/components'
 
-<Tabs items={['Number', 'String']}>
+<Tabs items={['Number Array', 'String Array', 'String Enum', 'Numeric Enum']}>
   <Tab>
     ```ts
       import { enumerator, number } from '@nordic-ui/validathor';
@@ -44,5 +44,45 @@ import { Tabs, Tab } from 'nextra/components'
         console.error('Parsing failed:', error.message);
       }
     ```
+  </Tab>
+  <Tab>
+    ```ts
+      import { enumerator, string } from '@nordic-ui/validathor';
+
+      enum Color {
+        Red = 'red',
+        Green = 'green',
+        Blue = 'blue'
+      }
+
+      const schema = string([enumerator(Color)]);
+
+      try {
+        const parsedValue = schema.parse('red');
+        console.log('Parsed value:', parsedValue);
+      } catch (error) {
+        console.error('Parsing failed:', error.message);
+      }
+      ```
+  </Tab>
+  <Tab>
+    ```ts
+      import { enumerator, number } from '@nordic-ui/validathor';
+
+      enum Status {
+        Inactive,  // 0
+        Active,    // 1
+        Pending    // 2
+      }
+
+      const schema = number([enumerator(Status)]);
+
+      try {
+        const parsedValue = schema.parse(1); // Active
+        console.log('Parsed value:', parsedValue);
+      } catch (error) {
+        console.error('Parsing failed:', error.message);
+      }
+      ```
   </Tab>
 </Tabs>

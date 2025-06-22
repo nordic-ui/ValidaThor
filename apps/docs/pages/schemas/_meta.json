@@ -2,6 +2,7 @@
   "array": "Array",
   "boolean": "Boolean",
   "date": "Date",
+  "enum": "Enum",
   "number": "Number",
   "object": "Object",
   "regex": "Regex",

@@ -68,7 +68,7 @@ const TYPE_ERROR_CODE: ErrorCodes<TypeErrorCode> = {
   // Enum type errors
   ERR_TYP_6000: {
     code: 'ERR_TYP_6000',
-    message: () => 'Expected a tuple',
+    message: () => 'Expected a string or number',
   },
 
   // Boolean type errors
@@ -157,6 +157,14 @@ const VALIDATION_ERROR_CODE: ErrorCodes<ValidationErrorCode> = {
   ERR_VAL_6000: {
     code: 'ERR_VAL_6000',
     message: () => 'Expected a non-empty input',
+  },
+  ERR_VAL_6001: {
+    code: 'ERR_VAL_6001',
+    message: () => 'Value is not a valid enum option',
+  },
+  ERR_VAL_6002: {
+    code: 'ERR_VAL_6002',
+    message: () => 'Value is not in the allowed list',
   },
 
   // Boolean validation errors
