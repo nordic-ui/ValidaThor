@@ -103,7 +103,7 @@ describe('string()', () => {
     expect(parse(schema, '😠')).toEqual('😠')
 
     expect(() => parse(schema, 'invalid')).toThrowError(
-      new ValidationError('Expected a valid value'),
+      new ValidationError('Value is not in the allowed list'),
     )
   })
 

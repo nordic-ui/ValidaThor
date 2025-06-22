@@ -162,6 +162,10 @@ const VALIDATION_ERROR_CODE: ErrorCodes<ValidationErrorCode> = {
     code: 'ERR_VAL_6001',
     message: () => 'Value is not a valid enum option',
   },
+  ERR_VAL_6002: {
+    code: 'ERR_VAL_6002',
+    message: () => 'Value is not in the allowed list',
+  },
 
   // Boolean validation errors
   ERR_VAL_7000: {
