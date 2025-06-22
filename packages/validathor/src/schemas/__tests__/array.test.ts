@@ -9,7 +9,7 @@ describe('array()', () => {
     expect(array([]).name).toEqual('array')
   })
 
-  it('should work', () => {
+  it('should work with objects', () => {
     const schema = array(object({ name: string(), age: number(), isAdmin: boolean() }))
 
     expect(
@@ -41,6 +41,14 @@ describe('array()', () => {
         ['foo', 123],
       ]),
     ).toThrowError(new TypeError('Expected a string'))
+  })
+
+  it('should work with mixed schemas', () => {
+    const schema = array<string | number | boolean>([string(), number(), boolean()])
+
+    expect(parse(schema, ['hello', 123, true])).toEqual(['hello', 123, true])
+
+    expect(() => parse(schema, ['foo', new Date(), 123])).toThrow()
   })
 
   it('should work with no modifiers', () => {
@@ -122,17 +130,5 @@ describe('array()', () => {
         { name: 'Obi-Wan Kenobi', age: 38, isAdmin: 'false' },
       ]),
     ).toThrowError(new TypeError('Expected a boolean'))
-  })
-})
-
-describe('[FUTURE] mixed schemas', () => {
-  it.fails.each([
-    array<string | number>([string(), number()]),
-    array<number | string>([number(), string()]),
-  ])('should work with mixed schemas', (schema) => {
-    expect(parse(schema, ['hello', 'world', 123])).toEqual(['hello', 'world', 123])
-    expect(() => parse(schema, ['foo', true, 'baz'])).toThrowError(
-      new TypeError('Value must be at most 2 x long'),
-    )
   })
 })
