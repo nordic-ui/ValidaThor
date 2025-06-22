@@ -1,6 +1,7 @@
 export { array } from './array'
 export { boolean } from './boolean'
 export { date } from './date'
+export { enum_ } from './enum'
 export { number } from './number'
 export { object } from './object'
 export { regex } from './regex'

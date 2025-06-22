@@ -1,0 +1,124 @@
+# Enum schema
+
+A function which creates a parsing rule to ensure that a given value is one of the allowed values from an array or TypeScript enum.
+
+## Arguments
+
+1. An array of values or TypeScript enum
+2. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+
+## Examples
+
+import { Tabs, Tab } from 'nextra/components'
+
+<Tabs items={['Array Values', 'TypeScript String Enum', 'TypeScript Numeric Enum', 'Mixed Enum']}>
+  <Tab>
+    ```ts
+    import { enum_ } from '@nordic-ui/validathor';
+
+    const colorRule = enum_(['red', 'green', 'blue']);
+
+    try {
+      const parsedValue = colorRule.parse('red');
+      console.log('Parsed value:', parsedValue);
+    } catch (error) {
+      console.error('Parsing failed:', error.message);
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```ts
+    import { enum_ } from '@nordic-ui/validathor';
+
+    enum Color {
+      Red = 'red',
+      Green = 'green',
+      Blue = 'blue'
+    }
+
+    const colorRule = enum_(Color);
+
+    try {
+      const parsedValue = colorRule.parse('red');
+      console.log('Parsed value:', parsedValue);
+    } catch (error) {
+      console.error('Parsing failed:', error.message);
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```ts
+    import { enum_ } from '@nordic-ui/validathor';
+
+    enum Status {
+      Inactive,  // 0
+      Active,    // 1
+      Pending    // 2
+    }
+
+    const statusRule = enum_(Status);
+
+    try {
+      const parsedValue = statusRule.parse(1); // Active
+      console.log('Parsed value:', parsedValue);
+    } catch (error) {
+      console.error('Parsing failed:', error.message);
+    }
+    ```
+  </Tab>
+  <Tab>
+    ```ts
+    import { enum_ } from '@nordic-ui/validathor';
+
+    enum UserRole {
+      Admin = 'admin',
+      User = 1,
+      Guest = 'guest'
+    }
+
+    const roleRule = enum_(UserRole);
+
+    try {
+      const parsedValue = roleRule.parse('admin');
+      console.log('Parsed value:', parsedValue);
+    } catch (error) {
+      console.error('Parsing failed:', error.message);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Custom Error Messages
+
+```ts
+import { enum_ } from '@nordic-ui/validathor';
+
+const priorityRule = enum_(['low', 'medium', 'high'], {
+  type_error: 'Expected a string or number',
+  error: (value) => `"${value}" is not a valid priority level`
+});
+
+try {
+  const parsedValue = priorityRule.parse('invalid');
+} catch (error) {
+  console.error(error.message); // "invalid" is not a valid priority level
+}
+```
+
+## Readonly Arrays
+
+The enum schema also supports readonly arrays for better type safety:
+
+```ts
+import { enum_ } from '@nordic-ui/validathor';
+
+const permissions = ['read', 'write', 'admin'] as const;
+const permissionRule = enum_(permissions);
+
+try {
+  const parsedValue = permissionRule.parse('read');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
