@@ -65,15 +65,34 @@ export const array = <TSchema extends AcceptedParserPrimitives>(
 
       validateModifiers(value, modifiers)
 
-      // Use reduce to ensure the type is correctly inferred
-      const result: TSchema[] = value.reduce(
-        (acc: unknown[], item: AcceptedParserPrimitives, index) => {
-          const parser = _schema[index % _schema.length] // Handle cyclic schema application
+      const result: TSchema[] = value.reduce((acc: unknown[], item: AcceptedParserPrimitives) => {
+        // For mixed schemas, try each parser until one succeeds
+        if (_schema.length > 1) {
+          let parsed = false
+          let lastError: Error | undefined
+
+          for (const parser of _schema) {
+            try {
+              acc.push(parser.parse(item))
+              parsed = true
+              break
+            } catch (error) {
+              lastError = error instanceof Error ? error : new Error(String(error))
+              continue
+            }
+          }
+
+          if (!parsed && lastError) {
+            throw lastError
+          }
+        } else {
+          // Single schema case - use the parser directly
+          const parser = _schema[0]
           acc.push(parser.parse(item))
-          return acc
-        },
-        [],
-      )
+        }
+
+        return acc
+      }, [])
 
       return result
     },
