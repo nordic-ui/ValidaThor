@@ -1,0 +1,100 @@
+# Union schema
+
+A function which creates a parsing rule to ensure that a given unknown value matches one of the provided schemas.
+
+## Arguments
+
+1. `schemas` - An array of parser schemas to try in order
+2. `message` _(optional)_ - An object with a custom error message for type mismatches
+
+## Example
+
+```ts
+import { union, string, number, parse } from '@nordic-ui/validathor'
+
+const stringOrNumberRule = union([string(), number()])
+
+console.log(parse(stringOrNumberRule, 'hello')) // 'hello'
+console.log(parse(stringOrNumberRule, 42)) // 42
+
+try {
+  parse(stringOrNumberRule, true)
+} catch (error) {
+  console.error(error)
+  // TypeError: Expected value to match one of: string | number
+}
+```
+
+## Complex Example
+
+Union schemas can be used with any combination of schemas, including complex nested structures:
+
+```ts
+import { union, object, array, string, number, parse } from '@nordic-ui/validathor'
+
+const flexibleDataRule = union([
+  object({ 
+    type: string(), 
+    value: string() 
+  }),
+  object({ 
+    type: string(), 
+    count: number() 
+  }),
+  array(number())
+])
+
+// Matches the first object schema
+console.log(parse(flexibleDataRule, { type: 'text', value: 'hello' }))
+// { type: 'text', value: 'hello' }
+
+// Matches the second object schema
+console.log(parse(flexibleDataRule, { type: 'counter', count: 42 }))
+// { type: 'counter', count: 42 }
+
+// Matches the array schema
+console.log(parse(flexibleDataRule, [1, 2, 3]))
+// [1, 2, 3]
+```
+
+## Custom Error Messages
+
+You can provide a custom error message for when none of the schemas match:
+
+```ts
+import { union, string, number, parse } from '@nordic-ui/validathor'
+
+const customUnionRule = union(
+  [string(), number()],
+  { 
+    type_error: 'Value must be either text or a numeric value' 
+  }
+)
+
+try {
+  parse(customUnionRule, true)
+} catch (error) {
+  console.error(error)
+  // TypeError: Value must be either text or a numeric value
+}
+```
+
+## TypeScript Type Inference
+
+The union schema provides full type inference, automatically creating a TypeScript union type from the provided schemas:
+
+```ts
+import { union, string, number, boolean } from '@nordic-ui/validathor'
+
+const mixedRule = union([string(), number(), boolean()])
+
+// TypeScript infers the type as: string | number | boolean
+type MixedType = ReturnType<typeof mixedRule.parse>
+```
+
+## Important Notes
+
+- Schemas are tried in the order they are provided
+- The first matching schema's result is returned
+- If no schemas match, an error is thrown listing all expected types
+- At least one schema must be provided

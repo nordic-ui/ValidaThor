@@ -12,6 +12,7 @@ export { object } from '@/schemas/object'
 export { regex } from '@/schemas/regex'
 export { string } from '@/schemas/string'
 export { tuple } from '@/schemas/tuple'
+export { union } from '@/schemas/union'
 
 // Modifiers
 export { custom } from '@/modifiers/custom'

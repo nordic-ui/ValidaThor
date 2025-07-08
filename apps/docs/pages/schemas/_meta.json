@@ -7,5 +7,6 @@
   "object": "Object",
   "regex": "Regex",
   "string": "String",
-  "tuple": "Tuple"
+  "tuple": "Tuple",
+  "union": "Union"
 }
