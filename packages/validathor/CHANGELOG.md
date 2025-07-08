@@ -1,5 +1,11 @@
 # @nordic-ui/validathor
 
+## 0.1.0
+
+### Minor Changes
+
+- Added union schema
+
 ## 0.0.5
 
 ### Patch Changes
