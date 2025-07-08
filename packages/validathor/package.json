@@ -1,6 +1,6 @@
 {
   "name": "@nordic-ui/validathor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A simple validation library",
   "author": "Kevin Østerkilde <kevin@oesterkilde.dk>",
   "main": "dist/index.cjs.js",
