@@ -1,5 +1,11 @@
 # @nordic-ui/validathor
 
+## 0.2.0
+
+### Minor Changes
+
+- 48ae4e0: Added literal schema
+
 ## 0.1.0
 
 ### Minor Changes
