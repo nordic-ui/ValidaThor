@@ -3,6 +3,7 @@
   "boolean": "Boolean",
   "date": "Date",
   "enum": "Enum",
+  "literal": "Literal",
   "number": "Number",
   "object": "Object",
   "regex": "Regex",

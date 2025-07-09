@@ -1,0 +1,23 @@
+# Literal schema
+
+A function which ensures that a given input matches an exact value.
+
+## Arguments
+
+1. An exact value the input should be the same as.
+2. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+
+## Examples
+
+```ts
+import { literal } from '@nordic-ui/validathor';
+
+const literalRule = literal('Hello');
+
+try {
+  const parsedValue = literalRule.parse('Hello');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```

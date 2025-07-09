@@ -198,6 +198,12 @@ const VALIDATION_ERROR_CODE: ErrorCodes<ValidationErrorCode> = {
     code: 'ERR_VAL_8104',
     message: (max: string) => `Value must be at most ${max} or less`,
   },
+
+  // Literal validation errors
+  ERR_VAL_9000: {
+    code: 'ERR_VAL_9000',
+    message: () => 'Value does not match the literal value',
+  },
 }
 
 export const ERROR_CODES: ErrorCodes<TypeErrorCode> & ErrorCodes<ValidationErrorCode> = {
