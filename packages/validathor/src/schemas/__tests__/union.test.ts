@@ -1,5 +1,5 @@
 import { parse } from '@/core/parse'
-import { string, number, boolean, date, array, object } from '@/schemas'
+import { string, number, boolean, date, literal, array, object } from '@/schemas'
 
 import { union } from '../union'
 
@@ -12,7 +12,7 @@ describe('union()', () => {
     const schema = union([string(), number()])
 
     expect(parse(schema, 'hello')).toEqual('hello')
-    expect(parse(schema, 42)).toEqual(42)
+    expect(parse(schema, 420)).toEqual(420)
     expect(schema.parse('world')).toEqual('world')
     expect(schema.parse(123)).toEqual(123)
 
@@ -66,20 +66,33 @@ describe('union()', () => {
 
   it('should work with complex schemas', () => {
     const schema = union([
-      object({ type: string(), value: string() }),
-      object({ type: string(), count: number() }),
+      object({ type: string(), value: string(), literal: literal(69) }),
+      object({ type: string(), count: number(), literal: literal(420) }),
       array(number()),
     ])
 
-    expect(parse(schema, { type: 'text', value: 'hello' })).toEqual({
+    expect(parse(schema, { type: 'text', value: 'hello', literal: 69 })).toEqual({
       type: 'text',
       value: 'hello',
+      literal: 69,
     })
-    expect(parse(schema, { type: 'counter', count: 42 })).toEqual({ type: 'counter', count: 42 })
+    expect(parse(schema, { type: 'counter', count: 420, literal: 420 })).toEqual({
+      type: 'counter',
+      count: 420,
+      literal: 420,
+    })
     expect(parse(schema, [1, 2, 3])).toEqual([1, 2, 3])
 
-    expect(schema.parse({ type: 'text', value: 'world' })).toEqual({ type: 'text', value: 'world' })
-    expect(schema.parse({ type: 'counter', count: 0 })).toEqual({ type: 'counter', count: 0 })
+    expect(schema.parse({ type: 'text', value: 'world', literal: 69 })).toEqual({
+      type: 'text',
+      value: 'world',
+      literal: 69,
+    })
+    expect(schema.parse({ type: 'counter', count: 0, literal: 420 })).toEqual({
+      type: 'counter',
+      count: 0,
+      literal: 420,
+    })
     expect(schema.parse([4, 5, 6])).toEqual([4, 5, 6])
 
     expect(() => parse(schema, 'invalid')).toThrowError(
