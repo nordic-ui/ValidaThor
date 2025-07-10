@@ -27,6 +27,10 @@ describe('literal()', () => {
   it('should work with number literals', () => {
     const schema = literal(42)
 
+    const parsed = parse(schema, 42)
+
+    expect(parsed).toEqual(42)
+
     expect(parse(schema, 42)).toEqual(42)
     expect(schema.parse(42)).toEqual(42)
     expect(() => parse(schema, 41)).toThrowError(

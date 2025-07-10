@@ -1,8 +1,7 @@
 import { parse } from '@/core/parse'
 import { max, min } from '@/modifiers'
-import { boolean, string, number, array } from '@/schemas'
+import { boolean, string, number, array, enum_, literal } from '@/schemas'
 
-import { enum_ } from '../enum'
 import { object } from '../object'
 
 describe('object()', () => {
@@ -144,6 +143,168 @@ describe('object()', () => {
         },
       }),
     ).toThrowError('Expected a number')
+  })
+
+  it('should work with literal schemas', () => {
+    const schema = object({
+      status: literal('active'),
+      count: literal(42),
+      isEnabled: literal(true),
+      nullValue: literal(null),
+      undefinedValue: literal(undefined),
+    })
+
+    expect(
+      parse(schema, {
+        status: 'active',
+        count: 42,
+        isEnabled: true,
+        nullValue: null,
+        undefinedValue: undefined,
+      }),
+    ).toEqual({
+      status: 'active',
+      count: 42,
+      isEnabled: true,
+      nullValue: null,
+      undefinedValue: undefined,
+    })
+
+    expect(() =>
+      parse(schema, {
+        status: 'inactive',
+        count: 42,
+        isEnabled: true,
+        nullValue: null,
+        undefinedValue: undefined,
+      }),
+    ).toThrowError('Value does not match the literal value')
+
+    expect(() =>
+      parse(schema, {
+        status: 'active',
+        count: 43,
+        isEnabled: true,
+        nullValue: null,
+        undefinedValue: undefined,
+      }),
+    ).toThrowError('Value does not match the literal value')
+
+    expect(() =>
+      parse(schema, {
+        status: 'active',
+        count: 42,
+        isEnabled: false,
+        nullValue: null,
+        undefinedValue: undefined,
+      }),
+    ).toThrowError('Value does not match the literal value')
+  })
+
+  it('should work with literal schemas in nested objects', () => {
+    const schema = object({
+      user: object({
+        role: literal('admin'),
+        permissions: object({
+          canEdit: literal(true),
+          level: literal(5),
+        }),
+      }),
+      config: object({
+        environment: literal('production'),
+        debugMode: literal(false),
+      }),
+    })
+
+    expect(
+      parse(schema, {
+        user: {
+          role: 'admin',
+          permissions: {
+            canEdit: true,
+            level: 5,
+          },
+        },
+        config: {
+          environment: 'production',
+          debugMode: false,
+        },
+      }),
+    ).toEqual({
+      user: {
+        role: 'admin',
+        permissions: {
+          canEdit: true,
+          level: 5,
+        },
+      },
+      config: {
+        environment: 'production',
+        debugMode: false,
+      },
+    })
+
+    expect(() =>
+      parse(schema, {
+        user: {
+          role: 'user',
+          permissions: {
+            canEdit: true,
+            level: 5,
+          },
+        },
+        config: {
+          environment: 'production',
+          debugMode: false,
+        },
+      }),
+    ).toThrowError('Value does not match the literal value')
+  })
+
+  it('should work with literal schemas mixed with other types', () => {
+    const schema = object({
+      type: literal('user'),
+      name: string([min(1)]),
+      age: number([min(0)]),
+      active: boolean(),
+      role: literal('member'),
+    })
+
+    expect(
+      parse(schema, {
+        type: 'user',
+        name: 'John Doe',
+        age: 30,
+        active: true,
+        role: 'member',
+      }),
+    ).toEqual({
+      type: 'user',
+      name: 'John Doe',
+      age: 30,
+      active: true,
+      role: 'member',
+    })
+
+    expect(() =>
+      parse(schema, {
+        type: 'admin',
+        name: 'John Doe',
+        age: 30,
+        active: true,
+        role: 'member',
+      }),
+    ).toThrowError('Value does not match the literal value')
+
+    expect(() =>
+      parse(schema, {
+        type: 'user',
+        name: '',
+        age: 30,
+        active: true,
+        role: 'member',
+      }),
+    ).toThrowError('Expected a non-empty string')
   })
 })
 
