@@ -1,5 +1,15 @@
 # @nordic-ui/validathor
 
+## 0.3.0
+
+### Minor Changes
+
+- c5eec23: Fixed type issue with array schema
+
+### Patch Changes
+
+- b5781a2: Export union from schemas directory
+
 ## 0.2.0
 
 ### Minor Changes
