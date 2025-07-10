@@ -1,63 +1,56 @@
 import { validateModifiers } from '@/core/validateModifiers'
 import type { Custom, Max, Min } from '@/modifiers'
-import type { MaybeArray, Parser } from '@/types'
-import { assert, TypeError } from '@/utils'
+import type { Parser } from '@/types'
+import { assert, TypeError, ValidationError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
 /** An array of the accepted modifier types */
 export type ArraySchemaModifiers = (Min<number[]> | Max<number[]> | Custom<unknown>)[]
 
-type AcceptedParserPrimitives =
-  | string
-  | number
-  | boolean
-  | Date
-  | object
-  | AcceptedParserPrimitives[]
-
-type ParserMap = {
-  string: Parser<string>
-  number: Parser<number>
-  boolean: Parser<boolean>
-  Date: Parser<Date>
-  object: Parser<object>
-  Array: Parser<AcceptedParserPrimitives[]>
-}
-
-type PrimitiveTypeMap = {
-  string: 'string'
-  number: 'number'
-  boolean: 'boolean'
-  Date: 'Date'
-  object: 'object'
-}
-
-// Ensure PrimitiveTypeName returns only valid keys of ParserMap
-type PrimitiveTypeName<T extends AcceptedParserPrimitives> = T extends keyof PrimitiveTypeMap
-  ? PrimitiveTypeMap[T]
-  : never
-
-// Now, define the GetParser type function that retrieves the correct parser based on T
-type GetParser<T extends AcceptedParserPrimitives> = T extends (infer U)[]
-  ? Parser<U[]>
-  : PrimitiveTypeName<T> extends keyof ParserMap
-  ? ParserMap[PrimitiveTypeName<T>] extends Parser<infer U>
-    ? Parser<U>
+// Helper type to extract the parsed type from a Parser or array of Parsers
+type ExtractParsedType<T> = T extends Parser<infer U, unknown>
+  ? U
+  : T extends readonly Parser<unknown, unknown>[]
+  ? T[number] extends Parser<infer U, unknown>
+    ? U
     : never
   : never
 
-type MixedParser<T extends AcceptedParserPrimitives> = GetParser<T>
+// Helper type to get the return type based on schema input
+type ArrayReturnType<T> = T extends Parser<unknown, unknown>
+  ? ExtractParsedType<T>[]
+  : T extends readonly Parser<unknown, unknown>[]
+  ? ExtractParsedType<T[number]>[]
+  : never
 
-export const array = <TSchema extends AcceptedParserPrimitives>(
-  schema: MaybeArray<MixedParser<TSchema>>,
+const isValidArray = <TParser>(value: unknown[]): value is ArrayReturnType<TParser> => {
+  return Array.isArray(value)
+}
+
+export function array<TParser extends Parser<unknown, unknown>>(
+  schema: TParser,
+  modifiers?: ArraySchemaModifiers,
+  message?: { type_error?: string },
+): Parser<ExtractParsedType<TParser>[], unknown>
+
+export function array<TParsers extends readonly Parser<unknown, unknown>[]>(
+  schema: TParsers,
+  modifiers?: ArraySchemaModifiers,
+  message?: { type_error?: string },
+): Parser<ExtractParsedType<TParsers[number]>[], unknown>
+
+export function array<
+  TParser extends Parser<unknown, unknown> | readonly Parser<unknown, unknown>[],
+>(
+  schema: TParser,
   modifiers: ArraySchemaModifiers = [],
   message?: { type_error?: string },
-): Parser<TSchema[]> => {
+): Parser<ArrayReturnType<TParser>, unknown> {
   const _schema = Array.isArray(schema) ? schema : [schema]
 
   return {
     name: 'array' as const,
-    parse: (value): TSchema[] => {
+    parse: (value): ArrayReturnType<TParser> => {
       assert(
         Array.isArray(value),
         new TypeError(message?.type_error || ERROR_CODES.ERR_VAL_8000.message()),
@@ -65,8 +58,8 @@ export const array = <TSchema extends AcceptedParserPrimitives>(
 
       validateModifiers(value, modifiers)
 
-      const result: TSchema[] = value.reduce((acc: unknown[], item: AcceptedParserPrimitives) => {
-        // For mixed schemas, try each parser until one succeeds
+      const result: unknown[] = value.reduce((acc: unknown[], item: unknown) => {
+        // Mixed schema case: Try each parser until one succeeds
         if (_schema.length > 1) {
           let parsed = false
           let lastError: Error | undefined
@@ -86,7 +79,7 @@ export const array = <TSchema extends AcceptedParserPrimitives>(
             throw lastError
           }
         } else {
-          // Single schema case - use the parser directly
+          // Single schema case: Use the parser directly
           const parser = _schema[0]
           acc.push(parser.parse(item))
         }
@@ -94,7 +87,11 @@ export const array = <TSchema extends AcceptedParserPrimitives>(
         return acc
       }, [])
 
-      return result
+      if (isValidArray(result)) {
+        return result
+      }
+
+      throw new ValidationError('Something went wrong, this should not be reachable')
     },
   }
 }

@@ -1,6 +1,7 @@
 import { parse } from '@/core/parse'
 import { max, min } from '@/modifiers'
-import { boolean, string, number, object, date } from '@/schemas'
+import { boolean, string, number, object, date, union, literal } from '@/schemas'
+import { ValidationError } from '@/utils'
 
 import { array } from '../array'
 
@@ -44,7 +45,7 @@ describe('array()', () => {
   })
 
   it('should work with mixed schemas', () => {
-    const schema = array<string | number | boolean>([string(), number(), boolean()])
+    const schema = array([string(), number(), boolean()])
 
     expect(parse(schema, ['hello', 123, true])).toEqual(['hello', 123, true])
 
@@ -113,6 +114,84 @@ describe('array()', () => {
     expect(() => parse(schema4, [42, 1024, Infinity])).toThrowError(
       new TypeError('Maximum length must be a positive number'),
     )
+  })
+
+  it('should work with literals', () => {
+    const schema1 = array(literal(123))
+    const schema2 = array(union([literal(123), literal(456)]))
+
+    expect(parse(schema1, [123])).toEqual([123])
+    expect(parse(schema1, [123, 123])).toEqual([123, 123])
+
+    expect(parse(schema2, [123])).toEqual([123])
+    expect(parse(schema2, [123, 456])).toEqual([123, 456])
+
+    expect(() => parse(schema1, [456])).toThrowError(
+      new ValidationError('Value does not match the literal value'),
+    )
+    expect(() => parse(schema2, [654, 321])).toThrowError(
+      new ValidationError('Expected value to match one of: literal | literal'),
+    )
+  })
+
+  it('should work with unions', () => {
+    const schema = array(
+      union([
+        object({
+          type: string(),
+          value: string(),
+          literal: literal(69),
+          deep: union([object({ msg: string() }), string()]),
+        }),
+        object({ type: string(), count: number(), literal: literal(42) }),
+      ]),
+    )
+
+    const validData = [
+      { type: 'value', value: 'hello', literal: 69, deep: { msg: 'test' } },
+      { type: 'count', count: 100, literal: 42 },
+      { type: 'value', value: 'world', literal: 69, deep: 'test' },
+      { type: 'count', count: 200, literal: 42 },
+    ]
+
+    expect(parse(schema, validData)).toEqual(validData)
+
+    // Test with empty array
+    expect(parse(schema, [])).toEqual([])
+
+    // Test with single element matching first union variant
+    expect(parse(schema, [{ type: 'value', value: 'test', literal: 69, deep: 'test' }])).toEqual([
+      { type: 'value', value: 'test', literal: 69, deep: 'test' },
+    ])
+
+    // Test with single element matching second union variant
+    expect(parse(schema, [{ type: 'count', count: 50, literal: 42 }])).toEqual([
+      { type: 'count', count: 50, literal: 42 },
+    ])
+
+    // Test failures - wrong literal value
+    expect(() =>
+      parse(schema, [{ type: 'value', value: 'fail', literal: 42, deep: 'test' }]),
+    ).toThrowError()
+    expect(() => parse(schema, [{ type: 'count', count: 50, literal: 69 }])).toThrowError()
+
+    // Test failures - missing fields
+    expect(() => parse(schema, [{ type: 'value', literal: 69 }])).toThrowError()
+    expect(() => parse(schema, [{ type: 'count', literal: 42 }])).toThrowError()
+
+    // Test failures - wrong types
+    expect(() =>
+      parse(schema, [{ type: 'value', value: 123, literal: 69, deep: 'test' }]),
+    ).toThrowError()
+    expect(() => parse(schema, [{ type: 'count', count: 'string', literal: 42 }])).toThrowError()
+
+    // Test mixed valid and invalid elements
+    expect(() =>
+      parse(schema, [
+        { type: 'value', value: 'valid', literal: 69, deep: 'test' },
+        { type: 'invalid', literal: 100 },
+      ]),
+    ).toThrowError()
   })
 
   it('should fail', () => {
