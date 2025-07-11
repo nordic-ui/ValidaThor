@@ -22,7 +22,7 @@ export const union = <TSchemas extends readonly Parser<unknown>[]>(
     parse: (value: unknown): UnionSchemaType<TSchemas> => {
       assert(
         typeof value !== 'undefined' && value !== null,
-        new TypeError(ERROR_CODES.ERR_TYP_0001.message()),
+        new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_0001.message()),
       )
 
       const errors: Error[] = []
