@@ -3,7 +3,7 @@
 }
 
 .emoji-fix {
-  font-weight: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 .callout {
@@ -29,4 +29,8 @@
 
 .callout--success {
   border-left-color: #2ecc71;
+}
+
+ol > li > ul {
+  margin-top: 0px !important;
 }

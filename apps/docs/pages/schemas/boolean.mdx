@@ -4,17 +4,17 @@ A function which creates a parsing rule to ensure that a given value is a boolea
 
 ## Arguments
 
-1. (Optional): A list of modifiers
-   - `custom`: [Learn more](/modifiers/custom).
-2. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+1. `modifiers?` - A list of modifiers
+   - `custom`: [Learn more](/modifiers/custom)
+2. `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
 
-## Example
+## Examples
 
-```ts
+```ts showLineNumbers
 import { boolean } from '@nordic-ui/validathor';
 
-const booleanRule = boolean('Value must be a boolean');
+const booleanRule = boolean();
 
 try {
   const parsedValue = booleanRule.parse(true);
@@ -22,4 +22,14 @@ try {
 } catch (error) {
   console.error('Parsing failed:', error.message);
 }
+```
+
+## TypeScript
+
+To get the type of a schema, you can do the following:
+
+```ts showLineNumbers
+const booleanRule = boolean();
+
+type BooleanSchema = ReturnType<typeof booleanRule.parse>; // boolean
 ```

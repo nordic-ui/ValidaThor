@@ -4,41 +4,34 @@ A function which creates a parsing rule to ensure that a given value is an array
 
 ## Arguments
 
-1. A schema
-2. (Optional): A list of modifiers
-    - `min`: [Learn more](/modifiers/min).
-    - `max`: [Learn more](/modifiers/max).
-    - `custom`: [Learn more](/modifiers/custom).
-3. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+1. `schema` - A single schema or an array of schemas
+2. `modifiers?` - A list of modifiers
+    - `min`: [Learn more](/modifiers/min)
+    - `max`: [Learn more](/modifiers/max)
+    - `custom`: [Learn more](/modifiers/custom)
+3. `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
-## Example
+## Examples
 
-```ts
-import { array, string } from '@nordic-ui/validathor';
+```ts showLineNumbers
+import { array, string, number } from '@nordic-ui/validathor';
 
-const arrayRule = array(string(), undefined, 'Value must be an array');
+const arrayRule = array([string(), number()]);
 
 try {
-  const parsedValue = arrayRule.parse(['Hello', 'world']);
+  const parsedValue = arrayRule.parse(['Hello', 'world', 42]);
   console.log('Parsed value:', parsedValue);
 } catch (error) {
   console.error('Parsing failed:', error.message);
 }
 ```
 
-## Future
+## TypeScript
 
-In one of the next upcoming releases, the `Array` schema will support mixed schemas, so you'd be able to for example do the following:
+To get the type of a schema, you can do the following:
 
-```ts
-import { array, string, number } from '@nordic-ui/validathor';
-
+```ts showLineNumbers
 const arrayRule = array([string(), number()]);
 
-try {
-  const parsedValue = arrayRule.parse(['Hello', 42, 'world']);
-  console.log('Parsed value:', parsedValue);
-} catch (error) {
-  console.error('Parsing failed:', error.message);
-}
+type ArraySchema = ReturnType<typeof arrayRule.parse>; // (string | number)[]
 ```

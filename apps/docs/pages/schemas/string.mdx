@@ -4,19 +4,20 @@ A function which creates a parsing rule to ensure that a given value is a string
 
 ## Arguments
 
-1. (Optional): A list of modifiers
-   - `min`: [Learn more](/modifiers/min).
-   - `max`: [Learn more](/modifiers/max).
-   - `email`: [Learn more](/modifiers/email).
-   - `custom`: [Learn more](/modifiers/custom).
-2. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+1. `modifiers?` - A list of modifiers
+   - `min`: [Learn more](/modifiers/min)
+   - `max`: [Learn more](/modifiers/max)
+   - `email`: [Learn more](/modifiers/email)
+   - `enumerator`: [Learn more](/modifiers/enumerator)
+   - `custom`: [Learn more](/modifiers/custom)
+2. `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
-## Example
+## Examples
 
-```ts
+```ts showLineNumbers
 import { string } from '@nordic-ui/validathor';
 
-const stringRule = string(undefined, 'Value must be a string');
+const stringRule = string();
 
 try {
   const parsedValue = stringRule.parse('Hello world');
@@ -24,4 +25,14 @@ try {
 } catch (error) {
   console.error('Parsing failed:', error.message);
 }
+```
+
+## TypeScript
+
+To get the type of a schema, you can do the following:
+
+```ts showLineNumbers
+const stringRule = string();
+
+type StringSchema = ReturnType<typeof stringRule.parse>; // string
 ```

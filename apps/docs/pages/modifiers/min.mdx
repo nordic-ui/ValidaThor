@@ -4,15 +4,15 @@ A modifier which creates a validation rule to ensure that a given value is longe
 
 ## Schemas
 
-- `number`: [Learn more](/schemas/number).
-- `string`: [Learn more](/schemas/string).
-- `date`: [Learn more](/schemas/date).
-- `array`: [Learn more](/schemas/array).
+- `number`: [Learn more](/schemas/number)
+- `string`: [Learn more](/schemas/string)
+- `date`: [Learn more](/schemas/date)
+- `array`: [Learn more](/schemas/array)
 
 ## Arguments
 
-- `min` (number | date): The minimum value that the input value must be more or equal to.
-- `message` (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+- `min` - The minimum value that the input value must be more or equal to
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
 ## Example
 
@@ -20,7 +20,7 @@ import { Tabs, Tab } from 'nextra/components'
 
 <Tabs items={['Number', 'String', 'Date', 'Array']}>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
     import { min, number } from '@nordic-ui/validathor';
 
     const schema = number([min(10)]);
@@ -34,7 +34,7 @@ import { Tabs, Tab } from 'nextra/components'
     ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
     import { min, string } from '@nordic-ui/validathor';
 
     const schema = string([min(3)]);
@@ -48,7 +48,7 @@ import { Tabs, Tab } from 'nextra/components'
     ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
     import { min, date } from '@nordic-ui/validathor';
 
     const schema = date([min(new Date('2024-05-10'))]);
@@ -62,7 +62,7 @@ import { Tabs, Tab } from 'nextra/components'
     ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
     import { min, array } from '@nordic-ui/validathor';
 
     const schema = array([min(3)]);

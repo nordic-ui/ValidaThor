@@ -4,8 +4,8 @@ A function which creates a parsing rule to ensure that a given value is one of t
 
 ## Arguments
 
-1. An array of values or TypeScript enum
-2. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+1. `values` - An array of values or TypeScript enum
+2. `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
 ## Examples
 
@@ -13,10 +13,10 @@ import { Tabs, Tab } from 'nextra/components'
 
 <Tabs items={['Array Values', 'TypeScript String Enum', 'TypeScript Numeric Enum', 'Mixed Enum']}>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
     import { enum_ } from '@nordic-ui/validathor';
 
-    const colorRule = enum_(['red', 'green', 'blue']);
+    const colorRule = enum_(['red', 'green', 'blue'] as const);
 
     try {
       const parsedValue = colorRule.parse('red');
@@ -27,7 +27,7 @@ import { Tabs, Tab } from 'nextra/components'
     ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
     import { enum_ } from '@nordic-ui/validathor';
 
     enum Color {
@@ -47,7 +47,7 @@ import { Tabs, Tab } from 'nextra/components'
     ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
     import { enum_ } from '@nordic-ui/validathor';
 
     enum Status {
@@ -67,7 +67,7 @@ import { Tabs, Tab } from 'nextra/components'
     ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
     import { enum_ } from '@nordic-ui/validathor';
 
     enum UserRole {
@@ -88,37 +88,46 @@ import { Tabs, Tab } from 'nextra/components'
   </Tab>
 </Tabs>
 
-## Custom Error Messages
+## TypeScript
 
-```ts
-import { enum_ } from '@nordic-ui/validathor';
+To get the type of a schema, you can do the following:
 
-const priorityRule = enum_(['low', 'medium', 'high'], {
-  type_error: 'Expected a string or number',
-  error: (value) => `"${value}" is not a valid priority level`
-});
+<Tabs items={['Array Values', 'TypeScript String Enum', 'TypeScript Numeric Enum']}>
+  <Tab>
+  As you can see here, using readonly arrays give better type safety.
+  ```ts showLineNumbers
+  const colorRule = enum_(['red', 'green', 'blue']);
+  const permissionRule = enum_(['read', 'write', 'admin'] as const);
 
-try {
-  const parsedValue = priorityRule.parse('invalid');
-} catch (error) {
-  console.error(error.message); // "invalid" is not a valid priority level
-}
-```
+  type ColorSchema = ReturnType<typeof colorRule.parse>; // string
+  type PermissionSchema = ReturnType<typeof permissionRule.parse>; // 'read' | 'write' | 'admin'
+  ```
+  </Tab>
+  <Tab>
+  ```ts showLineNumbers
+  enum Color {
+    Red = 'red',
+    Green = 'green',
+    Blue = 'blue'
+  }
 
-## Readonly Arrays
+  const colorRule = enum_(Color);
 
-The enum schema also supports readonly arrays for better type safety:
+  type ColorSchema = ReturnType<typeof colorRule.parse>; // Color
+  ```
+  </Tab>
+  <Tab>
+  Using numeric enums do something odd with the return type.
+  ```ts showLineNumbers
+  enum Status {
+    Inactive,  // 0
+    Active,    // 1
+    Pending    // 2
+  }
 
-```ts
-import { enum_ } from '@nordic-ui/validathor';
+  const statusRule = enum_(Status);
 
-const permissions = ['read', 'write', 'admin'] as const;
-const permissionRule = enum_(permissions);
-
-try {
-  const parsedValue = permissionRule.parse('read');
-  console.log('Parsed value:', parsedValue);
-} catch (error) {
-  console.error('Parsing failed:', error.message);
-}
-```
+  type StatusSchema = ReturnType<typeof statusRule.parse>; // string | Status
+  ```
+  </Tab>
+</Tabs>

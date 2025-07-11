@@ -18,7 +18,7 @@ Here's a basic example usecase
 
 <Tabs items={['Schema', 'Usage #1', 'Usage #2']}>
   <Tab>
-    ```js
+    ```ts showLineNumbers
     import * as v from '@nordic-ui/validathor';
 
     // Define the shape of your schema
@@ -40,7 +40,28 @@ Here's a basic example usecase
     ```
   </Tab>
   <Tab>
-    ```js
+    ```ts showLineNumbers
+    // If the input data matches the schema, nothing will happen,
+    // Otherwise an error will be thrown to help the user
+    try {
+      exampleSchema.parse({
+        name: 'John Doe',
+        age: 35,
+        email: 'email@example.com',
+        avatar: {
+          path: 'https://placekeanu.com/200/200',
+          size: 2048
+        },
+        acceptedTerms: true,
+        createdAt: new Date('01/08/2023')
+      })
+    } catch(err) {
+      // Do something with the error
+    };
+    ```
+  </Tab>
+  <Tab>
+    ```ts showLineNumbers
     import * as v from '@nordic-ui/validathor';
 
     // If the input data matches the schema, nothing will happen,
@@ -60,27 +81,6 @@ Here's a basic example usecase
           createdAt: new Date('01/08/2023')
         }
       );
-    } catch(err) {
-      // Do something with the error
-    };
-    ```
-  </Tab>
-  <Tab>
-    ```js
-    // If the input data matches the schema, nothing will happen,
-    // Otherwise an error will be thrown to help the user
-    try {
-      exampleSchema.parse({
-        name: 'John Doe',
-        age: 35,
-        email: 'email@example.com',
-        avatar: {
-          path: 'https://placekeanu.com/200/200',
-          size: 2048
-        },
-        acceptedTerms: true,
-        createdAt: new Date('01/08/2023')
-      })
     } catch(err) {
       // Do something with the error
     };

@@ -4,12 +4,12 @@ A function which ensures that a given input matches an exact value.
 
 ## Arguments
 
-1. An exact value the input should be the same as.
-2. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+1. `value` - An exact value the input should be the same as
+2. `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
 ## Examples
 
-```ts
+```ts showLineNumbers
 import { literal } from '@nordic-ui/validathor';
 
 const literalRule = literal('Hello');
@@ -20,4 +20,14 @@ try {
 } catch (error) {
   console.error('Parsing failed:', error.message);
 }
+```
+
+## TypeScript
+
+To get the type of a schema, you can do the following:
+
+```ts showLineNumbers
+const literalRule = literal('Hello');
+
+type LiteralSchema = ReturnType<typeof literalRule.parse>; // 'Hello'
 ```

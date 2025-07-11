@@ -6,12 +6,12 @@ These are used internally but could be useful for example to test that the right
 
 ## Arguments
 
-- `message` (optional, string): A custom error message to be displayed.
-- `cause` (optional, Error): The original error that caused this type error. If not provided, a generic error with the default message will be set as the cause.
+- `message?` - A custom error message to be displayed
+- `cause?` - The original error that caused this type error. If not provided, a generic error with the default message will be set as the cause
 
 ## Example
 
-```ts
+```ts showLineNumbers
 import { ValidationError, TypeError } from '@nordic-ui/validathor';
 
 throw new ValidationError('Maximum length must be a positive number');
