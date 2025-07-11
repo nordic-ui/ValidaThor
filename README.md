@@ -10,7 +10,7 @@ This is a very short-term roadmap mind you and nothing here is final
 
 - [x] ⚙️ Setup build system and package the library
 - [x] 📚 Add some basic documentation
-- [ ] 🧬 Improve TypeScript types
+- [x] 🧬 Improve TypeScript types
 
 ## Example
 

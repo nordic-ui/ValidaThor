@@ -27,9 +27,7 @@ try {
 To get the type of a schema, you can do the following:
 
 ```ts showLineNumbers
-const tupleRule = tuple();
+const tupleRule = tuple([string(), number()]);
 
-type TupleSchema = ReturnType<typeof tupleRule.parse>; // (Parser<number> | Parser<string>)[][]
+type TupleSchema = ReturnType<typeof tupleRule.parse>; // [string, number]
 ```
-
-NOTE: This is not working as intended right now for this schema
