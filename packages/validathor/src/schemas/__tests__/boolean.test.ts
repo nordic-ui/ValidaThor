@@ -13,12 +13,10 @@ describe('boolean()', () => {
 
     expect(parse(schema, true)).toEqual(true)
     expect(parse(schema, false)).toEqual(false)
-    // @ts-expect-error - This value is always truthy but let's be explicit here
     expect(parse(schema, !!'hello')).toEqual(true)
 
     expect(schema.parse(true)).toEqual(true)
     expect(schema.parse(false)).toEqual(false)
-    // @ts-expect-error - This value is always truthy but let's be explicit here
     expect(schema.parse(!!'hello')).toEqual(true)
 
     expect(() => parse(schema, 'hello world')).toThrowError(new TypeError('Expected a boolean'))

@@ -82,6 +82,7 @@ export type MqttGatewayAdvData = {
 
 type ErrorCounter = { count: number }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function json_safe_parse(str: string): any {
   try {
     return JSON.parse(str)
@@ -264,6 +265,7 @@ describe('All validathor schema types', () => {
 })
 
 describe('process_validathor with union schemas', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let mockCallback: any
   let errorCounter: { count: number }
 
