@@ -3,14 +3,26 @@ import type { Parser } from '@/types'
 import { assert, assertType, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export const tuple = <TSchema extends Parser<unknown>[]>(
+type InferTupleType<T> = T extends readonly [...infer U]
+  ? {
+      [K in keyof U]: U[K] extends Parser<infer V> ? V : never
+    }
+  : never
+
+const isValidTuple = <T extends readonly Parser<unknown>[]>(
+  value: unknown[],
+): value is InferTupleType<T> => {
+  return Array.isArray(value)
+}
+
+export const tuple = <const TSchema extends readonly Parser<unknown>[]>(
   schema: TSchema,
   message?: {
     type_error?: string
   },
-): Parser<TSchema[]> => ({
+): Parser<InferTupleType<TSchema>> => ({
   name: 'tuple' as const,
-  parse: (value): TSchema[] => {
+  parse: (value): InferTupleType<TSchema> => {
     assert(
       Array.isArray(value),
       new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_0000.message()),
@@ -23,17 +35,24 @@ export const tuple = <TSchema extends Parser<unknown>[]>(
       ),
     )
 
-    return value.reduce((result: TSchema[], item: TSchema, index) => {
+    const result = value.reduce((acc: unknown[], item: unknown, index) => {
       const schemaItem = schema[index]
 
-      assertType<Parser<TSchema>>(
+      assertType<Parser<unknown>>(
         schemaItem,
-        isParser<Parser<TSchema>>,
+        isParser<Parser<unknown>>,
         new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_0000.message()),
       )
 
-      result.push(schemaItem.parse(item))
-      return result
+      acc.push(schemaItem.parse(item))
+      return acc
     }, [])
+
+    assert(
+      isValidTuple<TSchema>(result),
+      new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_0000.message()),
+    )
+
+    return result
   },
 })
