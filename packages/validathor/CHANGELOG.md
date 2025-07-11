@@ -1,5 +1,13 @@
 # @nordic-ui/validathor
 
+## 0.4.0
+
+### Minor Changes
+
+- - Support dates in `enumerator` modifier
+  - Updated `array` schema type-error
+  - Allowed for custom `type_error` message in `union` schema
+
 ## 0.3.0
 
 ### Minor Changes
