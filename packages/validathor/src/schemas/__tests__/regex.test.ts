@@ -37,4 +37,10 @@ describe('regex()', () => {
 
     expect(() => parse(schema, 123)).toThrowError(new ValidationError('Invalid regex'))
   })
+
+  it('should have correct return type', () => {
+    const schema = regex()
+
+    expectTypeOf(schema.parse).returns.toEqualTypeOf<RegExp>()
+  })
 })

@@ -373,4 +373,10 @@ describe('[FUTURE]', () => {
       imageIds: [1, 2, 3],
     })
   })
+
+  it('should have correct return type', () => {
+    const schema = object({ name: string(), age: number() })
+
+    expectTypeOf(schema.parse).returns.toEqualTypeOf<{ name: string; age: number }>()
+  })
 })

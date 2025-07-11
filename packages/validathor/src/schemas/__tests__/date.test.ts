@@ -85,4 +85,10 @@ describe('date()', () => {
       new ValidationError('End of the month (maybe)'),
     )
   })
+
+  it('should have correct return type', () => {
+    const schema = date()
+
+    expectTypeOf(schema.parse).returns.toEqualTypeOf<Date>()
+  })
 })

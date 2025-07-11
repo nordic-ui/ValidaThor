@@ -116,4 +116,14 @@ describe('literal()', () => {
       new ValidationError('Value does not match the literal value'),
     )
   })
+
+  it('should have correct return type', () => {
+    const schema1 = literal('hello')
+    const schema2 = literal(420)
+    const schema3 = literal(false)
+
+    expectTypeOf(schema1.parse).returns.toEqualTypeOf<'hello'>()
+    expectTypeOf(schema2.parse).returns.toEqualTypeOf<420>()
+    expectTypeOf(schema3.parse).returns.toEqualTypeOf<false>()
+  })
 })

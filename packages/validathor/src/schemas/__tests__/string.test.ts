@@ -120,4 +120,10 @@ describe('string()', () => {
       new ValidationError('Should be "John Doe"'),
     )
   })
+
+  it('should have correct return type', () => {
+    const schema = string()
+
+    expectTypeOf(schema.parse).returns.toEqualTypeOf<string>()
+  })
 })

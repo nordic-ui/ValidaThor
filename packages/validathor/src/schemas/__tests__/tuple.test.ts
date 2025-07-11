@@ -33,4 +33,10 @@ describe('tuple()', () => {
       new TypeError('Value must be at most 10 or less'),
     )
   })
+
+  it('should have correct return type', () => {
+    const schema = tuple([number(), string()])
+
+    expectTypeOf(schema.parse).returns.toEqualTypeOf<[number, string]>()
+  })
 })

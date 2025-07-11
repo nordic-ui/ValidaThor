@@ -127,4 +127,19 @@ describe('enum_()', () => {
       new ValidationError('Value is not a valid enum option'),
     )
   })
+
+  it('should have correct return type', () => {
+    const schema1 = enum_(['One', 'Two'])
+    const schema2 = enum_(['One', 'Two'] as const)
+    const schema3 = enum_(StringEnum)
+    const schema4 = enum_(NumericEnum)
+    const schema5 = enum_(MixedEnum)
+
+    expectTypeOf(schema1.parse).returns.toEqualTypeOf<string>()
+    expectTypeOf(schema2.parse).returns.toEqualTypeOf<'One' | 'Two'>()
+    expectTypeOf(schema3.parse).returns.toEqualTypeOf<StringEnum>()
+    // TODO: The numeric and mixed enums produce weird types
+    expectTypeOf(schema4.parse).returns.toEqualTypeOf<string | NumericEnum>()
+    expectTypeOf(schema5.parse).returns.toEqualTypeOf<string | MixedEnum>()
+  })
 })

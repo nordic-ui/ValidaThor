@@ -40,4 +40,10 @@ describe('boolean()', () => {
     expect(() => schema.parse('hello world')).toThrowError(new TypeError('Invalid value'))
     expect(() => schema.parse(123)).toThrowError(new TypeError('Invalid value'))
   })
+
+  it('should have correct return type', () => {
+    const schema = boolean()
+
+    expectTypeOf(schema.parse).returns.toEqualTypeOf<boolean>()
+  })
 })

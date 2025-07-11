@@ -132,4 +132,10 @@ describe('union()', () => {
     expect(() => parse(schema, 123)).toThrowError('Expected value to match one of: string | date')
     expect(() => schema.parse(true)).toThrowError('Expected value to match one of: string | date')
   })
+
+  it('should have correct return type', () => {
+    const schema = union([string(), date()])
+
+    expectTypeOf(schema.parse).returns.toEqualTypeOf<string | Date>()
+  })
 })

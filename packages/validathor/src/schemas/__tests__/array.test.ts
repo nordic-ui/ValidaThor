@@ -219,4 +219,14 @@ describe('array()', () => {
       ]),
     ).toThrowError(new TypeError('Expected a boolean'))
   })
+
+  it('should have correct return type', () => {
+    const schema1 = array([string()])
+    const schema2 = array([number()])
+    const schema3 = array([number(), string()])
+
+    expectTypeOf(schema1.parse).returns.toEqualTypeOf<string[]>()
+    expectTypeOf(schema2.parse).returns.toEqualTypeOf<number[]>()
+    expectTypeOf(schema3.parse).returns.toEqualTypeOf<(number | string)[]>()
+  })
 })

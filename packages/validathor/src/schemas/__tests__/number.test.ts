@@ -81,4 +81,10 @@ describe('number()', () => {
     expect(() => parse(schema1, '123')).toThrowError(new ValidationError('Expected a number'))
     expect(() => parse(schema2, 123)).toThrowError(new ValidationError('Expected a string'))
   })
+
+  it('should have correct return type', () => {
+    const schema = number()
+
+    expectTypeOf(schema.parse).returns.toEqualTypeOf<number>()
+  })
 })
