@@ -6,12 +6,12 @@ This function is used within each of our schemas and modifiers
 
 ## Arguments
 
-- `condition` The condition to check.
-- `message?` The error message to throw if the condition is false.
+- `condition` - The condition to check
+- `message?` - The error message to throw if the condition is false
 
 ## Example
 
-```ts
+```ts showLineNumbers
 import { assert } from '@nordic-ui/validathor';
 
 assert(isAdmin === true, 'You must be an admin to perform this action');

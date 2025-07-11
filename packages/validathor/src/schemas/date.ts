@@ -1,10 +1,10 @@
 import { validateModifiers } from '@/core/validateModifiers'
-import type { Custom, Max, Min } from '@/modifiers'
+import type { Custom, Enumerator, Max, Min } from '@/modifiers'
 import type { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
-export type DateSchemaModifiers = (Min<Date> | Max<Date> | Custom<Date>)[]
+export type DateSchemaModifiers = (Min<Date> | Max<Date> | Enumerator<Date> | Custom<Date>)[]
 
 export const date = (
   modifiers: DateSchemaModifiers = [],

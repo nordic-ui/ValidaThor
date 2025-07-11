@@ -109,6 +109,7 @@ describe('string()', () => {
 
   it('should work with custom() modifier', () => {
     const schema = string([
+      // Note: Do not use this in your own code - Use the `literal` schema instead
       custom((value) => [[value === 'John Doe', new ValidationError('Should be "John Doe"')]]),
     ])
 

@@ -4,21 +4,22 @@ A modifier which creates a validation rule to ensure that a given value is one o
 
 ## Schemas
 
-- `number`: [Learn more](/schemas/number).
-- `string`: [Learn more](/schemas/string).
+- `number`: [Learn more](/schemas/number)
+- `string`: [Learn more](/schemas/string)
+- `date`: [Learn more](/schemas/date)
 
 ## Arguments
 
-- `input` (number[] | string[] | TypeScript enum): The array of values or TypeScript enum which the input value must be one of.
-- `message` (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+- `input` - The array of values or TypeScript enum which the input value must be one of
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
 ## Example
 
 import { Tabs, Tab } from 'nextra/components'
 
-<Tabs items={['Number Array', 'String Array', 'String Enum', 'Numeric Enum']}>
+<Tabs items={['Number Array', 'String Array', 'Date Array', 'String Enum', 'Numeric Enum']}>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
       import { enumerator, number } from '@nordic-ui/validathor';
 
       const schema = number([enumerator([0, 25, 50, 75, 100])]);
@@ -32,7 +33,7 @@ import { Tabs, Tab } from 'nextra/components'
       ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
       import { enumerator, string } from '@nordic-ui/validathor';
 
       const schema = string([enumerator(['Red', 'Green', 'Blue'])]);
@@ -46,7 +47,21 @@ import { Tabs, Tab } from 'nextra/components'
     ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
+      import { enumerator, date } from '@nordic-ui/validathor';
+
+      const schema = date([enumerator([new Date('2024/01/01'), new Date('2025/01/01')])]);
+
+      try {
+        const parsedValue = schema.parse(new Date('2024/12/31'));
+        console.log('Parsed value:', parsedValue);
+      } catch (error) {
+        console.error('Parsing failed:', error.message);
+      }
+    ```
+  </Tab>
+  <Tab>
+    ```ts showLineNumbers
       import { enumerator, string } from '@nordic-ui/validathor';
 
       enum Color {
@@ -58,7 +73,7 @@ import { Tabs, Tab } from 'nextra/components'
       const schema = string([enumerator(Color)]);
 
       try {
-        const parsedValue = schema.parse('red');
+        const parsedValue = schema.parse(Color.Red); // 'red'
         console.log('Parsed value:', parsedValue);
       } catch (error) {
         console.error('Parsing failed:', error.message);
@@ -66,7 +81,7 @@ import { Tabs, Tab } from 'nextra/components'
       ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
       import { enumerator, number } from '@nordic-ui/validathor';
 
       enum Status {
@@ -78,7 +93,7 @@ import { Tabs, Tab } from 'nextra/components'
       const schema = number([enumerator(Status)]);
 
       try {
-        const parsedValue = schema.parse(1); // Active
+        const parsedValue = schema.parse(Status.Active); // 1
         console.log('Parsed value:', parsedValue);
       } catch (error) {
         console.error('Parsing failed:', error.message);

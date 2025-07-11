@@ -6,20 +6,20 @@ If you have specific needs that are not met by existing modifiers, the `custom` 
 
 ## Schemas
 
-- `boolean`: [Learn more](/schemas/boolean).
-- `date`: [Learn more](/schemas/date).
-- `number`: [Learn more](/schemas/number).
-- `regex`: [Learn more](/schemas/regex).
-- `string`: [Learn more](/schemas/string).
-- `array`: [Learn more](/schemas/array).
+- `boolean`: [Learn more](/schemas/boolean)
+- `date`: [Learn more](/schemas/date)
+- `number`: [Learn more](/schemas/number)
+- `regex`: [Learn more](/schemas/regex)
+- `string`: [Learn more](/schemas/string)
+- `array`: [Learn more](/schemas/array)
 
 ## Arguments
 
-- `assertions`: A tuple consisting of an assertion and the related error.
+- `assertions` - A tuple consisting of an assertion and the related error
 
 ## Example
 
-```ts
+```ts showLineNumbers
 import { custom, string, ValidationError } from '@nordic-ui/validathor';
 
 const customRule = string([custom((value) =>

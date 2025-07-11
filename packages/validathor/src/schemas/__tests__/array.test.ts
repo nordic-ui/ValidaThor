@@ -57,8 +57,9 @@ describe('array()', () => {
     const schema2 = array(number())
     const schema3 = array(boolean())
     const schema4 = array(date())
-    const schema5 = array(object({ name: string() }))
-    const schema6 = array(array([number()]))
+    const schema5 = array(literal('hello'))
+    const schema6 = array(object({ name: string() }))
+    const schema7 = array(array([number()]))
 
     expect(parse(schema1, ['hello', 'world'])).toEqual(['hello', 'world'])
     expect(parse(schema2, [1, 2, 3])).toEqual([1, 2, 3])
@@ -66,12 +67,13 @@ describe('array()', () => {
     expect(
       parse(schema4, [new Date('2018-03-06T09:00:00.000Z'), new Date('2024-11-16T17:07:39.128Z')]),
     ).toEqual([new Date('2018-03-06T09:00:00.000Z'), new Date('2024-11-16T17:07:39.128Z')])
-    expect(parse(schema5, [{ name: 'Obi-Wan Kenobi' }, { name: 'Anakin Skywalker' }])).toEqual([
+    expect(parse(schema5, ['hello'])).toEqual(['hello'])
+    expect(parse(schema6, [{ name: 'Obi-Wan Kenobi' }, { name: 'Anakin Skywalker' }])).toEqual([
       { name: 'Obi-Wan Kenobi' },
       { name: 'Anakin Skywalker' },
     ])
     expect(
-      parse(schema6, [
+      parse(schema7, [
         [1, 2, 3],
         [4, 5, 6],
         [7, 8, 9],
@@ -88,6 +90,7 @@ describe('array()', () => {
     expect(parse(schema4, [])).toEqual([])
     expect(parse(schema5, [])).toEqual([])
     expect(parse(schema6, [])).toEqual([])
+    expect(parse(schema7, [])).toEqual([])
   })
 
   it('should work with modifiers', () => {
@@ -103,6 +106,12 @@ describe('array()', () => {
       new TypeError('Value must be at most 2 x long'),
     )
     expect(() => parse(schema2, [1, 2])).toThrowError(
+      new TypeError('Value must be at least 3 x long'),
+    )
+    expect(() => parse(schema3, [1, 2, 420])).toThrowError(
+      new TypeError('Value must be at most 69 or less'),
+    )
+    expect(() => parse(schema3, [42, 1024])).toThrowError(
       new TypeError('Value must be at least 3 x long'),
     )
     expect(() => parse(schema3, [42, 1024, Infinity])).toThrowError(
@@ -194,10 +203,10 @@ describe('array()', () => {
     ).toThrowError()
   })
 
-  it('should fail', () => {
+  it('should fail on nested schema validations', () => {
     const schema = array(object({ name: string(), age: number(), isAdmin: boolean() }))
 
-    expect(() => parse(schema, 'fail')).toThrowError(new TypeError('Value must be an array'))
+    expect(() => parse(schema, 'fail')).toThrowError(new TypeError('Expected an array'))
     expect(() => parse(schema, ['fail'])).toThrowError(new TypeError('Expected an object'))
     expect(() => parse(schema, [{ name: 123 }])).toThrowError(new TypeError('Expected a string'))
     expect(() => parse(schema, [{ name: 'John Doe', age: 'foo' }])).toThrowError(

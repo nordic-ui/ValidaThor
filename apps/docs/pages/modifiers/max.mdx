@@ -4,15 +4,15 @@ A modifier which creates a validation rule to ensure that a given value is less 
 
 ## Schemas
 
-- `number`: [Learn more](/schemas/number).
-- `string`: [Learn more](/schemas/string).
-- `date`: [Learn more](/schemas/date).
-- `array`: [Learn more](/schemas/array).
+- `number`: [Learn more](/schemas/number)
+- `string`: [Learn more](/schemas/string)
+- `date`: [Learn more](/schemas/date)
+- `array`: [Learn more](/schemas/array)
 
 ## Arguments
 
-- `max` (number | date): The maximum value that the input value must meet or exceed.
-- `message` (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+- `max` - The maximum value that the input value must meet or exceed
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
 ## Example
 
@@ -20,7 +20,7 @@ import { Tabs, Tab } from 'nextra/components'
 
 <Tabs items={['Number', 'String', 'Date', 'Array']}>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
       import { max, number } from '@nordic-ui/validathor';
 
       const schema = number([max(10)]);
@@ -34,7 +34,7 @@ import { Tabs, Tab } from 'nextra/components'
       ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
       import { max, string } from '@nordic-ui/validathor';
 
       const schema = string([max(6)]);
@@ -48,7 +48,7 @@ import { Tabs, Tab } from 'nextra/components'
     ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
       import { max, date } from '@nordic-ui/validathor';
 
       const schema = date([max(new Date('2026-03-24'))]);
@@ -62,7 +62,7 @@ import { Tabs, Tab } from 'nextra/components'
     ```
   </Tab>
   <Tab>
-    ```ts
+    ```ts showLineNumbers
       import { max, array } from '@nordic-ui/validathor';
 
       const schema = array([max(3)]);

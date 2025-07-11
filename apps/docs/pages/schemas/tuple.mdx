@@ -4,15 +4,15 @@ A function which creates a parsing rule to ensure that a given value is a tuple.
 
 ## Arguments
 
-1. A schema
-2. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+1. `schemas` - A tuple of schemas
+2. `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
-## Example
+## Examples
 
-```ts
+```ts showLineNumbers
 import { tuple, string, number } from '@nordic-ui/validathor';
 
-const tupleRule = tuple([string(), number()], 'Value must be a tuple');
+const tupleRule = tuple([string(), number()]);
 
 try {
   const parsedValue = tupleRule.parse(['Hello', 123]);
@@ -21,3 +21,15 @@ try {
   console.error('Parsing failed:', error.message);
 }
 ```
+
+## TypeScript
+
+To get the type of a schema, you can do the following:
+
+```ts showLineNumbers
+const tupleRule = tuple();
+
+type TupleSchema = ReturnType<typeof tupleRule.parse>; // (Parser<number> | Parser<string>)[][]
+```
+
+NOTE: This is not working as intended right now for this schema

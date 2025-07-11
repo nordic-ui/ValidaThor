@@ -30,7 +30,7 @@ describe('enum_()', () => {
   })
 
   it('should work with array of numbers', () => {
-    const schema = enum_([1, 2, 420])
+    const schema = enum_([1, 2, 420] as const)
 
     expect(parse(schema, 1)).toEqual(1)
     expect(parse(schema, 420)).toEqual(420)

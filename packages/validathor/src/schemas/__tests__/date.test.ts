@@ -1,5 +1,5 @@
 import { parse } from '@/core/parse'
-import { custom, max, min } from '@/modifiers'
+import { custom, enumerator, max, min } from '@/modifiers'
 import { ValidationError, TypeError } from '@/utils/errors/errors'
 
 import { date } from '../date'
@@ -60,6 +60,18 @@ describe('date()', () => {
     )
     expect(() => parse(schema5, new Date('2022/01/01'))).toThrowError(
       new ValidationError('Date is too late'),
+    )
+  })
+
+  it('should work with enumerator() modifier', () => {
+    const dates = [new Date('2021/01/01'), new Date('2021/12/31'), new Date('2025/07/11')] as const
+    const schema = date([enumerator(dates)])
+
+    expect(parse(schema, dates[0])).toEqual(new Date('2021/01/01'))
+    expect(parse(schema, dates[2])).toEqual(new Date('2025/07/11'))
+
+    expect(() => parse(schema, new Date('2018/01/01'))).toThrowError(
+      new ValidationError('Value is not in the allowed list'),
     )
   })
 

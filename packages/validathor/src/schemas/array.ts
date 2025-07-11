@@ -53,7 +53,7 @@ export function array<
     parse: (value): ArrayReturnType<TParser> => {
       assert(
         Array.isArray(value),
-        new TypeError(message?.type_error || ERROR_CODES.ERR_VAL_8000.message()),
+        new TypeError(message?.type_error || ERROR_CODES.ERR_TYP_8000.message()),
       )
 
       validateModifiers(value, modifiers)

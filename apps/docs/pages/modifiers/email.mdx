@@ -4,16 +4,16 @@ A modifier which creates a validation rule to ensure that a given string is an e
 
 ## Schemas
 
-- `string`: [Learn more](/schemas/string).
+- `string`: [Learn more](/schemas/string)
 
 ## Arguments
 
-- `domain` (Optional): The domain that the email should end with.
-- `message` (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+- `domain?` - The domain that the email should end with
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
 ## Example
 
-```ts
+```ts showLineNumbers
 import { email, string } from '@nordic-ui/validathor';
 
 const emailRule = string([

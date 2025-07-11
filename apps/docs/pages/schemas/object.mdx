@@ -4,15 +4,15 @@ A function which creates a parsing rule to ensure that a given value is an objec
 
 ## Arguments
 
-1. A record of schemas
-2. (Optional): A custom object with error messages to be displayed when validation fails or there are type errors.
+1. `schema` - A record of schemas
+2. `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
 
-## Example
+## Examples
 
-```ts
+```ts showLineNumbers
 import { object, string } from '@nordic-ui/validathor';
 
-const objectRule = object({ name: string() }, 'Value must be an object');
+const objectRule = object({ name: string() });
 
 try {
   const parsedValue = objectRule.parse({ name: 'John Doe' });
@@ -20,4 +20,14 @@ try {
 } catch (error) {
   console.error('Parsing failed:', error.message);
 }
+```
+
+## TypeScript
+
+To get the type of a schema, you can do the following:
+
+```ts showLineNumbers
+const objectRule = object({ name: string() });
+
+type ObjectSchema = ReturnType<typeof objectRule.parse>; // { name: string }
 ```
