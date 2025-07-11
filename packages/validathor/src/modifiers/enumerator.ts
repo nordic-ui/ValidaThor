@@ -7,16 +7,18 @@ export type Enumerator<TValue> = {
 }
 
 // Support for both array of values and TypeScript enums
-type EnumLike = Record<string | number, string | number> | readonly (string | number)[]
+type EnumLike =
+  | Record<string | number, string | number | Date>
+  | readonly (string | number | Date)[]
 
 // Helper to extract enum values (reused from enum schema)
-const getEnumValues = (enumObject: EnumLike): (string | number)[] => {
+const getEnumValues = (enumObject: EnumLike): (string | number | Date)[] => {
   if (Array.isArray(enumObject)) return [...enumObject]
 
   // For TypeScript enums, we need to extract the actual enum values
   // while avoiding reverse mappings
   const entries = Object.entries(enumObject)
-  const validValues: (string | number)[] = []
+  const validValues: (string | number | Date)[] = []
 
   for (const [key, value] of entries) {
     // Skip reverse mappings (where key is a string representation of a number)
@@ -30,6 +32,7 @@ const getEnumValues = (enumObject: EnumLike): (string | number)[] => {
 // Overload for when we can infer it's a string-only enum/array
 export function enumerator(input: string[] | readonly string[]): Enumerator<string>
 export function enumerator(input: number[] | readonly number[]): Enumerator<number>
+export function enumerator(input: Date[] | readonly Date[]): Enumerator<Date>
 // Generic fallback for enums (TypeScript can't easily infer these)
 export function enumerator(input: EnumLike): Enumerator<string | number>
 export function enumerator(
@@ -41,11 +44,15 @@ export function enumerator(
   message?: { type_error?: string; error?: string },
 ): Enumerator<number>
 export function enumerator(
+  input: Date[] | readonly Date[],
+  message?: { type_error?: string; error?: string },
+): Enumerator<Date>
+export function enumerator(
   input: EnumLike,
   message?: { type_error?: string; error?: string },
-): Enumerator<string | number>
+): Enumerator<string | number | Date>
 
-export function enumerator<TValue extends string | number = string | number>(
+export function enumerator<TValue extends string | number | Date = string | number | Date>(
   input: EnumLike,
   message?: {
     type_error?: string
