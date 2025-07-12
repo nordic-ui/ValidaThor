@@ -1,0 +1,60 @@
+# Trim modifier
+
+A modifier which creates a transformation rule to trim whitespace from the beginning and end of a string.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { trim, string, min } from '@nordic-ui/validathor';
+
+const trimmedRule = string([
+  trim({
+    type_error: "Must be a string",
+  }),
+  min(1), // Ensure non-empty after trimming
+]);
+
+try {
+  const parsedValue = trimmedRule.parse('  hello world  ');
+  console.log('Parsed value:', parsedValue); // "hello world"
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Transformation Details
+
+The trim modifier:
+- Removes all leading whitespace characters
+- Removes all trailing whitespace characters
+- Preserves internal whitespace
+- Works with all Unicode whitespace characters (spaces, tabs, newlines, etc.)
+
+## Common Use Cases
+
+```ts showLineNumbers
+import { trim, string, email } from '@nordic-ui/validathor';
+
+// Clean user input before validation
+const emailRule = string([
+  trim(),
+  email(),
+]);
+
+// Ensure non-empty strings after trimming
+const requiredTextRule = string([
+  trim(),
+  min(1, { min_error: "This field is required" }),
+]);
+
+// Process form inputs
+const result = emailRule.parse('  user@example.com  '); // "user@example.com"
+```

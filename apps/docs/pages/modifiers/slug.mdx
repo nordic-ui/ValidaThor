@@ -1,0 +1,85 @@
+# Slug modifier
+
+A modifier which creates a validation rule to ensure that a given string is a valid slug (URL-friendly identifier).
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { slug, string } from '@nordic-ui/validathor';
+
+const slugRule = string([
+  slug({
+    type_error: "Must be a valid slug",
+  }),
+]);
+
+try {
+  const parsedValue = slugRule.parse('my-awesome-blog-post');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Validation Rules
+
+A valid slug must:
+- Contain only lowercase letters (a-z)
+- Contain only numbers (0-9)
+- Use hyphens (-) as separators
+- Not start or end with a hyphen
+- Not contain consecutive hyphens
+- Not contain spaces or special characters
+
+## Valid Examples
+
+- `hello`
+- `hello-world`
+- `my-awesome-post`
+- `product-123`
+- `version-2`
+- `a-b-c-d-e`
+
+## Invalid Examples
+
+- `Hello` (uppercase letters)
+- `hello world` (spaces)
+- `hello_world` (underscores)
+- `hello.world` (dots)
+- `-hello` (starts with hyphen)
+- `hello-` (ends with hyphen)
+- `hello--world` (consecutive hyphens)
+
+## Common Use Cases
+
+```ts showLineNumbers
+import { slug, string, min, max } from '@nordic-ui/validathor';
+
+// Username validation
+const usernameRule = string([
+  slug(),
+  min(3),
+  max(30),
+]);
+
+// URL segment validation
+const urlSegmentRule = string([
+  slug({
+    type_error: "URL segment must be lowercase with hyphens only",
+  }),
+]);
+
+// Blog post ID validation
+const postIdRule = string([
+  slug(),
+  max(100),
+]);
+```

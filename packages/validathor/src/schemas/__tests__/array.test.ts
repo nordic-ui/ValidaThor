@@ -49,7 +49,9 @@ describe('array()', () => {
 
     expect(parse(schema, ['hello', 123, true])).toEqual(['hello', 123, true])
 
-    expect(() => parse(schema, ['foo', new Date(), 123])).toThrow()
+    expect(() => parse(schema, ['foo', new Date(), 123])).toThrowError(
+      new TypeError('Expected a boolean'),
+    )
   })
 
   it('should work with no modifiers', () => {

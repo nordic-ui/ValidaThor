@@ -1,0 +1,42 @@
+# UUID modifier
+
+A modifier which creates a validation rule to ensure that a given string is a valid UUID (Universally Unique Identifier).
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { uuid, string } from '@nordic-ui/validathor';
+
+const uuidRule = string([
+  uuid({
+    type_error: "Must be a valid UUID",
+  }),
+]);
+
+try {
+  const parsedValue = uuidRule.parse('123e4567-e89b-12d3-a456-426614174000');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Supported UUID Versions
+
+The UUID modifier validates UUIDs according to RFC 4122, supporting:
+
+- Version 1 (timestamp-based)
+- Version 2 (DCE Security)
+- Version 3 (namespace name-based, MD5)
+- Version 4 (random)
+- Version 5 (namespace name-based, SHA-1)
+
+The validation is case-insensitive, accepting both uppercase and lowercase UUIDs.

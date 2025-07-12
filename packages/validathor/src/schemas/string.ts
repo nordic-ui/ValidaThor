@@ -1,6 +1,22 @@
 import { validateModifiers } from '@/core/validateModifiers'
-import type { Custom, Email, Max, Min } from '@/modifiers'
-import type { Enumerator } from '@/modifiers/enumerator'
+import type {
+  CreditCard,
+  Custom,
+  Email,
+  EndsWith,
+  Enumerator,
+  Includes,
+  Ip,
+  Max,
+  Min,
+  Pattern,
+  Phone,
+  Slug,
+  StartsWith,
+  Trim,
+  Url,
+  Uuid,
+} from '@/modifiers'
 import type { Parser } from '@/types'
 import { assert, TypeError } from '@/utils'
 import { ERROR_CODES } from '@/utils/errors/errorCodes'
@@ -12,8 +28,25 @@ export type StringSchemaModifiers = (
   | Email
   | Enumerator<string>
   | Custom<string>
+  | Url
+  | Uuid
+  | Phone
+  | Ip
+  | CreditCard
+  | Trim
+  | Includes
+  | StartsWith
+  | EndsWith
+  | Slug
+  | Pattern
 )[]
 
+/**
+ * Creates a schema that validates non-empty string values
+ * @param modifiers Optional modifiers for additional validation and transformation
+ * @param message Optional custom error messages
+ * @returns A parser that validates non-empty strings
+ */
 export const string = (
   modifiers: StringSchemaModifiers = [],
   message?: {

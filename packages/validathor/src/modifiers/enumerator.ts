@@ -29,6 +29,12 @@ const getEnumValues = (enumObject: EnumLike): (string | number | Date)[] => {
   return validValues
 }
 
+/**
+ * Used to validate that a value is one of the allowed values from an array or enum
+ * @param input An array of allowed values or a TypeScript enum object
+ * @param message Optional custom error messages
+ * @returns An enumerator modifier that validates values against the allowed list
+ */
 // Overload for when we can infer it's a string-only enum/array
 export function enumerator(input: string[] | readonly string[]): Enumerator<string>
 export function enumerator(input: number[] | readonly number[]): Enumerator<number>

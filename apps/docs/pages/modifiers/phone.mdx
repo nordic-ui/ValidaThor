@@ -1,0 +1,51 @@
+# Phone modifier
+
+A modifier which creates a validation rule to ensure that a given string is a valid phone number.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { phone, string } from '@nordic-ui/validathor';
+
+const phoneRule = string([
+  phone({
+    type_error: "Must be a valid phone number",
+  }),
+]);
+
+try {
+  const parsedValue = phoneRule.parse('+1-555-123-4567');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Supported Phone Formats
+
+The phone modifier supports various international and domestic phone number formats:
+
+### US Formats
+- `+1-555-123-4567`
+- `1-555-123-4567`
+- `555-123-4567`
+- `(555) 123-4567`
+- `555.123.4567`
+- `5551234567`
+
+### International Formats
+- `+44 20 7946 0958` (UK)
+- `+33 1 42 86 82 00` (France)
+- `+49 30 12345678` (Germany)
+- `+81 3-1234-5678` (Japan)
+- `+86 10 1234 5678` (China)
+
+The validator accepts numbers with spaces, dots, hyphens, and parentheses as separators.

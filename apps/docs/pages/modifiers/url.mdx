@@ -1,0 +1,44 @@
+# URL modifier
+
+A modifier which creates a validation rule to ensure that a given string is a valid URL.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { url, string } from '@nordic-ui/validathor';
+
+const urlRule = string([
+  url({
+    type_error: "Must be a valid URL",
+  }),
+]);
+
+try {
+  const parsedValue = urlRule.parse('https://example.com');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Valid URL Formats
+
+The URL modifier uses the built-in JavaScript `URL` constructor for validation, which accepts:
+
+- `https://example.com`
+- `http://example.com`
+- `ftp://files.example.com`
+- `https://example.com:8080`
+- `https://subdomain.example.com`
+- `https://example.com/path/to/resource`
+- `https://example.com?query=value`
+- `https://example.com#anchor`
+- `https://user:pass@example.com`

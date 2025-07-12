@@ -42,6 +42,12 @@ const isValidEnumValue = <TEnum extends EnumLike>(
   return allowedValues.includes(value)
 }
 
+/**
+ * Creates a schema that validates enum values (TypeScript enums or value arrays)
+ * @param enumObject A TypeScript enum object or an array of allowed values
+ * @param message Optional custom error messages
+ * @returns A parser that validates values against the enum
+ */
 export const enum_ = <TEnum extends EnumLike>(
   enumObject: TEnum,
   message?: {

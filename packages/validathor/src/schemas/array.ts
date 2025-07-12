@@ -27,6 +27,13 @@ const isValidArray = <TParser>(value: unknown[]): value is ArrayReturnType<TPars
   return Array.isArray(value)
 }
 
+/**
+ * Creates a schema that validates arrays containing elements of the specified type(s)
+ * @param schema A single schema or an array of schemas that elements must match
+ * @param modifiers Optional array modifiers like min/max length
+ * @param message Optional custom error messages
+ * @returns A parser that validates arrays of the specified type(s)
+ */
 export function array<TParser extends Parser<unknown, unknown>>(
   schema: TParser,
   modifiers?: ArraySchemaModifiers,

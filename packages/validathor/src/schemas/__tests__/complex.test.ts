@@ -219,7 +219,7 @@ describe('All validathor schema types', () => {
   it('should demonstrate usage of all schema types', () => {
     // Boolean schema
     const isActiveSchema = v.boolean()
-    expect(parse(isActiveSchema, true)).toBe(true)
+    expect(parse(isActiveSchema, true)).toEqual(true)
 
     // Date schema
     const lastSeenSchema = v.date()
@@ -228,7 +228,7 @@ describe('All validathor schema types', () => {
 
     // Enum schema
     const statusSchema = v.enum_(['online', 'offline', 'idle'])
-    expect(parse(statusSchema, 'online')).toBe('online')
+    expect(parse(statusSchema, 'online')).toEqual('online')
 
     // Tuple schema
     const coordinatesSchema = v.tuple([v.number(), v.number(), v.number()])
@@ -301,7 +301,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(1)
       expect(mockCallback).toHaveBeenCalledWith(
         'AA:BB:CC:DD:EE:FF',
@@ -337,7 +337,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(1)
       expect(mockCallback).toHaveBeenCalledWith(
         'AA:BB:CC:DD:EE:FF',
@@ -373,7 +373,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(1)
       expect(mockCallback).toHaveBeenCalledWith(
         'AA:BB:CC:DD:EE:FF',
@@ -433,7 +433,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(3)
       expect(mockCallback).toHaveBeenNthCalledWith(
         1,
@@ -483,7 +483,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(1)
       expect(mockCallback).toHaveBeenCalledWith(
         'AA:BB:CC:DD:EE:FF',
@@ -504,7 +504,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(1)
+      expect(errorCounter.count).toEqual(1)
       expect(mockCallback).not.toHaveBeenCalled()
     })
 
@@ -518,7 +518,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(1)
+      expect(errorCounter.count).toEqual(1)
       expect(mockCallback).not.toHaveBeenCalled()
     })
 
@@ -540,7 +540,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(1)
+      expect(errorCounter.count).toEqual(1)
       expect(mockCallback).not.toHaveBeenCalled()
     })
 
@@ -555,7 +555,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(1)
+      expect(errorCounter.count).toEqual(1)
       expect(mockCallback).not.toHaveBeenCalled()
     })
 
@@ -590,7 +590,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(1)
+      expect(errorCounter.count).toEqual(1)
       expect(mockCallback).not.toHaveBeenCalled()
     })
 
@@ -600,7 +600,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(1)
+      expect(errorCounter.count).toEqual(1)
       expect(mockCallback).not.toHaveBeenCalled()
     })
 
@@ -635,7 +635,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(1)
+      expect(errorCounter.count).toEqual(1)
       expect(mockCallback).not.toHaveBeenCalled()
     })
   })
@@ -652,7 +652,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).not.toHaveBeenCalled()
     })
 
@@ -683,7 +683,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(1)
     })
   })
@@ -722,7 +722,7 @@ describe('process_validathor with union schemas', () => {
       await process_validathor(message, mockCallback, errorCounter)
 
       // The current schema doesn't validate these extra fields, but they should be ignored
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(1)
     })
 
@@ -753,7 +753,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(1)
       expect(mockCallback).toHaveBeenCalledWith(
         'AA:BB:CC:DD:EE:FF',
@@ -792,7 +792,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledWith(
         'AA:BB:CC:DD:EE:FF',
         'alive',
@@ -829,7 +829,7 @@ describe('process_validathor with union schemas', () => {
       )
 
       await process_validathor(validMacMessage, mockCallback, errorCounter)
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(1)
 
       // Test with invalid MAC format (though current schema just uses string())
@@ -858,7 +858,7 @@ describe('process_validathor with union schemas', () => {
 
       // Current schema accepts any string for MAC addresses
       await process_validathor(invalidMacMessage, mockCallback, errorCounter)
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledTimes(2)
     })
 
@@ -888,7 +888,7 @@ describe('process_validathor with union schemas', () => {
 
       await process_validathor(message, mockCallback, errorCounter)
 
-      expect(errorCounter.count).toBe(0)
+      expect(errorCounter.count).toEqual(0)
       expect(mockCallback).toHaveBeenCalledWith(
         'AA:BB:CC:DD:EE:FF',
         'adv1',

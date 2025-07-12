@@ -1,0 +1,61 @@
+# IP modifier
+
+A modifier which creates a validation rule to ensure that a given string is a valid IP address.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `version?` - Optional version specification: `'v4'` for IPv4 only, `'v6'` for IPv6 only, or undefined for both
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { ip, string } from '@nordic-ui/validathor';
+
+// Accept both IPv4 and IPv6
+const ipRule = string([
+  ip(undefined, {
+    type_error: "Must be a valid IP address",
+  }),
+]);
+
+// IPv4 only
+const ipv4Rule = string([
+  ip('v4', {
+    type_error: "Must be a valid IPv4 address",
+  }),
+]);
+
+// IPv6 only
+const ipv6Rule = string([
+  ip('v6', {
+    type_error: "Must be a valid IPv6 address",
+  }),
+]);
+
+try {
+  const ipv4 = ipv4Rule.parse('192.168.1.1');
+  const ipv6 = ipv6Rule.parse('2001:db8::8a2e:370:7334');
+  console.log('IPv4:', ipv4);
+  console.log('IPv6:', ipv6);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Supported Formats
+
+### IPv4 Addresses
+- Standard dotted decimal notation: `192.168.1.1`
+- All valid ranges (0-255 per octet): `10.0.0.0`, `172.16.0.1`, `8.8.8.8`
+
+### IPv6 Addresses
+- Full notation: `2001:0db8:85a3:0000:0000:8a2e:0370:7334`
+- Compressed notation: `2001:db8:85a3::8a2e:370:7334`
+- Loopback: `::1`
+- Unspecified: `::`
+- IPv4-mapped IPv6: `::ffff:192.168.1.1`

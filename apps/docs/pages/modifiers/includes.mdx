@@ -1,0 +1,70 @@
+# Includes modifier
+
+A modifier which creates a validation rule to ensure that a given string includes a specific substring.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `substring` - The substring that must be present in the string
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { includes, string } from '@nordic-ui/validathor';
+
+const includesRule = string([
+  includes('@', {
+    include_error: "Must contain @ symbol",
+  }),
+]);
+
+try {
+  const parsedValue = includesRule.parse('user@example.com');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Validation Details
+
+The includes modifier:
+- Performs case-sensitive substring matching
+- Can check for any substring, not just single characters
+- Returns the original string if validation passes
+
+## Common Use Cases
+
+```ts showLineNumbers
+import { includes, string } from '@nordic-ui/validathor';
+
+// Ensure email-like format
+const emailLikeRule = string([
+  includes('@'),
+  includes('.'),
+]);
+
+// Validate file extensions
+const markdownRule = string([
+  includes('.md', {
+    include_error: "Must be a markdown file",
+  }),
+]);
+
+// Check for required keywords
+const licenseRule = string([
+  includes('MIT License', {
+    include_error: "Must contain MIT License text",
+  }),
+]);
+
+// Multiple required substrings
+const urlRule = string([
+  includes('https://'),
+  includes('.com'),
+]);
+```

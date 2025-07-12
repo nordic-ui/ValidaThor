@@ -6,6 +6,12 @@ type ExtractParserType<T> = T extends Parser<infer U> ? U : never
 
 type UnionSchemaType<T extends readonly Parser<unknown>[]> = ExtractParserType<T[number]>
 
+/**
+ * Creates a schema that validates values matching any of the provided schemas
+ * @param schemas An array of parsers, value must match at least one
+ * @param message Optional custom error messages
+ * @returns A parser that validates union types
+ */
 export const union = <TSchemas extends readonly Parser<unknown>[]>(
   schemas: TSchemas,
   message?: {

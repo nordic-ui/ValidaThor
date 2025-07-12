@@ -6,6 +6,7 @@
   "literal": "Literal",
   "number": "Number",
   "object": "Object",
+  "optional": "Optional",
   "regex": "Regex",
   "string": "String",
   "tuple": "Tuple",

@@ -6,6 +6,12 @@ import { ERROR_CODES } from '@/utils/errors/errorCodes'
 
 export type DateSchemaModifiers = (Min<Date> | Max<Date> | Enumerator<Date> | Custom<Date>)[]
 
+/**
+ * Creates a schema that validates Date objects
+ * @param modifiers Optional modifiers like min/max date validation
+ * @param message Optional custom error messages
+ * @returns A parser that validates Date objects
+ */
 export const date = (
   modifiers: DateSchemaModifiers = [],
   message?: { type_error?: string },

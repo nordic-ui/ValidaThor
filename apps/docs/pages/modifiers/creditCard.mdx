@@ -1,0 +1,53 @@
+# Credit Card modifier
+
+A modifier which creates a validation rule to ensure that a given string is a valid credit card number using the Luhn algorithm.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { creditCard, string } from '@nordic-ui/validathor';
+
+const creditCardRule = string([
+  creditCard({
+    type_error: "Must be a valid credit card number",
+  }),
+]);
+
+try {
+  const parsedValue = creditCardRule.parse('4111 1111 1111 1111');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Validation Details
+
+The credit card modifier:
+- Accepts card numbers with or without spaces and dashes
+- Validates using the Luhn algorithm (mod 10 check)
+- Accepts card numbers between 13 and 19 digits
+- Does not perform card type detection
+
+## Supported Card Formats
+
+The modifier accepts credit card numbers from all major card issuers:
+
+- **Visa**: 13 or 16 digits, starting with 4
+- **Mastercard**: 16 digits, starting with 51-55 or 2221-2720
+- **American Express**: 15 digits, starting with 34 or 37
+- **Discover**: 16 digits, starting with 6011, 622126-622925, 644-649, or 65
+- **JCB**: 16 digits, starting with 3528-3589
+
+The validation accepts numbers with spaces or dashes as separators:
+- `4111111111111111`
+- `4111 1111 1111 1111`
+- `4111-1111-1111-1111`

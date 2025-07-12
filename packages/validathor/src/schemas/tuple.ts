@@ -15,6 +15,12 @@ const isValidTuple = <T extends readonly Parser<unknown>[]>(
   return Array.isArray(value)
 }
 
+/**
+ * Creates a schema that validates tuples (fixed-length arrays with specific types at each position)
+ * @param schema An array of parsers defining the type for each position in the tuple
+ * @param message Optional custom error messages
+ * @returns A parser that validates tuples matching the schema
+ */
 export const tuple = <const TSchema extends readonly Parser<unknown>[]>(
   schema: TSchema,
   message?: {

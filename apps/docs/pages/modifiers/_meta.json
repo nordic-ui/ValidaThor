@@ -1,7 +1,18 @@
 {
+  "creditCard": "Credit Card",
   "custom": "Custom",
   "email": "Email",
+  "endsWith": "Ends With",
   "enumerator": "Enumerator",
+  "includes": "Includes",
+  "ip": "IP",
+  "max": "Max",
   "min": "Min",
-  "max": "Max"
+  "pattern": "Pattern",
+  "phone": "Phone",
+  "slug": "Slug",
+  "startsWith": "Starts With",
+  "trim": "Trim",
+  "url": "URL",
+  "uuid": "UUID"
 }

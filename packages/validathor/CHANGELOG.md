@@ -1,5 +1,13 @@
 # @nordic-ui/validathor
 
+## 0.5.0
+
+### Minor Changes
+
+- - Added a handful of new string modifiers
+  - Added missing JSDoc comments
+  - Updated tests
+
 ## 0.4.1
 
 ### Patch Changes

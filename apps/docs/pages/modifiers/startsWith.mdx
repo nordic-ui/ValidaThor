@@ -1,0 +1,71 @@
+# Starts With modifier
+
+A modifier which creates a validation rule to ensure that a given string starts with a specific prefix.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `prefix` - The prefix that the string must start with
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { startsWith, string } from '@nordic-ui/validathor';
+
+const startsWithRule = string([
+  startsWith('https://', {
+    prefix_error: "Must start with https://",
+  }),
+]);
+
+try {
+  const parsedValue = startsWithRule.parse('https://example.com');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Validation Details
+
+The startsWith modifier:
+- Performs case-sensitive prefix matching
+- Can check for any string prefix, not just single characters
+- Returns the original string if validation passes
+
+## Common Use Cases
+
+```ts showLineNumbers
+import { startsWith, string, url } from '@nordic-ui/validathor';
+
+// Ensure secure URLs
+const secureUrlRule = string([
+  startsWith('https://'),
+  url(),
+]);
+
+// Validate file paths
+const absolutePathRule = string([
+  startsWith('/', {
+    prefix_error: "Must be an absolute path",
+  }),
+]);
+
+// Check for specific prefixes
+const phoneWithCountryRule = string([
+  startsWith('+', {
+    prefix_error: "Must include country code",
+  }),
+]);
+
+// Validate namespaced keys
+const configKeyRule = string([
+  startsWith('app.config.', {
+    prefix_error: "Must be a config key",
+  }),
+]);
+```

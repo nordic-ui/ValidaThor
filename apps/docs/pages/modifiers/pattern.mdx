@@ -1,0 +1,136 @@
+# Pattern modifier
+
+A modifier which creates a validation rule to ensure that a given string matches a regular expression pattern.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `regex` - The regular expression pattern to match against
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { pattern, string } from '@nordic-ui/validathor';
+
+const patternRule = string([
+  pattern(/^[A-Z][a-z]+$/, {
+    pattern_error: "Must start with uppercase followed by lowercase letters",
+  }),
+]);
+
+try {
+  const parsedValue = patternRule.parse('Hello');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Regular Expression Support
+
+The pattern modifier supports all JavaScript regular expression features:
+
+### Flags
+- `i` - Case insensitive matching
+- `g` - Global matching (finds all matches)
+- `m` - Multiline mode
+- `s` - Dot matches newlines
+- `u` - Unicode mode
+- `y` - Sticky mode
+
+### Common Patterns
+
+```ts showLineNumbers
+import { pattern, string } from '@nordic-ui/validathor';
+
+// Alphanumeric only
+const alphanumericRule = string([
+  pattern(/^[a-zA-Z0-9]+$/),
+]);
+
+// Email validation
+const emailRule = string([
+  pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/),
+]);
+
+// Phone number (US format)
+const phoneRule = string([
+  pattern(/^\d{3}-\d{3}-\d{4}$/),
+]);
+
+// ISO date format
+const dateRule = string([
+  pattern(/^\d{4}-\d{2}-\d{2}$/),
+]);
+
+// Hex color
+const hexColorRule = string([
+  pattern(/^#[0-9a-fA-F]{6}$/),
+]);
+
+// Strong password
+const passwordRule = string([
+  pattern(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    { pattern_error: "Password must contain uppercase, lowercase, number and special character" }
+  ),
+]);
+
+// Semantic version
+const semverRule = string([
+  pattern(/^\d+\.\d+\.\d+$/),
+]);
+
+// URL slug
+const slugRule = string([
+  pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+]);
+```
+
+## Complex Validation Examples
+
+```ts showLineNumbers
+import { pattern, string, min, max } from '@nordic-ui/validathor';
+
+// Username validation
+const usernameRule = string([
+  min(3),
+  max(20),
+  pattern(/^[a-zA-Z0-9_]+$/, {
+    pattern_error: "Username can only contain letters, numbers, and underscores",
+  }),
+]);
+
+// GitHub repository name
+const repoNameRule = string([
+  pattern(/^[a-zA-Z0-9._-]+$/, {
+    pattern_error: "Repository name can only contain letters, numbers, dots, hyphens, and underscores",
+  }),
+]);
+
+// Credit card CVV
+const cvvRule = string([
+  pattern(/^\d{3,4}$/, {
+    pattern_error: "CVV must be 3 or 4 digits",
+  }),
+]);
+
+// Time format (24-hour)
+const timeRule = string([
+  pattern(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+    pattern_error: "Time must be in HH:MM format (24-hour)",
+  }),
+]);
+```
+
+## Tips
+
+- Use the `^` and `$` anchors to match the entire string
+- Escape special regex characters with backslash: `\.`, `\*`, `\+`, etc.
+- Use character classes for common patterns: `\d` (digits), `\w` (word characters), `\s` (whitespace)
+- Test your regex patterns thoroughly with various inputs
+- Consider using more specific modifiers (like `email()`, `url()`, `uuid()`) when available

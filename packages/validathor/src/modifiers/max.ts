@@ -9,15 +9,19 @@ export type Max<TValue> = {
   validate: (value: TValue) => TValue
 }
 
-type ErrorMessages = Partial<{
-  type_error: string
-  max_length_error: string
-  error: string
-}>
-
+/**
+ * Used to validate that a value does not exceed a maximum threshold
+ * @param max The maximum allowed value (number for numeric/string length/array length, Date for dates)
+ * @param message Optional custom error messages
+ * @returns A max modifier that validates values are at or below the maximum
+ */
 export function max<TValue extends Input>(
   max: TValue extends Date ? Date : number,
-  message?: ErrorMessages,
+  message?: {
+    type_error?: string
+    max_length_error?: string
+    error?: string
+  },
 ): Max<TValue> {
   return {
     name: 'max' as const,

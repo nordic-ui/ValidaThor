@@ -1,0 +1,99 @@
+# Optional schema
+
+A function which creates a parsing rule that makes any schema optional, allowing it to accept `undefined` values.
+
+## Arguments
+
+1. `schema` - Any parser schema to make optional
+
+## Examples
+
+```ts showLineNumbers
+import { optional, string, object, number } from '@nordic-ui/validathor';
+
+// Basic usage
+const optionalString = optional(string());
+
+try {
+  const value1 = optionalString.parse(undefined); // Returns undefined
+  const value2 = optionalString.parse('hello');   // Returns 'hello'
+  console.log('Values:', value1, value2);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+
+// With object schemas
+const userSchema = object({
+  name: string(),
+  age: optional(number()),
+  email: optional(string([email()]))
+});
+
+try {
+  const user = userSchema.parse({
+    name: 'John Doe',
+    age: undefined,
+    // email is omitted entirely
+  });
+  console.log('User:', user); // { name: 'John Doe', age: undefined, email: undefined }
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Advanced usage
+
+The optional schema can wrap any other schema, including complex nested structures:
+
+```ts showLineNumbers
+import { optional, object, array, string, min } from '@nordic-ui/validathor';
+
+// Complex nested structure
+const addressSchema = object({
+  street: string([min(5)]),
+  city: string(),
+  country: string()
+});
+
+const userSchema = object({
+  name: string(),
+  addresses: optional(array(addressSchema))
+});
+
+// Valid with addresses
+const user1 = userSchema.parse({
+  name: 'John',
+  addresses: [
+    { street: '123 Main St', city: 'New York', country: 'USA' }
+  ]
+});
+
+// Valid without addresses
+const user2 = userSchema.parse({
+  name: 'Jane',
+  addresses: undefined
+});
+
+// Also valid - field omitted entirely
+const user3 = userSchema.parse({
+  name: 'Bob'
+});
+```
+
+## TypeScript
+
+To get the type of an optional schema, you can do the following:
+
+```ts showLineNumbers
+const optionalString = optional(string());
+const optionalUser = optional(object({ name: string(), age: number() }));
+
+type OptionalString = ReturnType<typeof optionalString.parse>; // string | undefined
+type OptionalUser = ReturnType<typeof optionalUser.parse>;     // { name: string; age: number } | undefined
+```
+
+## Important notes
+
+- The optional schema only accepts `undefined` values, not `null`
+- When used in object schemas, omitted fields will be set to `undefined`
+- The wrapped schema's validation rules still apply when a non-undefined value is provided

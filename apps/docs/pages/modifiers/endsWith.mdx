@@ -1,0 +1,70 @@
+# Ends With modifier
+
+A modifier which creates a validation rule to ensure that a given string ends with a specific suffix.
+
+## Schemas
+
+- `string`: [Learn more](/schemas/string)
+
+## Arguments
+
+- `suffix` - The suffix that the string must end with
+- `message?` - A custom object with error messages to be displayed when validation fails or there are type errors
+
+## Example
+
+```ts showLineNumbers
+import { endsWith, string } from '@nordic-ui/validathor';
+
+const endsWithRule = string([
+  endsWith('.com', {
+    suffix_error: "Must end with .com",
+  }),
+]);
+
+try {
+  const parsedValue = endsWithRule.parse('example.com');
+  console.log('Parsed value:', parsedValue);
+} catch (error) {
+  console.error('Parsing failed:', error.message);
+}
+```
+
+## Validation Details
+
+The endsWith modifier:
+- Performs case-sensitive suffix matching
+- Can check for any string suffix, not just single characters
+- Returns the original string if validation passes
+
+## Common Use Cases
+
+```ts showLineNumbers
+import { endsWith, string } from '@nordic-ui/validathor';
+
+// Validate file extensions
+const imageRule = string([
+  endsWith('.png', {
+    suffix_error: "Must be a PNG file",
+  }),
+]);
+
+// Check domain endings
+const commercialDomainRule = string([
+  endsWith('.com'),
+]);
+
+// Validate file types
+const documentRule = string([
+  endsWith('.pdf', {
+    suffix_error: "Must be a PDF document",
+  }),
+]);
+
+// Ensure specific formats
+const percentageRule = string([
+  endsWith('%', {
+    suffix_error: "Must end with %",
+  }),
+]);
+```

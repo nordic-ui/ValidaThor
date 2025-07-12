@@ -12,6 +12,12 @@ const isValidLiteralValue = <TLiteral extends Literal>(
   return input === value
 }
 
+/**
+ * Creates a schema that validates exact literal values
+ * @param value The exact literal value to match (string, number, boolean, null, or undefined)
+ * @param message Optional custom error messages
+ * @returns A parser that validates the exact literal value
+ */
 export const literal = <TLiteral extends Literal>(
   value: TLiteral,
   message?: {

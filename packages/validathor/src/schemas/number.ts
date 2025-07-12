@@ -11,6 +11,12 @@ export type NumberSchemaModifiers = (
   | Custom<number>
 )[]
 
+/**
+ * Creates a schema that validates finite number values
+ * @param modifiers Optional modifiers like min/max validation
+ * @param message Optional custom error messages
+ * @returns A parser that validates finite numbers
+ */
 export const number = (
   modifiers: NumberSchemaModifiers = [],
   message?: {
